@@ -1,8 +1,13 @@
 import Vue from 'vue'
-import './plugins/vuetify'
+import Vuetify from 'vuetify/lib'
+import 'vuetify/src/stylus/app.styl'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+
+Vue.use(Vuetify, {
+  iconfont: 'md'
+})
 
 Vue.config.productionTip = false
 
