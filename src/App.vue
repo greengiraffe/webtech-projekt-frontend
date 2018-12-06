@@ -12,19 +12,25 @@
         <v-btn
           flat
           exact
-          :to="{ name: 'home'}"
+          :to="{ name: 'home' }"
         >
-          <span class="mr-2">Home</span>
+          Home
         </v-btn>
         <v-btn
           flat
-          :to="{ name: 'about'}"
+          :to="{ name: 'about' }"
         >
-          <span class="mr-2">About</span>
+          About
+        </v-btn>
+        <v-btn
+          color="primary"
+          flat
+          :to="{ name: 'login' }"
+        >
+          Login
         </v-btn>
       </v-toolbar-items>
     </v-toolbar>
-
     <v-content>
       <router-view></router-view>
     </v-content>
