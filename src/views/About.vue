@@ -1,7 +1,8 @@
 <template>
   <v-container>
     <div class="about">
-      <h1>This is an about page</h1>
+      <h1>About LearnIT</h1>
+      <p>LearnIT is a small quiz that teaches about several computing topics.</p>
     </div>
   </v-container>
 </template>
