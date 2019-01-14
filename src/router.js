@@ -29,7 +29,7 @@ export default new Router({
     {
       path: '/quiz/:quizid',
       name: 'quiz',
-      component: () => import(/* webpackChunkName: "quiz" */ './views/Quiz.vue')
+      component: () => import(/* webpackChunkName: "quiz" */ './views/Home.vue')
     }
   ]
 })

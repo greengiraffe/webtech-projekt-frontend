@@ -1,30 +1,23 @@
 <template>
-  <v-container>
-    <h1>Available Quizzes</h1>
-    <ul id="allquizzes">
-      <li v-for="quiz in quizzes">
-          <v-card class="quizdetails">
-            <v-card-title>
-              <h2 class="quizname">quiz.name</h2>
-              <p class="quizdescription">quiz.description</p>
-            </v-card-title>
-            <v-card-actions>        
-              <router-link :to={name: 'quiz', params: {quizid: quiz.id}}>
-                <v-btn>Open Quiz</v-btn>
-              </router-link>
-            </v-card-actions>
-          </v-card>
-      </li>
-    </ul>
-  </v-container>
+  <div id="startpage">
+    <h1 class="welcome-message">Welcome to <span class="font-weight-light headline text-uppercase">Learn</span><span class="font-weight-black headline text-uppercase">it</span></h1>
+    <QuizList></QuizList>
+  </div>
 </template>
 
 <script>
-import Quiz from '../components/Quiz.vue'
+  import QuizList from '../components/QuizList.vue'
 
-export default {
-  components: {
-    Quiz
+  export default{
+    components:{
+      QuizList
+    }
   }
-}
 </script>
+
+<style>
+  .welcome-message{
+    margin: 1em auto;
+    text-align: center;
+  }
+</style>
