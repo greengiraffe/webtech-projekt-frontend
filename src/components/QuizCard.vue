@@ -28,7 +28,7 @@
 </script>
 
 <style>
-    .quizcard{
-        display: inline;
+    .router-link-active{
+        margin: 0 auto;
     }
 </style>

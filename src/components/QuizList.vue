@@ -1,9 +1,8 @@
 <template>
     <v-container>
-        <h2>Available Quizzes</h2>
-        <div id="allquizzes">
+        <div id="quizzes">
         <v-layout row wrap >
-                <v-card v-for="quiz in allquizzes" :key='quiz.name' v-bind:id="'quizcard-'+quiz.name" class="quizcard">
+                <v-card v-for="quiz in quizzes" :key='quiz.name' v-bind:id="'quizcard-'+quiz.name" class="quizcard">
                     <QuizCard v-bind:quiz="quiz"></QuizCard>
                 </v-card>
         </v-layout>
@@ -16,20 +15,21 @@
 
     export default{
         name: 'QuizList',
+        props: ['quizzes'],
         components: {
             QuizCard
         },
         data() {
             return{
-                allquizzes: [
-                    {name: 'SampleQuiz1', description: 'This is a samplequiz with no backend connection'},
-                    {name: 'SampleQuiz2', description: 'This is a samplequiz with no backend connection'},
-                    {name: 'SampleQuiz3', description: 'This is a samplequiz with no backend connection'},
-                    {name: 'SampleQuiz4', description: 'This is a samplequiz with no backend connection'}
-                ]
+                
             }
+        },
+        computed:{
+
         }
-  }
+    }
+
+    
 </script>
 
 <style>

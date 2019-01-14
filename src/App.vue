@@ -16,9 +16,7 @@
         >
           Home
         </v-btn>
-        <v-btn
-          flat
-          :to="{ name: 'about' }"
+        <v-btn flat :to="{ name: 'about' }"
         >
           About
         </v-btn>
@@ -39,7 +37,11 @@
 
 <script>
 export default {
-
+  data(){
+    return{
+      
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>
