@@ -8,7 +8,7 @@
         </v-card-title>
 
         <v-card-actions>        
-            <router-link :to="{name: quiz.name, params: {quizid: quiz.id}}">
+            <router-link :to="{path: 'quiz/'+quiz.id}" exact>
                 <v-btn>Open Quiz</v-btn>
             </router-link>
         </v-card-actions>

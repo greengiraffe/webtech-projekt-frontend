@@ -50,10 +50,10 @@
     data(){
       return{
         quizzes: [
-          {name: 'SampleQuiz1 hello', description: 'This is a samplequiz with no backend connection', progress: "0", categories: ["Java"]},
-          {name: 'SampleQuiz2', description: 'This is a samplequiz with no backend connection', progress: "20", categories:["Python"]},
-          {name: 'SampleQuiz3 hell', description: 'This is a samplequiz with no backend connection', progress: "25", categories:["Java", "Databases"]},
-          {name: 'SampleQuiz4', description: 'This is a samplequiz with no backend connection', progress: "95", categories:["Databases"]}
+          {id: '1', name: 'SampleQuiz1 hello', description: 'This is a samplequiz with no backend connection', progress: "0", categories: ["Java"]},
+          {id: '2', name: 'SampleQuiz2', description: 'This is a samplequiz with no backend connection', progress: "20", categories:["Python"]},
+          {id: '3', name: 'SampleQuiz3 hell', description: 'This is a samplequiz with no backend connection', progress: "25", categories:["Java", "Databases"]},
+          {id: '4', name: 'SampleQuiz4', description: 'This is a samplequiz with no backend connection', progress: "95", categories:["Databases"]}
         ],
         categories:[
           {name: 'Java'},
