@@ -11,25 +11,24 @@
 </template>
 
 <script>
-    import QuizCard from '../components/QuizCard.vue'
+import QuizCard from '../components/QuizCard.vue'
 
-    export default{
-        name: 'QuizList',
-        props: ['quizzes'],
-        components: {
-            QuizCard
-        },
-        data() {
-            return{
-                
-            }
-        },
-        computed:{
+export default {
+  name: 'QuizList',
+  props: ['quizzes'],
+  components: {
+    QuizCard
+  },
+  data () {
+    return {
 
-        }
     }
+  },
+  computed: {
 
-    
+  }
+}
+
 </script>
 
 <style>

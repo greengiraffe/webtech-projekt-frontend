@@ -34,7 +34,7 @@ import LoginForm from '../components/LoginForm.vue'
 import RegisterForm from '../components/RegisterForm.vue'
 
 export default {
-  components: {
+  components: {
     LoginForm,
     RegisterForm
   }
