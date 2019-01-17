@@ -20,12 +20,22 @@
         >
           About
         </v-btn>
+
         <v-btn
+          v-if="!loggedIn"
           color="primary"
           flat
           :to="{ name: 'login' }"
         >
           Login
+        </v-btn>
+        <v-btn
+          v-else
+          color="warning"
+          flat
+          @click="logout"
+        >
+          Logout
         </v-btn>
       </v-toolbar-items>
     </v-toolbar>
@@ -36,10 +46,20 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   data () {
     return {
 
+    }
+  },
+  computed: {
+    ...mapState(['loggedIn'])
+  },
+  methods: {
+    logout () {
+      this.$store.dispatch('logout')
     }
   }
 }

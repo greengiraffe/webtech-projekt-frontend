@@ -1,79 +1,106 @@
+import axios from 'axios'
+
 const API_BASE_URL = `https://api.learnit.development.wahlemedia.de/api`
 const API_VERSION = 'v1'
 
-const API_URL = `${API_BASE_URL}/${API_VERSION}`
+axios.defaults.baseURL = `${API_BASE_URL}/${API_VERSION}`
+axios.defaults.headers.common['Authorization'] = localStorage.getItem('id_token')
 
-export const API = {
+function getToken () {
+  return localStorage.getItem('user_token')
+}
 
+// Add token authorization to every request
+axios.interceptors.request.use(
+  function (config) {
+    const token = getToken()
+    console.log(token)
+    if (token !== null) {
+      config.headers.Authorization = `Bearer ${token}`
+    }
+    return config
+  }, function (error) {
+    console.log(error)
+    return Promise.reject(error)
+  })
+
+export default class API {
   // AUTHENTICATION
 
-  async registerUser (name, email, password) {
-    const url = `${API_URL}/register`
-  },
+  static async registerUser (name, email, password) {
+    return axios.post('register', {
+      name,
+      email,
+      password
+    })
+  }
 
-  async loginUser (email, password) {
-    const url = `${API_URL}/login`
-  },
+  static async loginUser (email, password) {
+    return axios.post('login', {
+      email,
+      password
+    })
+  }
 
-  async getCurrentUser (email, password) {
+  static async logoutUser (email, password) {
+    return axios.post('logout')
+  }
+
+  /* eslint-disable */
+  static async getCurrentUser (email, password) {
     const url = `${API_URL}/me`
-  },
+  }
 
-  async logoutUser (email, password) {
-    const url = `${API_URL}/logout`
-  },
-
-  async refreshUser (name, email, password) {
+  static async refreshUser (name, email, password) {
     const url = `${API_URL}/refresh`
-  },
+  }
 
   // TASK
 
-  async getTasks () {
+  static async getTasks () {
     const url = `${API_URL}/tasks`
-  },
+  }
 
-  async saveTask (text) {
+  static async saveTask (text) {
     const url = `${API_URL}/tasks`
-  },
+  }
 
   // CATEGORY
 
-  async getCategories () {
+  static async getCategories () {
     const url = `${API_URL}/categories`
-  },
+  }
 
-  async saveCategory (name) {
+  static async saveCategory (name) {
     const url = `${API_URL}/category`
-  },
+  }
 
   // QUIZ
 
-  async getQuizzes (name, email, password) {
+  static async getQuizzes (name, email, password) {
     const url = `${API_URL}/quizzes`
-  },
+  }
 
-  async saveQuiz (name, description, categories) {
+  static async saveQuiz (name, description, categories) {
     // TODO missing Postman description
     const url = `${API_URL}/quiz`
-  },
+  }
 
-  async getQuiz (id) {
+  static async getQuiz (id) {
     const url = `${API_URL}/quizzes/${id}`
-  },
+  }
 
-  async deleteQuiz (id) {
+  static async deleteQuiz (id) {
     const url = `${API_URL}/quizzes/${id}`
-  },
+  }
 
   // TASK TYPE
 
-  async getTaskTypes () {
-    const url = `${API_URL}/tasktype`
-  },
-
-  async saveTaskType (name) {
+  static async getTaskTypes () {
     const url = `${API_URL}/tasktype`
   }
 
+  static async saveTaskType (name) {
+    const url = `${API_URL}/tasktype`
+  }
 }

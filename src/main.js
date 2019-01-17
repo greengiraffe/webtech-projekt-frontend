@@ -11,6 +11,13 @@ Vue.use(Vuetify, {
 
 Vue.config.productionTip = false
 
+// Set logged-in state based on JWT token
+if (localStorage.getItem('user_token') !== null) {
+  store.commit('setLoggedIn', true)
+} else {
+  store.commit('setLoggedIn', false)
+}
+
 new Vue({
   router,
   store,
