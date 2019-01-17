@@ -1,13 +1,13 @@
 <template>
-    <v-tabs dark color="green" show-arrows>
-        <v-tabs-slider color="black"></v-tabs-slider>
+    <v-tabs dark color="#171e5f" show-arrows>
+        <v-tabs-slider color="#3fd6d3"></v-tabs-slider>
         <v-tab v-for="i in tasks.length" :href="'#task-' + i" :key="i">
             Task {{ i }}
         </v-tab>
 
         <v-tabs-items>
             <v-tab-item v-for="task in tasks" :value="'task-' + task.id" :key="task.id">
-                <v-card flat>
+                <v-card theme--light>
                     <v-card-text>{{ task.text }}</v-card-text>
                     <div class="answers">
                         <Answers v-bind:task_id="task.id"></Answers>
@@ -50,7 +50,10 @@ export default {
 </script>
 
 <style lang="scss">
-
+    .v-card__text{
+        padding: 20px;
+        padding-bottom: 0px;
+    }
 </style>
 
 
