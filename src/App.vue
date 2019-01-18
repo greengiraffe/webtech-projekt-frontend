@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons" rel="stylesheet">
     <v-toolbar app>
       <v-toolbar-title class="headline text-uppercase">
         <router-link :to="{ name: 'home' }" exact class="title-link">

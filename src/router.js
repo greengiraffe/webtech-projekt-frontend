@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from './views/Home.vue'
 import Quiz from './components/Quiz.vue'
+import Quizform from './components/Quizform.vue'
 
 Vue.use(VueRouter)
 
@@ -30,6 +31,11 @@ export default new VueRouter({
     {
       path: '/quiz/:id',
       component: Quiz,
+      props: true
+    },
+    {
+      path: '/newquiz',
+      component: Quizform,
       props: true
     }
   ]
