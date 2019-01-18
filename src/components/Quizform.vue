@@ -13,6 +13,20 @@
                     <div class="small">
                         <v-text-field v-model="name" label="Quizname" required="required" clearable></v-text-field>
                     </div>
+                    <div>
+                        <v-combobox v-model="quizCategories" :items="categories" :search-input.sync="search" hide-selected 
+                        label="Add one or more categories"  multiple persistent-hint small-chips >
+                            <template slot="no-data">
+                            <v-list-tile>
+                                <v-list-tile-content>
+                                <v-list-tile-title>
+                                    No results matching "<strong>{{ search }}</strong>". Press <kbd>enter</kbd> to create a new one
+                                </v-list-tile-title>
+                                </v-list-tile-content>
+                            </v-list-tile>
+                            </template>
+                        </v-combobox>
+                    </div>
                     <div class="large">
                         <v-text-field v-model="description" label="Description" rows="2" multi-line clearable></v-text-field>
                     </div>
@@ -68,6 +82,9 @@ export default {
             ],
             taskdetails: [
                 'Order', 'Text', 'TaskType', 'Solved'
+            ],
+            categories:[
+                'Python', 'Java'
             ]
         }
     },
@@ -108,7 +125,7 @@ export default {
 
 <style lang="scss">
     
-    .v-card{
+    .quizform>.v-card{
         margin: 5% auto;
         width: 70%;
         padding: 5% 0%;
@@ -133,4 +150,7 @@ export default {
             margin-top: 3%;
         }
     }
+    .v-select-list{
+            margin: 0px;
+        }
 </style>
