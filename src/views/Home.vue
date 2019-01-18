@@ -25,59 +25,59 @@
 </template>
 
 <script>
-  import QuizList from '../components/QuizList.vue'
+import QuizList from '../components/QuizList.vue'
 
-  var _filterByName = function(quizzes, search){
-    return quizzes.filter((quiz) => (quiz.name.toLowerCase()).match((search.toLowerCase()))
-    );
-  }
+const _filterByName = function (quizzes, search) {
+  return quizzes.filter((quiz) => (quiz.name.toLowerCase()).match((search.toLowerCase()))
+  )
+}
 
-  var _filterByCategory = function(quizzes, selected){
-    if(selected.length === 0) return quizzes;
-    return quizzes.filter((quiz) => 
-        selected.filter((sel) => quiz.categories.includes(sel)).length > 0
-    )
-  }
+const _filterByCategory = function (quizzes, selected) {
+  if (selected.length === 0) return quizzes
+  return quizzes.filter((quiz) =>
+    selected.filter((sel) => quiz.categories.includes(sel)).length > 0
+  )
+}
 
-  var _sortByProgress = function(quizzes){
-    return quizzes.sort((a, b) => b.progress-a.progress)
-  }
+const _sortByProgress = function (quizzes) {
+  return quizzes.sort((a, b) => b.progress - a.progress)
+}
 
-  export default{
-    components:{
-      QuizList
-    },
-    data(){
-      return{
-        quizzes: [
-          {id: '1', name: 'SampleQuiz1 hello', description: 'This is a samplequiz with no backend connection', progress: "0", categories: ["Java"]},
-          {id: '2', name: 'SampleQuiz2', description: 'This is a samplequiz with no backend connection', progress: "20", categories:["Python"]},
-          {id: '3', name: 'SampleQuiz3 hell', description: 'This is a samplequiz with no backend connection', progress: "25", categories:["Java", "Databases"]},
-          {id: '4', name: 'SampleQuiz4', description: 'This is a samplequiz with no backend connection', progress: "95", categories:["Databases"]}
-        ],
-        categories:[
-          {name: 'Java'},
-          {name: 'Python'},
-          {name: 'Databases'}
-        ],
-        search:'',
-        selected: [],
-        orderbyprogress: false,
-        userloggedin: true
-      }
-    },
-    computed:{      
-      filteredByAll: function(){
-        var filtered = _filterByName(_filterByCategory(this.quizzes, this.selected), this.search);
-        if(this.orderbyprogress) return _sortByProgress(filtered);
-        else return filtered
-      }
+export default {
+  components: {
+    QuizList
+  },
+  data () {
+    return {
+      quizzes: [
+        { id: '1', name: 'SampleQuiz1 hello', description: 'This is a samplequiz with no backend connection', progress: '0', categories: ['Java'] },
+        { id: '2', name: 'SampleQuiz2', description: 'This is a samplequiz with no backend connection', progress: '20', categories: ['Python'] },
+        { id: '3', name: 'SampleQuiz3 hell', description: 'This is a samplequiz with no backend connection', progress: '25', categories: ['Java', 'Databases'] },
+        { id: '4', name: 'SampleQuiz4', description: 'This is a samplequiz with no backend connection', progress: '95', categories: ['Databases'] }
+      ],
+      categories: [
+        { name: 'Java' },
+        { name: 'Python' },
+        { name: 'Databases' }
+      ],
+      search: '',
+      selected: [],
+      orderbyprogress: false,
+      userloggedin: true
+    }
+  },
+  computed: {
+    filteredByAll: function () {
+      const filtered = _filterByName(_filterByCategory(this.quizzes, this.selected), this.search)
+      if (this.orderbyprogress) return _sortByProgress(filtered)
+      else return filtered
     }
   }
-  
+}
+
 </script>
 
-<style lang=<style lang="scss">
+<style lang="scss">
   .welcome-message {
     margin: 1em auto;
     text-align: center;
@@ -99,8 +99,8 @@
     }
   }
   .v-expansion-panel {
-	width: 15%;
-	margin: 0px 10px 0px auto;
+    width: 15%;
+    margin: 0px 10px 0px auto;
 
     .v-expansion-panel__body{
       z-index: 2;

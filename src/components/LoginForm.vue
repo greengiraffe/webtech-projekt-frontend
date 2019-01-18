@@ -62,6 +62,14 @@ export default {
   methods: {
     submit () {
       this.$v.$touch()
+      if (this.$v.$invalid) {
+        // TODO
+      } else {
+        this.$store.dispatch('login', {
+          email: this.email,
+          password: this.password
+        })
+      }
     },
     clear () {
       this.$v.$reset()

@@ -7,7 +7,7 @@
             </div>
         </v-card-title>
 
-        <v-card-actions>        
+        <v-card-actions>
             <router-link :to="{path: 'quiz/'+quiz.id}" exact>
                 <v-btn>Open Quiz</v-btn>
             </router-link>
@@ -17,14 +17,14 @@
 </template>
 
 <script>
-    export default{
-        props: ['quiz'],
-        data(){
-            return{
+export default {
+  props: ['quiz'],
+  data () {
+    return {
 
-            }
-        }
     }
+  }
+}
 </script>
 
 <style>

@@ -51,7 +51,7 @@ export default {
     email: { required, email },
     password: {
       required,
-      minLength: minLength(6),
+      minLength: minLength(6)
     },
     confirmPassword: {
       required,
@@ -100,6 +100,15 @@ export default {
   methods: {
     submit () {
       this.$v.$touch()
+      if (this.$v.$invalid) {
+        // TODO
+      } else {
+        this.$store.dispatch('signup', {
+          name: this.name,
+          email: this.email,
+          password: this.password
+        })
+      }
     },
     clear () {
       this.$v.$reset()
