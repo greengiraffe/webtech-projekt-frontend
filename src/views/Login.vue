@@ -8,7 +8,9 @@
       <v-flex xs12 sm8 md6 lg4>
         <v-card>
 
-          <v-tabs grow>
+          <span v-if="loggedIn">You are already logged in.</span>
+
+          <v-tabs v-else grow>
             <v-tabs-slider color="red"></v-tabs-slider>
 
             <v-tab>Login</v-tab>
@@ -30,6 +32,7 @@
   </v-container>
 </template>
 <script>
+import { mapState } from 'vuex'
 import LoginForm from '../components/LoginForm.vue'
 import RegisterForm from '../components/RegisterForm.vue'
 
@@ -37,6 +40,11 @@ export default {
   components: {
     LoginForm,
     RegisterForm
+  },
+  computed: {
+    ...mapState('user', {
+      loggedIn: state => state.loggedIn
+    })
   }
 }
 </script>

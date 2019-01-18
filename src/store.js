@@ -6,48 +6,53 @@ import API from './api'
 Vue.use(Vuex)
 
 const userModule = {
+  namespaced: true,
   state: {
     name: null,
+    email: null,
     loggedIn: false
   },
   mutations: {
-    setLoggedIn (state, payload) {
-      console.log(payload)
-      state.loggedIn = payload
+    login (state) {
+      state.loggedIn = true
     },
-    setName (state, payload) {
-      state.name = payload
+    logout (state) {
+      state.loggedIn = false
+    },
+    setUser (state, payload) {
+      state.name = payload ? payload.name : null
+      state.email = payload ? payload.email : null
     }
   },
   actions: {
     async signup ({ commit }, { name, email, password }) {
       const res = await API.registerUser(name, email, password)
-      console.log(res)
       localStorage.setItem('user_token', res.data.meta.token)
-      commit('setName', name)
-      commit('setLoggedIn', true)
+      commit('login')
+      commit('setUser', { name, email })
     },
 
-    async login ({ commit }, { email, password }) {
+    async login ({ commit, state }, { email, password }) {
       const res = await API.loginUser(email, password)
-      console.log(res)
       localStorage.setItem('user_token', res.data.meta.token)
-      commit('setName', name)
-      commit('setLoggedIn', true)
+      commit('login')
+      commit('setUser', {
+        name: res.data.data.name,
+        email: res.data.data.email
+      })
     },
 
     async logout ({ commit }) {
-      const res = await API.logoutUser()
-      console.log(res)
+      await API.logoutUser()
       localStorage.removeItem('user_token')
-      commit('setName', null)
-      commit('setLoggedIn', false)
+      commit('logout')
+      commit('setUser', null)
     }
   }
 }
 
 export default new Vuex.Store({
   modules: {
-    userModule
+    user: userModule
   }
 })

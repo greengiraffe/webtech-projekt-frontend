@@ -103,11 +103,12 @@ export default {
       if (this.$v.$invalid) {
         // TODO
       } else {
-        this.$store.dispatch('signup', {
+        this.$store.dispatch('user/signup', {
           name: this.name,
           email: this.email,
           password: this.password
         })
+        this.$router.push({ name: 'home' })
       }
     },
     clear () {

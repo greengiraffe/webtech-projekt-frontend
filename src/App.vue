@@ -56,11 +56,13 @@ export default {
     }
   },
   computed: {
-    ...mapState(['loggedIn'])
+    ...mapState({
+      loggedIn: state => state.user.loggedIn
+    })
   },
   methods: {
     logout () {
-      this.$store.dispatch('logout')
+      this.$store.dispatch('user/logout')
     }
   }
 }

@@ -1,3 +1,4 @@
+import jwtDecode from 'jwt-decode'
 import Vue from 'vue'
 import Vuetify from 'vuetify/lib'
 import 'vuetify/src/stylus/app.styl'
@@ -12,10 +13,14 @@ Vue.use(Vuetify, {
 Vue.config.productionTip = false
 
 // Set logged-in state based on JWT token
-if (localStorage.getItem('user_token') !== null) {
-  store.commit('setLoggedIn', true)
+const userToken = localStorage.getItem('user_token')
+if (userToken !== null) {
+  // validate token
+  const decodedToken = jwtDecode(userToken)
+  console.log(decodedToken)
+  store.commit('user/login')
 } else {
-  store.commit('setLoggedIn', false)
+  store.commit('user/logout')
 }
 
 new Vue({

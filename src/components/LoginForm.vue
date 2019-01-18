@@ -65,10 +65,11 @@ export default {
       if (this.$v.$invalid) {
         // TODO
       } else {
-        this.$store.dispatch('login', {
+        this.$store.dispatch('user/login', {
           email: this.email,
           password: this.password
         })
+        this.$router.push({ name: 'home' })
       }
     },
     clear () {
