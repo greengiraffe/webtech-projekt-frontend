@@ -57,7 +57,7 @@
                         
                     </div>
                     <div class="btns">
-                        <v-btn>Cancel</v-btn>
+                        <router-link :to="{name: 'home'}"><v-btn>Cancel</v-btn></router-link>
                         <v-btn>Sumbit</v-btn>
                     </div>
                 </div>

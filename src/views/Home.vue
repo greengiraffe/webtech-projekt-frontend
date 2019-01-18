@@ -1,25 +1,25 @@
 <template>
   <div id="startpage">
     <h1 class="welcome-message">Welcome to <span class="font-weight-light headline text-uppercase">Learn</span><span class="font-weight-black headline text-uppercase">it</span></h1>
-    <div id="filtersearchsection">
+    <v-container id="filtersearchsection">
       <div id="search">
         <v-icon>search</v-icon>
         <input type="text" v-model="search" placeholder="Search for quizzes" />
       </div>
-      <div id="filter">
-        <div id="category">
-           <v-expansion-panel>
-            <v-expansion-panel-content>
-              <div slot="header">Sort by categories</div>
-                <v-checkbox v-for='category in categories' :key='category.name' v-model="selected" :label='category.name' :value='category.name'></v-checkbox>
-            </v-expansion-panel-content>
-           </v-expansion-panel>
+      <v-layout row wrap justify-space-between align-center class="sameheight">
+        <div id="newquizbtn">
+          <router-link :to="{path: '/newquiz'}" exact=""><v-btn title="Add new quiz"><v-icon>add</v-icon> New quiz</v-btn></router-link>
         </div>
-      </div>
-      <div id="sort">
-        <v-switch v-show="userloggedin" label="Order by progress" v-model="orderbyprogress"></v-switch>
-      </div>
-    </div>
+        <div id="filter">
+          <div id="category">
+              <v-select v-model="selected" :items="categoryNames" attach chips label="Filter by categories" multiple></v-select>
+          </div>
+        </div>
+        <div id="sort">
+          <v-switch v-show="userloggedin" label="Order by progress" v-model="orderbyprogress"></v-switch>
+        </div>
+      </v-layout>
+    </v-container>
     <QuizList v-bind:quizzes="filteredByAll"></QuizList>
   </div>
 </template>
@@ -71,18 +71,52 @@ export default {
       const filtered = _filterByName(_filterByCategory(this.quizzes, this.selected), this.search)
       if (this.orderbyprogress) return _sortByProgress(filtered)
       else return filtered
+    },
+    categoryNames: function(){
+      return this.categories.map(category => category.name);
     }
   }
 }
-
 </script>
 
 <style lang="scss">
-  .welcome-message {
-    margin: 1em auto;
-    text-align: center;
-  }
-  #search {
+  #filtersearchsection{
+    margin: 0 auto;
+    padding-bottom: 0px;
+
+    .sameheight{
+      margin-top: 3%;
+
+
+      #newquizbtn{
+        width: 33%;
+        display: inline-block;
+      }
+      #filter{
+        width: 33%;
+        display: inline-block;
+
+        #category{
+          width: 80%;
+          margin: 0 auto;
+        }
+
+        .v-list__tile{
+          height: 30px;
+          font-size: 14px;
+        }
+      }
+      #sort{
+          width: 33%;
+          display: inline-block;
+
+          .v-input__control{
+          	margin: 0 0 0 auto;
+          }
+      }
+    }
+
+    #search {
     border: 1px solid #8080804d;
     border-radius: 20px;
     width: 30%;
@@ -98,33 +132,9 @@ export default {
       border: 1px solid #808080cc;
     }
   }
-  .v-expansion-panel {
-    width: 15%;
-    margin: 0px 10px 0px auto;
-
-    .v-expansion-panel__body{
-      z-index: 2;
-      position: absolute;
-      width: 15%;
-    }
-
-    .v-label{
-      font-size: 14px;
-    }
-    .v-input--selection-controls{
-      width: 90%;
-      margin-left: 10%;
-      margin-bottom: 0px;
-
-      .v-input__slot{
-        margin-bottom: 0px;
-      }
-    }
   }
-
-  #sort{
-    .v-input__control{
-      margin: 10px 20px 0px auto;
-    }
-  }
+  .welcome-message {
+    margin: 1em auto;
+    text-align: center;
+  }  
 </style>

@@ -36,6 +36,10 @@ export default new VueRouter({
     {
       path: '/newquiz',
       component: Quizform,
+    },
+    {
+      path: '/editquiz/:id',
+      component: Quizform,
       props: true
     }
   ]

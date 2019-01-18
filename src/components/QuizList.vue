@@ -1,7 +1,7 @@
 <template>
     <v-container>
         <div id="quizzes">
-        <v-layout row wrap >
+        <v-layout row wrap justify-space-between align-center>
                 <v-card v-for="quiz in quizzes" :key='quiz.name' v-bind:id="'quizcard-'+quiz.name" class="quizcard">
                     <QuizCard v-bind:quiz="quiz"></QuizCard>
                 </v-card>
@@ -33,7 +33,6 @@ export default {
 
 <style>
     .v-card{
-        margin-right: 3%;
         margin-bottom: 3%;
     }
     h2{
