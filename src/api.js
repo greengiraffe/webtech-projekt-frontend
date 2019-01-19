@@ -26,11 +26,12 @@ axios.interceptors.request.use(
 export default class API {
     // AUTHENTICATION
 
-    static async registerUser (name, email, password) {
+    static async registerUser (name, email, password, isAdmin) {
         return axios.post('register', {
             name,
             email,
-            password
+            password,
+            'is_admin': isAdmin
         })
     }
 

@@ -10,7 +10,8 @@ const userModule = {
     state: {
         name: null,
         email: null,
-        loggedIn: false
+        loggedIn: false,
+        isAdmin: false
     },
     mutations: {
         login (state) {
@@ -22,23 +23,25 @@ const userModule = {
         setUser (state, payload) {
             state.name = payload ? payload.name : null
             state.email = payload ? payload.email : null
+            state.isAdmin = payload ? payload.isAdmin : null
         }
     },
     actions: {
-        async signup ({ commit }, { name, email, password }) {
-            const res = await API.registerUser(name, email, password)
+        async signup ({ commit }, { name, email, password, isAdmin }) {
+            const res = await API.registerUser(name, email, password, isAdmin)
             localStorage.setItem('user_token', res.data.meta.token)
             commit('login')
-            commit('setUser', { name, email })
+            commit('setUser', { name, email, isAdmin })
         },
 
-        async login ({ commit, state }, { email, password }) {
+        async login ({ commit }, { email, password }) {
             const res = await API.loginUser(email, password)
             localStorage.setItem('user_token', res.data.meta.token)
             commit('login')
             commit('setUser', {
                 name: res.data.data.name,
-                email: res.data.data.email
+                email: res.data.data.email,
+                isAdmin: res.data.data['is_admin']
             })
         },
 

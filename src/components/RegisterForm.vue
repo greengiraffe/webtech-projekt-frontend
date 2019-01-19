@@ -62,6 +62,7 @@ export default {
         name: '',
         email: '',
         password: '',
+        isAdmin: false,
         confirmPassword: '',
         showPassword: false,
         showConfirmPassword: false
@@ -106,7 +107,8 @@ export default {
                 this.$store.dispatch('user/signup', {
                     name: this.name,
                     email: this.email,
-                    password: this.password
+                    password: this.password,
+                    isAdmin: this.isAdmin
                 })
                 this.$router.push({ name: 'home' })
             }
