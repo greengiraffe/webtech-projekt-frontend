@@ -7,7 +7,7 @@ import router from './router'
 import store from './store'
 
 Vue.use(Vuetify, {
-  iconfont: 'mdi'
+    iconfont: 'mdi'
 })
 
 Vue.config.productionTip = false
@@ -15,16 +15,16 @@ Vue.config.productionTip = false
 // Set logged-in state based on JWT token
 const userToken = localStorage.getItem('user_token')
 if (userToken !== null) {
-  // validate token
-  const decodedToken = jwtDecode(userToken)
-  console.log(decodedToken)
-  store.commit('user/login')
+    // validate token
+    const decodedToken = jwtDecode(userToken)
+    console.log(decodedToken)
+    store.commit('user/login')
 } else {
-  store.commit('user/logout')
+    store.commit('user/logout')
 }
 
 new Vue({
-  router,
-  store,
-  render: h => h(App)
+    router,
+    store,
+    render: h => h(App)
 }).$mount('#app')

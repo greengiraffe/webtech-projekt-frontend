@@ -23,12 +23,12 @@
 
 <script>
 export default {
-  props: ['quiz'],
-  data () {
-    return {
+    props: ['quiz'],
+    data () {
+        return {
 
+        }
     }
-  }
 }
 </script>
 

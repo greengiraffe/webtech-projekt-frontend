@@ -67,74 +67,74 @@
 
 <script>
 export default {
-  props: 'quiz',
-  data () {
-    return {
-      name: 'New Quiz',
-      description: '',
-      imageName: '',
-      imageUrl: '',
-      tumbnail: '',
-      tasks: [
-        {
-          id: '1',
-          quiz_id: '1',
-          task_type: 'multiple choice',
-          text: 'What is an animal?',
-          solved: 'false',
-          order: '1'
-        },
-        {
-          id: '2',
-          quiz_id: '1',
-          task_type: 'single choice',
-          text: 'What is a tiger?',
-          solved: 'false',
-          order: '2'
+    props: 'quiz',
+    data () {
+        return {
+            name: 'New Quiz',
+            description: '',
+            imageName: '',
+            imageUrl: '',
+            tumbnail: '',
+            tasks: [
+                {
+                    id: '1',
+                    quiz_id: '1',
+                    task_type: 'multiple choice',
+                    text: 'What is an animal?',
+                    solved: 'false',
+                    order: '1'
+                },
+                {
+                    id: '2',
+                    quiz_id: '1',
+                    task_type: 'single choice',
+                    text: 'What is a tiger?',
+                    solved: 'false',
+                    order: '2'
+                }
+            ],
+            taskdetails: ['Order', 'Text', 'TaskType', 'Solved'],
+            categories: ['Python', 'Java']
         }
-      ],
-      taskdetails: ['Order', 'Text', 'TaskType', 'Solved'],
-      categories: ['Python', 'Java']
-    }
-  },
-  computed: {
-    edit: function () {
-      /* TODO: adapt to get data from vuex
+    },
+    computed: {
+        edit: function () {
+            /* TODO: adapt to get data from vuex
 
             */
 
-      if (this.quiz) {
-        this.name = this.quiz.name
-      }
-    }
-    /*tasks: function(){
-        } */
-  },
-  methods: {
-    pickFile () {
-      this.$refs.image.click()
-    },
-
-    onFilePicked (e) {
-      const files = e.target.files
-      if (files[0] !== undefined) {
-        this.imageName = files[0].name
-        if (this.imageName.lastIndexOf('.') <= 0) {
-          return
+            if (this.quiz) {
+                this.name = this.quiz.name
+            }
         }
-        const fr = new FileReader()
-        fr.readAsDataURL(files[0])
-        fr.addEventListener('load', () => {
-          this.imageUrl = fr.result
-          this.imageFile = files[0] // this is an image file that can be sent to server...
-        })
-      } else {
-        this.imageName = '';
-        this.imageFile = '';
-        this.imageUrl = '';
-      }
+    /* tasks: function(){
+        } */
+    },
+    methods: {
+        pickFile () {
+            this.$refs.image.click()
+        },
+
+        onFilePicked (e) {
+            const files = e.target.files
+            if (files[0] !== undefined) {
+                this.imageName = files[0].name
+                if (this.imageName.lastIndexOf('.') <= 0) {
+                    return
+                }
+                const fr = new FileReader()
+                fr.readAsDataURL(files[0])
+                fr.addEventListener('load', () => {
+                    this.imageUrl = fr.result
+                    this.imageFile = files[0] // this is an image file that can be sent to server...
+                })
+            } else {
+                this.imageName = ''
+                this.imageFile = ''
+                this.imageUrl = ''
+            }
+        }
     }
-  }
 }
 </script>
 

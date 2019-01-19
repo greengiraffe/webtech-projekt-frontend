@@ -50,21 +50,21 @@
 import { mapState } from 'vuex'
 
 export default {
-  data () {
-    return {
+    data () {
+        return {
 
+        }
+    },
+    computed: {
+        ...mapState({
+            loggedIn: state => state.user.loggedIn
+        })
+    },
+    methods: {
+        logout () {
+            this.$store.dispatch('user/logout')
+        }
     }
-  },
-  computed: {
-    ...mapState({
-      loggedIn: state => state.user.loggedIn
-    })
-  },
-  methods: {
-    logout () {
-      this.$store.dispatch('user/logout')
-    }
-  }
 }
 </script>
 <style lang="scss" scoped>

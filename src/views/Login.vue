@@ -37,14 +37,14 @@ import LoginForm from '../components/LoginForm.vue'
 import RegisterForm from '../components/RegisterForm.vue'
 
 export default {
-  components: {
-    LoginForm,
-    RegisterForm
-  },
-  computed: {
-    ...mapState('user', {
-      loggedIn: state => state.loggedIn
-    })
-  }
+    components: {
+        LoginForm,
+        RegisterForm
+    },
+    computed: {
+        ...mapState('user', {
+            loggedIn: state => state.loggedIn
+        })
+    }
 }
 </script>

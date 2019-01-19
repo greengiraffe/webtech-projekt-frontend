@@ -19,20 +19,20 @@
 </template>
 <script>
 export default {
-  data () {
-    return {
-      text: '',
-      tasktypes: [
-        { id: 1, name: 'single-choice' },
-        { id: 2, name: 'multiple-choice' },
-        { id: 3, name: 'text' }
-      ]
+    data () {
+        return {
+            text: '',
+            tasktypes: [
+                { id: 1, name: 'single-choice' },
+                { id: 2, name: 'multiple-choice' },
+                { id: 3, name: 'text' }
+            ]
+        }
+    },
+    computed: {
+        tasktype_names: function () {
+            return tasktypes.map(tasktype => tasktype.name)
+        }
     }
-  },
-  computed: {
-    tasktype_names: function () {
-      return tasktypes.map(tasktype => tasktype.name)
-    }
-  }
 }
 </script>

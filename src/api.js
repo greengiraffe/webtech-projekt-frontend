@@ -7,45 +7,45 @@ axios.defaults.baseURL = `${API_BASE_URL}/${API_VERSION}`
 axios.defaults.headers.common['Authorization'] = localStorage.getItem('id_token')
 
 function getToken () {
-  return localStorage.getItem('user_token')
+    return localStorage.getItem('user_token')
 }
 
 // Add token authorization to every request
 axios.interceptors.request.use(
-  function (config) {
-    const token = getToken()
-    if (token !== null) {
-      config.headers.Authorization = `Bearer ${token}`
-    }
-    return config
-  }, function (error) {
-    console.log(error)
-    return Promise.reject(error)
-  })
+    function (config) {
+        const token = getToken()
+        if (token !== null) {
+            config.headers.Authorization = `Bearer ${token}`
+        }
+        return config
+    }, function (error) {
+        console.log(error)
+        return Promise.reject(error)
+    })
 
 export default class API {
-  // AUTHENTICATION
+    // AUTHENTICATION
 
-  static async registerUser (name, email, password) {
-    return axios.post('register', {
-      name,
-      email,
-      password
-    })
-  }
+    static async registerUser (name, email, password) {
+        return axios.post('register', {
+            name,
+            email,
+            password
+        })
+    }
 
-  static async loginUser (email, password) {
-    return axios.post('login', {
-      email,
-      password
-    })
-  }
+    static async loginUser (email, password) {
+        return axios.post('login', {
+            email,
+            password
+        })
+    }
 
-  static async logoutUser (email, password) {
-    return axios.post('logout')
-  }
+    static async logoutUser (email, password) {
+        return axios.post('logout')
+    }
 
-  /* eslint-disable */
+    /* eslint-disable */
   static async getCurrentUser (email, password) {
     const url = `${API_URL}/me`
   }

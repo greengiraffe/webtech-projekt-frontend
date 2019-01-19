@@ -14,19 +14,19 @@
 import QuizCard from '../components/QuizCard.vue'
 
 export default {
-  name: 'QuizList',
-  props: ['quizzes'],
-  components: {
-    QuizCard
-  },
-  data () {
-    return {
+    name: 'QuizList',
+    props: ['quizzes'],
+    components: {
+        QuizCard
+    },
+    data () {
+        return {
+
+        }
+    },
+    computed: {
 
     }
-  },
-  computed: {
-
-  }
 }
 
 </script>
