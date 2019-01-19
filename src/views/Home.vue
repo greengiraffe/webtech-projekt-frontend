@@ -1,6 +1,13 @@
 <template>
   <div id="startpage">
-    <h1 class="welcome-message">Welcome to <span class="font-weight-light headline text-uppercase">Learn</span><span class="font-weight-black headline text-uppercase">it</span></h1>
+    <h1 class="welcome-message">
+      <span v-if="loggedIn">
+        Hi {{ userName }}, let's learn something!
+      </span>
+      <span v-else>
+        Welcome to <span class="font-weight-light headline text-uppercase">Learn</span><span class="font-weight-black headline text-uppercase">it</span>
+      </span>
+    </h1>
     <v-container id="filtersearchsection">
       <div id="search">
         <v-icon>search</v-icon>
@@ -25,6 +32,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import QuizList from '../components/QuizList.vue'
 
 const _filterByName = function (quizzes, search) {
@@ -67,13 +75,17 @@ export default {
     }
   },
   computed: {
+    ...mapState('user', {
+      loggedIn: state => state.loggedIn,
+      userName: state => state.name
+    }),
     filteredByAll: function () {
       const filtered = _filterByName(_filterByCategory(this.quizzes, this.selected), this.search)
       if (this.orderbyprogress) return _sortByProgress(filtered)
       else return filtered
     },
-    categoryNames: function(){
-      return this.categories.map(category => category.name);
+    categoryNames: function () {
+      return this.categories.map(category => category.name)
     }
   }
 }
@@ -86,7 +98,6 @@ export default {
 
     .sameheight{
       margin-top: 3%;
-
 
       #newquizbtn{
         width: 33%;
@@ -111,7 +122,7 @@ export default {
           display: inline-block;
 
           .v-input__control{
-          	margin: 0 0 0 auto;
+            margin: 0 0 0 auto;
           }
       }
     }
@@ -136,5 +147,5 @@ export default {
   .welcome-message {
     margin: 1em auto;
     text-align: center;
-  }  
+  }
 </style>
