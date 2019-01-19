@@ -25,23 +25,24 @@
 </template>
 
 <script>
-import QuizList from '../components/QuizList.vue'
+import QuizList from '../components/QuizList.vue';
 
 const _filterByName = function (quizzes, search) {
-  return quizzes.filter((quiz) => (quiz.name.toLowerCase()).match((search.toLowerCase()))
+  return quizzes.filter(quiz =>
+    quiz.name.toLowerCase().match(search.toLowerCase())
   )
-}
+};
 
 const _filterByCategory = function (quizzes, selected) {
   if (selected.length === 0) return quizzes
-  return quizzes.filter((quiz) =>
-    selected.filter((sel) => quiz.categories.includes(sel)).length > 0
+  return quizzes.filter(
+    quiz => selected.filter(sel => quiz.categories.includes(sel)).length > 0
   )
-}
+};
 
 const _sortByProgress = function (quizzes) {
   return quizzes.sort((a, b) => b.progress - a.progress)
-}
+};
 
 export default {
   components: {
@@ -50,16 +51,36 @@ export default {
   data () {
     return {
       quizzes: [
-        { id: '1', name: 'SampleQuiz1 hello', description: 'This is a samplequiz with no backend connection', progress: '0', categories: ['Java'] },
-        { id: '2', name: 'SampleQuiz2', description: 'This is a samplequiz with no backend connection', progress: '20', categories: ['Python'] },
-        { id: '3', name: 'SampleQuiz3 hell', description: 'This is a samplequiz with no backend connection', progress: '25', categories: ['Java', 'Databases'] },
-        { id: '4', name: 'SampleQuiz4', description: 'This is a samplequiz with no backend connection', progress: '95', categories: ['Databases'] }
+        {
+          id: '1',
+          name: 'SampleQuiz1 hello',
+          description: 'This is a samplequiz with no backend connection',
+          progress: '0',
+          categories: ['Java']
+        },
+        {
+          id: '2',
+          name: 'SampleQuiz2',
+          description: 'This is a samplequiz with no backend connection',
+          progress: '20',
+          categories: ['Python']
+        },
+        {
+          id: '3',
+          name: 'SampleQuiz3 hell',
+          description: 'This is a samplequiz with no backend connection',
+          progress: '25',
+          categories: ['Java', 'Databases']
+        },
+        {
+          id: '4',
+          name: 'SampleQuiz4',
+          description: 'This is a samplequiz with no backend connection',
+          progress: '95',
+          categories: ['Databases']
+        }
       ],
-      categories: [
-        { name: 'Java' },
-        { name: 'Python' },
-        { name: 'Databases' }
-      ],
+      categories: [{ name: 'Java' }, { name: 'Python' }, { name: 'Databases' }],
       search: '',
       selected: [],
       orderbyprogress: false,
@@ -68,73 +89,75 @@ export default {
   },
   computed: {
     filteredByAll: function () {
-      const filtered = _filterByName(_filterByCategory(this.quizzes, this.selected), this.search)
+      const filtered = _filterByName(
+        _filterByCategory(this.quizzes, this.selected),
+        this.search
+      )
       if (this.orderbyprogress) return _sortByProgress(filtered)
       else return filtered
     },
-    categoryNames: function(){
-      return this.categories.map(category => category.name);
+    categoryNames: function () {
+      return this.categories.map(category => category.name)
     }
   }
 }
 </script>
 
 <style lang="scss">
-  #filtersearchsection{
-    margin: 0 auto;
-    padding-bottom: 0px;
+#filtersearchsection {
+  margin: 0 auto;
+  padding-bottom: 0px;
 
-    .sameheight{
-      margin-top: 3%;
+  .sameheight {
+    margin-top: 3%;
 
+    #newquizbtn {
+      width: 33%;
+      display: inline-block;
+    }
+    #filter {
+      width: 33%;
+      display: inline-block;
 
-      #newquizbtn{
-        width: 33%;
-        display: inline-block;
+      #category {
+        width: 80%;
+        margin: 0 auto;
       }
-      #filter{
-        width: 33%;
-        display: inline-block;
 
-        #category{
-          width: 80%;
-          margin: 0 auto;
-        }
-
-        .v-list__tile{
-          height: 30px;
-          font-size: 14px;
-        }
-      }
-      #sort{
-          width: 33%;
-          display: inline-block;
-
-          .v-input__control{
-          	margin: 0 0 0 auto;
-          }
+      .v-list__tile {
+        height: 30px;
+        font-size: 14px;
       }
     }
+    #sort {
+      width: 33%;
+      display: inline-block;
 
-    #search {
+      .v-input__control {
+        margin: 0 0 0 auto;
+      }
+    }
+  }
+
+  #search {
     border: 1px solid #8080804d;
     border-radius: 20px;
     width: 30%;
     margin: 0 auto;
     padding: 10px;
 
-    .input{
+    .input {
       width: 90%;
       padding-left: 3%;
     }
 
-    &:hover{
+    &:hover {
       border: 1px solid #808080cc;
     }
   }
-  }
-  .welcome-message {
-    margin: 1em auto;
-    text-align: center;
-  }  
+}
+.welcome-message {
+  margin: 1em auto;
+  text-align: center;
+}
 </style>

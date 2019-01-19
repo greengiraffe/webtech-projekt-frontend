@@ -13,7 +13,7 @@
             <router-link :to="{path: 'quiz/'+quiz.id}" exact>
                <v-btn title="Start quiz"><v-icon style="margin-right: 5px">play_arrow</v-icon>Start</v-btn>
             </router-link>
-            <router-link :to="{path: 'editquiz/'+quiz.id, params: {quiz: 'quiz'}}" class="editbutton" exact>
+            <router-link :to="{path: 'editquiz/'+quiz.id, params: {quiz}}" class="editbutton" exact>
                 <v-btn title="Edit this quiz"><v-icon style="margin-right: 5px">create</v-icon>Edit</v-btn>
             </router-link>
         </v-card-actions>
@@ -39,5 +39,9 @@ export default {
     .editbutton{
         margin-right: 0px;
         margin-left: auto;
+    }
+    .v-card__actions{
+        width: 90%;
+        margin: 0 auto;
     }
 </style>

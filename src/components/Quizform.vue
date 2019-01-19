@@ -1,8 +1,7 @@
 <template>
     <v-form class="quizform">
          <v-card>
-            <h1 v-if="edit">{{Quizname}}</h1>
-            <h1 v-else>New Quiz</h1>
+            <h1>{{ this.name }}</h1>
             <v-container>
                 <div class="datainput">
                     <div class="small">
@@ -14,7 +13,7 @@
                         <v-text-field v-model="name" label="Quizname" required="required" clearable></v-text-field>
                     </div>
                     <div>
-                        <v-combobox v-model="quizCategories" :items="categories" :search-input.sync="search" hide-selected 
+                        <v-combobox v-model="quizCategories" :items="categories" :search-input.sync="search" hide-selected
                         label="Add one or more categories"  multiple persistent-hint small-chips >
                             <template slot="no-data">
                             <v-list-tile>
@@ -33,7 +32,7 @@
 
                     <div id="tasks">
                         <h2>Tasks</h2>
-                        
+
                         <v-data-table :headers="taskdetails" :items="tasks" class="quiztasks">
                             <template slot="headers" slot-scope="props">
                                 <tr>
@@ -54,7 +53,7 @@
                                 </tr>
                             </template>
                         </v-data-table>
-                        
+
                     </div>
                     <div class="btns">
                         <router-link :to="{name: 'home'}"><v-btn>Cancel</v-btn></router-link>
@@ -68,89 +67,103 @@
 
 <script>
 export default {
-    props: ['quiz'],
-    data() {
-        return {
-            name: '',
-            description: '',
-            imageName: '',
-            imageUrl: '',
-            tumbnail: '',
-            tasks: [
-                {id: '1', quiz_id: '1', task_type: 'multiple choice', text: "What is an animal?", solved: 'false', order: '1'},
-                {id: '2', quiz_id: '1', task_type: 'single choice', text: "What is a tiger?", solved:'false', order:'2'}
-            ],
-            taskdetails: [
-                'Order', 'Text', 'TaskType', 'Solved'
-            ],
-            categories:[
-                'Python', 'Java'
-            ]
-        }
-    },
-    computed:{
-        edit: function(){
-            return (this.props != undefined);
+  props: 'quiz',
+  data () {
+    return {
+      name: 'New Quiz',
+      description: '',
+      imageName: '',
+      imageUrl: '',
+      tumbnail: '',
+      tasks: [
+        {
+          id: '1',
+          quiz_id: '1',
+          task_type: 'multiple choice',
+          text: 'What is an animal?',
+          solved: 'false',
+          order: '1'
         },
-        /*tasks: function(){
-        }*/
-    },
-    methods: {
-        pickFile () {
-            this.$refs.image.click ()
-        },
-		
-		onFilePicked (e) {
-			const files = e.target.files
-			if(files[0] !== undefined) {
-				this.imageName = files[0].name
-				if(this.imageName.lastIndexOf('.') <= 0) {
-					return
-				}
-				const fr = new FileReader ()
-				fr.readAsDataURL(files[0])
-				fr.addEventListener('load', () => {
-					this.imageUrl = fr.result
-					this.imageFile = files[0] // this is an image file that can be sent to server...
-				})
-			} else {
-				this.imageName = ''
-				this.imageFile = ''
-				this.imageUrl = ''
-            }
+        {
+          id: '2',
+          quiz_id: '1',
+          task_type: 'single choice',
+          text: 'What is a tiger?',
+          solved: 'false',
+          order: '2'
         }
+      ],
+      taskdetails: ['Order', 'Text', 'TaskType', 'Solved'],
+      categories: ['Python', 'Java']
     }
+  },
+  computed: {
+    edit: function () {
+      /* TODO: adapt to get data from vuex
+
+            */
+
+      if (this.quiz) {
+        this.name = this.quiz.name
+      }
+    }
+    /*tasks: function(){
+        } */
+  },
+  methods: {
+    pickFile () {
+      this.$refs.image.click()
+    },
+
+    onFilePicked (e) {
+      const files = e.target.files
+      if (files[0] !== undefined) {
+        this.imageName = files[0].name
+        if (this.imageName.lastIndexOf('.') <= 0) {
+          return
+        }
+        const fr = new FileReader()
+        fr.readAsDataURL(files[0])
+        fr.addEventListener('load', () => {
+          this.imageUrl = fr.result
+          this.imageFile = files[0] // this is an image file that can be sent to server...
+        })
+      } else {
+        this.imageName = '';
+        this.imageFile = '';
+        this.imageUrl = '';
+      }
+    }
+  }
 }
 </script>
 
 <style lang="scss">
-    
-    .quizform>.v-card{
-        margin: 5% auto;
-        width: 70%;
-        padding: 5% 0%;
+.quizform > .v-card {
+  margin: 5% auto;
+  width: 70%;
+  padding: 5% 0%;
 
-        .datainput{
-        width: 80%;
-        margin: 2% auto;
-        
-            .small{
-                width: 40%;
-                
-            }
-            >:first-child{
-                    float: right;
-            }
-            .btns{
-                text-align: center;
-            }
-        }
+  .datainput {
+    width: 80%;
+    margin: 2% auto;
 
-        #tasks{
-            margin-top: 3%;
-        }
+    .small {
+      width: 40%;
     }
-    .v-select-list{
-            margin: 0px;
-        }
+    > :first-child {
+      float: right;
+    }
+    .btns {
+      text-align: center;
+    }
+  }
+
+  #tasks {
+    margin-top: 3%;
+  }
+}
+.v-select-list {
+  margin: 0px;
+}
 </style>
