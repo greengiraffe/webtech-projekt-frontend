@@ -1,7 +1,7 @@
 <template>
     <v-form class="taskform">
         <v-card>
-            <h1>Edit task</h1> <!-- ADD *new task* -> depending on data-->
+            <h1>New task</h1> <!-- edit *edit task* -> depending on data-->
             <v-container class="taskdetails">
                 <div>
                     <v-text-field v-model="text" label="Task text" required="required" clearable>{{ this.text }}</v-text-field>
@@ -9,10 +9,10 @@
                 <div>
                     <v-layout wrap align-center>
                         <v-flex xs12 sm6 d-flex>
-                            <v-select :items="tasktypes" label="Tasktype"></v-select>
+                            <v-select :items="tasktype_names" label="Tasktype"></v-select>
                         </v-flex>
+                    </v-layout>
                 </div>
-
             </v-container>
         </v-card>
     </v-form>
@@ -28,11 +28,11 @@ export default {
                 { id: 3, name: 'text' }
             ]
         }
-    },
+  },
     computed: {
         tasktype_names: function () {
-            return tasktypes.map(tasktype => tasktype.name)
-        }
+            return this.tasktypes.map(tasktype => tasktype.name)
+    }
     }
 }
 </script>

@@ -1,8 +1,9 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from './views/Home.vue'
-import Quiz from './components/Quiz.vue'
-import Quizform from './components/Quizform.vue'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import Home from './views/Home.vue';
+import Quiz from './components/Quiz.vue';
+import Quizform from './components/Quizform.vue';
+import TaskForm from './components/TaskForm.vue';
 
 Vue.use(VueRouter)
 
@@ -21,12 +22,14 @@ export default new VueRouter({
             // route level code-splitting
             // this generates a separate chunk (about.[hash].js) for this route
             // which is lazy-loaded when the route is visited.
-            component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+            component: () =>
+                import(/* webpackChunkName: "about" */ './views/About.vue')
         },
         {
             path: '/login',
             name: 'login',
-            component: () => import(/* webpackChunkName: "login" */ './views/Login.vue')
+            component: () =>
+                import(/* webpackChunkName: "login" */ './views/Login.vue')
         },
         {
             path: '/quiz/:id',
@@ -40,6 +43,11 @@ export default new VueRouter({
         {
             path: '/editquiz/:id',
             component: Quizform,
+            props: true
+        },
+        {
+            path: '/quiz/:id/newtask',
+            component: TaskForm,
             props: true
         }
     ]
