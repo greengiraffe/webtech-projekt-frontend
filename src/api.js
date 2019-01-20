@@ -1,27 +1,30 @@
 import axios from 'axios'
+import { getUserToken, refreshTokenIfNecessary } from './helpers/auth'
 
 const API_BASE_URL = `https://api.learnit.development.wahlemedia.de/api`
 const API_VERSION = 'v1'
 
 axios.defaults.baseURL = `${API_BASE_URL}/${API_VERSION}`
-axios.defaults.headers.common['Authorization'] = localStorage.getItem('id_token')
-
-function getToken () {
-    return localStorage.getItem('user_token')
-}
 
 // Add token authorization to every request
 axios.interceptors.request.use(
-    function (config) {
-        const token = getToken()
+    async function (config) {
+        let token = getUserToken()
         if (token !== null) {
+            if (!config.url.includes('refresh')) {
+                // don't refresh JWT on /refresh route to avoid endless loops
+                token = await refreshTokenIfNecessary(token)
+            }
+            // set auth headers
             config.headers.Authorization = `Bearer ${token}`
         }
         return config
-    }, function (error) {
+    },
+    function (error) {
         console.log(error)
         return Promise.reject(error)
-    })
+    }
+)
 
 export default class API {
     // AUTHENTICATION
@@ -42,18 +45,18 @@ export default class API {
         })
     }
 
-    static async logoutUser (email, password) {
+    static async logoutUser () {
         return axios.post('logout')
     }
 
-    /* eslint-disable */
-  static async getCurrentUser (email, password) {
-    const url = `${API_URL}/me`
-  }
+    static async getCurrentUser () {
+        return axios.get('me')
+    }
 
-  static async refreshUser (name, email, password) {
-    const url = `${API_URL}/refresh`
-  }
+    static async refreshUser () {
+        return axios.get('refresh')
+    }
+    /* eslint-disable */
 
   // TASK
 

@@ -1,11 +1,6 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import API from '../api'
 
-import API from './api'
-
-Vue.use(Vuex)
-
-const userModule = {
+export const userModule = {
     namespaced: true,
     state: {
         name: null,
@@ -50,12 +45,20 @@ const userModule = {
             localStorage.removeItem('user_token')
             commit('logout')
             commit('setUser', null)
+        },
+
+        async setCurrentUser ({ commit }) {
+            const res = await API.getCurrentUser()
+            commit('setUser', {
+                name: res.data.data.name,
+                email: res.data.data.email,
+                isAdmin: res.data.data['is_admin']
+            })
+        },
+
+        async refreshToken ({ commit }) {
+            const res = await API.refreshUser()
+            localStorage.setItem('user_token', res.data.meta.token)
         }
     }
 }
-
-export default new Vuex.Store({
-    modules: {
-        user: userModule
-    }
-})

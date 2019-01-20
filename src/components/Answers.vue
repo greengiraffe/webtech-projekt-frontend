@@ -92,12 +92,12 @@ export default {
             selected: [],
             showverification: false
         }
-  },
+    },
     computed: {
     // checks whether a task is of type text or choice
         texttask: function () {
             return this.answers[0].correct_string !== null
-    },
+        },
         // returns an array with the text of all correctly chosen answers, based on the selected answers
         // TODO: change back to boolean
         correctchoice: function () {
@@ -106,14 +106,14 @@ export default {
                 .filter(
                     answer => answer !== undefined && answer.correct_choice === 'true'
                 )
-      return correctAnswers.map(corrA => corrA.text)
-    },
+            return correctAnswers.map(corrA => corrA.text)
+        },
         // returns the number of all answers that are marked with correct_choice in the answers array
         // TODO: change back to boolean
         nrcorrectanswers: function () {
             return this.answers.filter(answer => answer.correct_choice === 'true')
                 .length
-    },
+        },
         // returns if task solved correctly
         correctlysolved: function () {
             if (
@@ -121,36 +121,36 @@ export default {
         this.correctchoice.length === this.nrcorrectanswers
             ) {
                 return true
-      } else {
+            } else {
                 return false
-      }
+            }
         }
     },
     methods: {
         verify () {
             this.showverification = true
-      this.highlightChosen()
-    },
+            this.highlightChosen()
+        },
         highlightChosen () {
             const chosenCheck = document.querySelectorAll('[aria-checked="true"]')
-      const tagName = 'li';
+            const tagName = 'li'
             let color
 
-      for (let i = 0; i < chosenCheck.length; i++) {
+            for (let i = 0; i < chosenCheck.length; i++) {
                 let element = chosenCheck[i]
-        const value = element.getAttribute('value')
-        // determine whether to color red or green
-        if (this.correctchoice.includes(value)) {
-                    color = 'lightgreen';
+                const value = element.getAttribute('value')
+                // determine whether to color red or green
+                if (this.correctchoice.includes(value)) {
+                    color = 'lightgreen'
                 } else {
-                    color = '#feb6b6';
+                    color = '#feb6b6'
                 }
 
                 while (element && element.parentNode) {
                     element = element.parentNode
-          if (element.tagName && element.tagName.toLowerCase() === tagName) {
+                    if (element.tagName && element.tagName.toLowerCase() === tagName) {
                         element.style.backgroundColor = color
-            break;
+                        break
                     }
                 }
             }
