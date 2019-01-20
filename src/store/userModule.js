@@ -1,11 +1,6 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import API from '../api'
 
-import API from './api'
-
-Vue.use(Vuex)
-
-const userModule = {
+export const userModule = {
     namespaced: true,
     state: {
         name: null,
@@ -53,9 +48,3 @@ const userModule = {
         }
     }
 }
-
-export default new Vuex.Store({
-    modules: {
-        user: userModule
-    }
-})
