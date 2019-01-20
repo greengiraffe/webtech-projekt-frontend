@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import QuizCard from '../components/QuizCard.vue'
+import QuizCard from '../components/QuizCard.vue';
 
 export default {
     name: 'QuizList',
@@ -20,23 +20,18 @@ export default {
         QuizCard
     },
     data () {
-        return {
-
-        }
-    },
-    computed: {
-
-    }
+        return {}
+  },
+    computed: {}
 }
-
 </script>
 
 <style>
-    .v-card{
-        margin-bottom: 3%;
-    }
-    h2{
-        text-align: center;
-        margin-bottom: 2%;
-    }
+.v-card {
+  margin-bottom: 3%;
+}
+h2 {
+  text-align: center;
+  margin-bottom: 2%;
+}
 </style>

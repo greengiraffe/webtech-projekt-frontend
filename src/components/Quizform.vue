@@ -6,7 +6,7 @@
                 <div class="datainput">
                     <div class="small">
                         <img :src="imageUrl" height="150" v-if="imageUrl"/>
-                        <v-text-field label="Select Image" @click='pickFile' v-model='imageName' prepend-icon='attach_file'></v-text-field>
+                        <v-text-field label="Select Image" @click='pickFile' v-model='imageName' prepend-icon='add_a_photo'></v-text-field>
                         <input type="file" style="display: none" ref="image" accept="image/*" @change="onFilePicked">
                     </div>
                     <div class="small">
@@ -157,7 +157,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .quizform > .v-card {
   margin: 5% auto;
   width: 70%;

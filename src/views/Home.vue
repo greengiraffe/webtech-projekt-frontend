@@ -93,7 +93,7 @@ export default {
             selected: [],
             orderbyprogress: false,
             userloggedin: true,
-            user: { is_admin: 'true' }
+            user: { is_admin: true }
         }
   },
     computed: {
@@ -113,14 +113,13 @@ export default {
             return this.categories.map(category => category.name)
     },
         isadmin: function () {
-            return this.user.is_admin === 'true';
-            /* return this.user.is_admin; */
-        }
+            return this.user.is_admin
+    }
     }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 #filtersearchsection {
   margin: 0 auto;
   padding-bottom: 0px;

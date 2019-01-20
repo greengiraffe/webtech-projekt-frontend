@@ -25,14 +25,13 @@ export default {
     props: ['quiz'],
     data () {
         return {
-            user: { name: 'user', email: 'user@user.com', is_admin: 'true' }
+            user: { name: 'user', email: 'user@user.com', is_admin: true }
         }
   },
     computed: {
         isadmin: function () {
-            return this.user.is_admin === 'true';
-            /* return this.user.is_admin; */
-        }
+            return this.user.is_admin
+    }
     }
 }
 </script>
