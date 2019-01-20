@@ -1,19 +1,19 @@
 <template>
     <v-form class="quizform">
          <v-card>
-            <h1>{{ this.name }}</h1>
+            <h1>{{ this.newname }}</h1>
             <v-container>
                 <div class="datainput">
                     <div class="small">
                         <img :src="imageUrl" height="150" v-if="imageUrl"/>
-                        <v-text-field label="Select Image" @click='pickFile' v-model='imageName' prepend-icon='add_a_photo'></v-text-field>
+                        <v-text-field label="Select Image" @click='pickFile' v-model='newthumbnail' prepend-icon='add_a_photo'></v-text-field>
                         <input type="file" style="display: none" ref="image" accept="image/*" @change="onFilePicked">
                     </div>
                     <div class="small">
-                        <v-text-field v-model="name" label="Quizname" required="required" clearable></v-text-field>
+                        <v-text-field v-model="newname" label="Quizname" required="required" clearable></v-text-field>
                     </div>
                     <div>
-                        <v-combobox v-model="quizCategories" :items="categories" :search-input.sync="search" hide-selected
+                        <v-combobox v-model="newcategories" :items="categories" :search-input.sync="search" hide-selected
                         label="Add one or more categories"  multiple persistent-hint small-chips >
                             <template slot="no-data">
                             <v-list-tile>
@@ -27,16 +27,16 @@
                         </v-combobox>
                     </div>
                     <div class="large">
-                        <v-text-field v-model="description" label="Description" rows="2" multi-line clearable></v-text-field>
+                        <v-text-field v-model="newdescription" label="Description" rows="2" multi-line clearable></v-text-field>
                     </div>
                     <div id="tasks">
                         <h2>Tasks</h2>
-                        <div v-if="tasks.length === 0" id="notasks">
+                        <div v-if="quiztasks.length === 0" id="notasks">
                             <p >No tasks have been added to this quiz yet.</p>
                             <v-btn title="Add new task"><v-icon>add</v-icon> add a task</v-btn>
                         </div>
 
-                        <v-data-table v-else :headers="taskdetails" :items="tasks" class="quiztasks">
+                        <v-data-table v-else :headers="taskdetails" :items="quiztasks" class="quiztasks">
                             <template slot="headers" slot-scope="props">
                                 <tr>
                                     <th v-for="header in taskdetails" :key="header" >{{header}}</th>
@@ -44,10 +44,10 @@
                                 </tr>
                             </template>
                             <template slot="items" slot-scope="props">
-                                <tr v-for="task in tasks" :key="task.id">
+                                <tr v-for="task in quiztasks" :key="task.id">
                                     <td>{{task.order}}</td>
                                     <td>{{task.text}}</td>
-                                    <td>{{task.task_type}}</td>
+                                    <td>{{task.type.name}}</td>
                                     <td>{{task.solved}}</td>
                                     <td>
                                         <v-btn flat icon title="Edit this task"><v-icon>create</v-icon></v-btn>
@@ -88,43 +88,93 @@ export default {
     props: 'quiz',
     data () {
         return {
-            name: 'New Quiz',
-            description: '',
-            imageName: '',
-            imageUrl: '',
-            tumbnail: '',
-            tasks: [
+            // Models for input data
+            newname: 'New Quiz',
+            newdescription: '',
+            newthumbnail: '',
+            newcategories: [],
+            // get from backend
+            quiz: {
+                id: 1,
+                name: 'Quiz 1',
+                description: '',
+                thumbnail: '',
+                categories: [
+                    {
+                        id: 1,
+                        name: 'Python',
+                        quizzes: 2
+                    },
+                    {
+                        id: 2,
+                        name: 'Java',
+                        quizzes: 1
+                    }
+                ]
+            },
+            quiztasks: [
                 {
                     id: '1',
-                    quiz_id: '1',
-                    task_type: 'multiple choice',
                     text: 'What is an animal?',
-                    solved: 'false',
-                    order: '1'
+                    order: '1',
+                    type: {
+                        id: 2,
+                        name: 'multiple choice'
+                    },
+                    answers: [
+                        {
+                            id: 1,
+                            order: 1,
+                            text: 'a'
+                        }
+                    ],
+                    solved: false
                 },
                 {
                     id: '2',
-                    quiz_id: '1',
-                    task_type: 'single choice',
                     text: 'What is a tiger?',
-                    solved: 'false',
-                    order: '2'
+                    order: '2',
+                    type: {
+                        id: 1,
+                        name: 'single choice'
+                    },
+                    answers: [
+                        {
+                            id: 1,
+                            order: 1,
+                            text: 'a'
+                        }
+                    ],
+                    solved: false
                 }
             ],
-            taskdetails: ['Order', 'Text', 'TaskType', 'Solved'],
-            categories: ['Python', 'Java'],
-            dialog: false
+            // Stay like this
+            taskdetails: ['Order', 'Text', 'Type', 'Solved'],
+            // Get from backend
+            categories: [
+                {
+                    id: 1,
+                    name: 'Python',
+                    quizzes: 2
+                },
+                {
+                    id: 2,
+                    name: 'Java',
+                    quizzes: 1
+                }
+            ],
+            dialog: false,
+            // Check what will be used here -> thumbnail?
+            imageUrl: ''
+
         }
-  },
+    },
     computed: {
         edit: function () {
-            /* TODO: adapt to get data from vuex
-
-            */
-
+            /* TODO: adapt to get data from vuex */
             if (this.quiz) {
                 this.name = this.quiz.name
-      }
+            }
         }
     /* tasks: function(){
         } */
@@ -132,25 +182,25 @@ export default {
     methods: {
         pickFile () {
             this.$refs.image.click()
-    },
-
+        },
+        // method by Vuetify
         onFilePicked (e) {
             const files = e.target.files
-      if (files[0] !== undefined) {
-                this.imageName = files[0].name
-        if (this.imageName.lastIndexOf('.') <= 0) {
+            if (files[0] !== undefined) {
+                this.thumbnail = files[0].name
+                if (this.thumbnail.lastIndexOf('.') <= 0) {
                     return
-        }
+                }
                 const fr = new FileReader()
-        fr.readAsDataURL(files[0])
-        fr.addEventListener('load', () => {
+                fr.readAsDataURL(files[0])
+                fr.addEventListener('load', () => {
                     this.imageUrl = fr.result
-          this.imageFile = files[0] // this is an image file that can be sent to server...
-        })
-      } else {
-                this.imageName = '';
-                this.imageFile = '';
-                this.imageUrl = '';
+                    this.imageFile = files[0] // this is an image file that can be sent to server...
+                })
+            } else {
+                this.thumbnail = ''
+                this.imageFile = ''
+                this.imageUrl = ''
             }
         }
     }

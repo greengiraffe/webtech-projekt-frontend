@@ -17,7 +17,6 @@
             </router-link>
         </v-card-actions>
     </div>
-
 </template>
 
 <script>
@@ -25,7 +24,11 @@ export default {
     props: ['quiz'],
     data () {
         return {
-            user: { name: 'user', email: 'user@user.com', is_admin: true }
+            user: {
+                name: 'user',
+                email: 'user@user.com',
+                is_admin: true
+            }
         }
   },
     computed: {

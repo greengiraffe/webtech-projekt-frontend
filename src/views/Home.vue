@@ -32,25 +32,8 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import QuizList from '../components/QuizList.vue';
-
-const _filterByName = function (quizzes, search) {
-    return quizzes.filter(quiz =>
-        quiz.name.toLowerCase().match(search.toLowerCase())
-    )
-};
-
-const _filterByCategory = function (quizzes, selected) {
-    if (selected.length === 0) return quizzes
-  return quizzes.filter(
-        quiz => selected.filter(sel => quiz.categories.includes(sel)).length > 0
-    )
-};
-
-const _sortByProgress = function (quizzes) {
-    return quizzes.sort((a, b) => b.progress - a.progress)
-};
+import { mapState } from 'vuex'
+import QuizList from '../components/QuizList.vue'
 
 export default {
     components: {
@@ -63,63 +46,129 @@ export default {
                     id: '1',
                     name: 'SampleQuiz1 hello',
                     description: 'This is a samplequiz with no backend connection',
-                    progress: '0',
-                    categories: ['Java']
+                    thumbnail: '',
+                    categories: [
+                        {
+                            id: 2,
+                            name: 'Java',
+                            quizzes: 2
+                        },
+                        {
+                            id: 1,
+                            name: 'Python',
+                            quizzes: 1
+                        }
+                    ],
+                    progress: '0'
                 },
                 {
                     id: '2',
                     name: 'SampleQuiz2',
                     description: 'This is a samplequiz with no backend connection',
-                    progress: '20',
-                    categories: ['Python']
+                    thumbnail: '',
+                    categories: [
+                        {
+                            id: 1,
+                            name: 'Python',
+                            quizzes: 1
+                        }
+                    ],
+                    progress: '20'
                 },
                 {
                     id: '3',
                     name: 'SampleQuiz3 hell',
                     description: 'This is a samplequiz with no backend connection',
-                    progress: '25',
-                    categories: ['Java', 'Databases']
+                    thumbnail: '',
+                    categories: [
+                        {
+                            id: 2,
+                            name: 'Java',
+                            quizzes: 2
+                        },
+                        {
+                            id: 3,
+                            name: 'Databases',
+                            quizzes: 4
+                        }
+                    ],
+                    progress: '25'
                 },
                 {
                     id: '4',
                     name: 'SampleQuiz4',
                     description: 'This is a samplequiz with no backend connection',
-                    progress: '95',
-                    categories: ['Databases']
+                    thumbnail: '',
+                    categories: [
+                        {
+                            id: 3,
+                            name: 'Databases',
+                            quizzes: 4
+                        }
+                    ],
+                    progress: '95'
                 }
             ],
-            categories: [{ name: 'Java' }, { name: 'Python' }, { name: 'Databases' }],
+            categories: [
+                {
+                    id: 2,
+                    name: 'Java',
+                    quizzes: 2
+                },
+                {
+                    id: 1,
+                    name: 'Python',
+                    quizzes: 1
+                },
+                {
+                    id: 3,
+                    name: 'Databases',
+                    quizzes: 4
+                }
+            ],
             search: '',
             selected: [],
             orderbyprogress: false,
             userloggedin: true,
             user: { is_admin: true }
         }
-  },
+    },
     computed: {
         ...mapState('user', {
             loggedIn: state => state.loggedIn,
             userName: state => state.name
         }),
         filteredByAll: function () {
-            const filtered = _filterByName(
-                _filterByCategory(this.quizzes, this.selected),
+            const filtered = this._filterByName(
+                this._filterByCategory(this.quizzes, this.selected),
                 this.search
             )
-      if (this.orderbyprogress) return _sortByProgress(filtered)
-      else return filtered
-    },
+            if (this.orderbyprogress) return this._sortByProgress(filtered)
+            else return filtered
+        },
         categoryNames: function () {
             return this.categories.map(category => category.name)
-    },
+        },
         isadmin: function () {
             return this.user.is_admin
-    }
+        }
+    },
+    methods: {
+        _filterByName: function (quizzes, search) {
+            return quizzes.filter(quiz => quiz.name.toLowerCase().match(search.toLowerCase()))
+        },
+        _filterByCategory: function (quizzes, selected) {
+            if (selected.length === 0) return quizzes
+            return quizzes.filter(quiz => selected.filter(sel => this.categoryNames.includes(sel)).length > 0)
+        },
+        _sortByProgress: function (quizzes) {
+            return quizzes.sort((a, b) => b.progress - a.progress)
+        }
     }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" >
 #filtersearchsection {
   margin: 0 auto;
   padding-bottom: 0px;

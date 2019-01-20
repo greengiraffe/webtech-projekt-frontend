@@ -30,17 +30,23 @@ export default {
         return {
             tasks: [
                 {
-                    id: '1',
-                    quiz_id: '1',
-                    task_type: 'multiple choice',
+                    id: 1,
                     text: 'What is an animal?',
+                    order: 1,
+                    type: {
+                        id: 2,
+                        name: 'multiple choice'
+                    },
                     solved: 'false'
                 },
                 {
-                    id: '2',
-                    quiz_id: '1',
-                    task_type: 'single choice',
+                    id: 2,
                     text: 'What is a tiger?',
+                    order: 2,
+                    type: {
+                        id: 1,
+                        name: 'single choice'
+                    },
                     solved: 'false'
                 }
             ],

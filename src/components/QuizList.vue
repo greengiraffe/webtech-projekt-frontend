@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import QuizCard from '../components/QuizCard.vue';
+import QuizCard from '../components/QuizCard.vue'
 
 export default {
     name: 'QuizList',
@@ -21,7 +21,7 @@ export default {
     },
     data () {
         return {}
-  },
+    },
     computed: {}
 }
 </script>
