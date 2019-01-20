@@ -14,11 +14,11 @@
         <input type="text" v-model="search" placeholder="Search for quizzes" />
       </div>
       <v-layout row wrap justify-space-between align-center class="sameheight">
-        <div id="newquizbtn">
+        <div v-if="isadmin" id="newquizbtn">
           <router-link :to="{path: '/newquiz'}" exact=""><v-btn title="Add new quiz"><v-icon>add</v-icon> New quiz</v-btn></router-link>
         </div>
-        <div id="filter">
-          <div id="category">
+        <div  id="filter">
+          <div :class="{noadmin: !isadmin}" id="category">
               <v-select v-model="selected" :items="categoryNames" attach chips label="Filter by categories" multiple></v-select>
           </div>
         </div>
@@ -32,25 +32,25 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import QuizList from '../components/QuizList.vue'
+import { mapState } from 'vuex';
+import QuizList from '../components/QuizList.vue';
 
 const _filterByName = function (quizzes, search) {
     return quizzes.filter(quiz =>
         quiz.name.toLowerCase().match(search.toLowerCase())
     )
-}
+};
 
 const _filterByCategory = function (quizzes, selected) {
     if (selected.length === 0) return quizzes
-    return quizzes.filter(
+  return quizzes.filter(
         quiz => selected.filter(sel => quiz.categories.includes(sel)).length > 0
     )
-}
+};
 
 const _sortByProgress = function (quizzes) {
     return quizzes.sort((a, b) => b.progress - a.progress)
-}
+};
 
 export default {
     components: {
@@ -92,9 +92,10 @@ export default {
             search: '',
             selected: [],
             orderbyprogress: false,
-            userloggedin: true
+            userloggedin: true,
+            user: { is_admin: 'false' }
         }
-    },
+  },
     computed: {
         ...mapState('user', {
             loggedIn: state => state.loggedIn,
@@ -105,11 +106,15 @@ export default {
                 _filterByCategory(this.quizzes, this.selected),
                 this.search
             )
-            if (this.orderbyprogress) return _sortByProgress(filtered)
-            else return filtered
-        },
+      if (this.orderbyprogress) return _sortByProgress(filtered)
+      else return filtered
+    },
         categoryNames: function () {
             return this.categories.map(category => category.name)
+    },
+        isadmin: function () {
+            return this.user.is_admin === 'true';
+            /* return this.user.is_admin; */
         }
     }
 }
@@ -140,6 +145,9 @@ export default {
         height: 30px;
         font-size: 14px;
       }
+    }
+    .noadmin {
+      margin: 0 !important;
     }
     #sort {
       width: 33%;
