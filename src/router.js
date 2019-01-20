@@ -1,9 +1,9 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-import Home from './views/Home.vue';
-import Quiz from './components/Quiz.vue';
-import Quizform from './components/Quizform.vue';
-import TaskForm from './components/TaskForm.vue';
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import Home from './views/Home.vue'
+import Quiz from './components/Quiz.vue'
+import Quizform from './components/Quizform.vue'
+import TaskForm from './components/TaskForm.vue'
 
 Vue.use(VueRouter)
 

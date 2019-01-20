@@ -28,11 +28,11 @@ export default {
                 { id: 3, name: 'text' }
             ]
         }
-  },
+    },
     computed: {
         tasktype_names: function () {
             return this.tasktypes.map(tasktype => tasktype.name)
-    }
+        }
     }
 }
 </script>
