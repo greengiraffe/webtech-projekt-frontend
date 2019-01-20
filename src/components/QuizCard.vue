@@ -25,7 +25,7 @@ export default {
     props: ['quiz'],
     data () {
         return {
-            user: { name: 'user', email: 'user@user.com', is_admin: 'false' }
+            user: { name: 'user', email: 'user@user.com', is_admin: 'true' }
         }
   },
     computed: {

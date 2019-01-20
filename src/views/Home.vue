@@ -93,7 +93,7 @@ export default {
             selected: [],
             orderbyprogress: false,
             userloggedin: true,
-            user: { is_admin: 'false' }
+            user: { is_admin: 'true' }
         }
   },
     computed: {
