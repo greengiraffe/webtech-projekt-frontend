@@ -56,54 +56,92 @@ export default class API {
     static async refreshUser () {
         return axios.get('refresh')
     }
-    /* eslint-disable */
 
-  // TASK
+    // CATEGORY
 
-  static async getTasks () {
-    const url = `${API_URL}/tasks`
-  }
+    static async getCategories () {
+        return axios.get('categories')
+    }
 
-  static async saveTask (text) {
-    const url = `${API_URL}/tasks`
-  }
+    static async saveCategory (name) {
+        return axios.post('category', {
+            name
+        })
+    }
 
-  // CATEGORY
+    static async deleteCategory (id) {
+        return axios.delete(`category/${id}`)
+    }
 
-  static async getCategories () {
-    const url = `${API_URL}/categories`
-  }
+    // TASK
 
-  static async saveCategory (name) {
-    const url = `${API_URL}/category`
-  }
+    static async getTasks () {
+        return axios.get('tasks')
+    }
 
-  // QUIZ
+    static async saveTask (task) {
+        return axios.post('tasks', task)
+    }
 
-  static async getQuizzes (name, email, password) {
-    const url = `${API_URL}/quizzes`
-  }
+    static async updateTask (taskId, task) {
+        return axios.patch(`tasks/${taskId}`, task)
+    }
 
-  static async saveQuiz (name, description, categories) {
-    // TODO missing Postman description
-    const url = `${API_URL}/quiz`
-  }
+    static async deleteTask (taskId) {
+        return axios.delete(`tasks/${taskId}`)
+    }
 
-  static async getQuiz (id) {
-    const url = `${API_URL}/quizzes/${id}`
-  }
+    // QUIZ
 
-  static async deleteQuiz (id) {
-    const url = `${API_URL}/quizzes/${id}`
-  }
+    static async getQuiz (id) {
+        return axios.get(`quizzes/${id}`)
+    }
 
-  // TASK TYPE
+    static async getQuizzes () {
+        return axios.get('quizzes')
+    }
 
-  static async getTaskTypes () {
-    const url = `${API_URL}/tasktype`
-  }
+    static async saveQuiz (name, description, categories) {
+        return axios.post('quizzes', {
+            name,
+            description,
+            categories
+        })
+    }
 
-  static async saveTaskType (name) {
-    const url = `${API_URL}/tasktype`
-  }
+    static async updateQuiz (quizId, name, description, categories) {
+        return axios.post(`quizzes/${quizId}`, {
+            name,
+            description,
+            categories
+        })
+    }
+
+    static async deleteQuiz (id) {
+        return axios.delete(`quizzes/${id}`)
+    }
+
+    static async getTasksByQuiz (quizId, taskId) {
+        return axios.get(`quizzes/${quizId}/tasks/${taskId}`)
+    }
+
+    // TASK TYPE
+
+    static async getTaskTypes () {
+        return axios.get('tasktype')
+    }
+
+    static async saveTaskType (name) {
+        return axios.post('tasktype', {
+            name
+        })
+    }
+
+    // VALIDATE
+
+    static async validateTask (quizId, taskId, answers) {
+        return axios.post(`validate/${quizId}/tasks/${taskId}`, {
+            answers
+        })
+    }
 }
