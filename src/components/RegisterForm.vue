@@ -32,6 +32,7 @@
           label="Confirm password"
           @blur="$v.confirmPassword.$touch()"
         ></v-text-field>
+        <v-checkbox label="User is admin" v-model="isAdmin"></v-checkbox>
 
         <v-btn @click="submit">Register</v-btn>
       </form>

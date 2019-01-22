@@ -159,16 +159,13 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 li {
   list-style-type: none;
 
   .v-input--selection-controls {
     padding: 0;
     margin: 0;
-      input {
-          opacity: 1;
-      }
   }
 }
 

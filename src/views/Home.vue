@@ -168,7 +168,7 @@ export default {
 }
 </script>
 
-<style lang="scss" >
+<style lang="scss">
 #filtersearchsection {
   margin: 0 auto;
   padding-bottom: 0px;

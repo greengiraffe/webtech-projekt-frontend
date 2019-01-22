@@ -87,8 +87,8 @@ h1 {
     width: 2.5em;
     line-height: 2.5em;
 
-    -moz-border-radius: 50%; /* or 50% */
-    border-radius: 50%; /* or 50% */
+    -moz-border-radius: 50%;
+    border-radius: 50%;
 
     background-color: #171e5f;
     color: white;

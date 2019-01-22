@@ -76,4 +76,7 @@ export default {
       text-decoration: underline;
     }
   }
+  .v-input--selection-controls__input input{
+    opacity: 1 !important;
+  }
 </style>
