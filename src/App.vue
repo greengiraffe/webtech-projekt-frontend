@@ -49,11 +49,6 @@
 import { mapState } from 'vuex'
 
 export default {
-    data () {
-        return {
-
-        }
-    },
     computed: {
         ...mapState({
             loggedIn: state => state.user.loggedIn
