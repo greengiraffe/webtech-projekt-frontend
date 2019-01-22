@@ -1,8 +1,8 @@
 <template>
   <div id="startpage">
     <h1 class="welcome-message">
-      <span v-if="loggedIn">
-        Hi {{ userName }}, let's learn something!
+      <span v-if="user.loggedIn">
+        Hi {{ user.name }}, let's learn something!
       </span>
       <span v-else>
         Welcome to <span class="font-weight-light headline text-uppercase">Learn</span><span class="font-weight-black headline text-uppercase">it</span>
@@ -11,156 +11,74 @@
     <v-container id="filtersearchsection">
       <div id="search">
         <v-icon>search</v-icon>
-        <input type="text" v-model="search" placeholder="Search for quizzes" />
+        <input type="text" v-model="searchKeyword" placeholder="Search for quizzes" />
       </div>
       <v-layout row wrap justify-space-between align-center class="sameheight">
-        <div v-if="isadmin" id="newquizbtn">
+        <div v-if="user.isAdmin" id="newquizbtn">
           <router-link :to="{path: '/newquiz'}" exact=""><v-btn title="Add new quiz"><v-icon>add</v-icon> New quiz</v-btn></router-link>
         </div>
-        <div  id="filter">
-          <div :class="{noadmin: !isadmin}" id="category">
-              <v-select v-model="selected" :items="categoryNames" attach chips label="Filter by categories" multiple></v-select>
+        <div id="filter">
+          <div :class="{noadmin: !user.isAdmin}" id="category">
+              <v-select v-model="selectedCategories" :items="categoryNames" attach chips label="Filter by categories" multiple></v-select>
           </div>
         </div>
         <div id="sort">
-          <v-switch v-show="userloggedin" label="Order by progress" v-model="orderbyprogress"></v-switch>
+          <v-switch v-show="user.loggedIn" label="Order by progress" v-model="sortByProgress"></v-switch>
         </div>
       </v-layout>
     </v-container>
-    <QuizList v-bind:quizzes="filteredByAll"></QuizList>
+    <QuizList v-bind:quizzes="filteredQuizzes"></QuizList>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import QuizList from '../components/QuizList.vue'
 
 export default {
     components: {
         QuizList
     },
-    data () {
-        return {
-            quizzes: [
-                {
-                    id: '1',
-                    name: 'SampleQuiz1 hello',
-                    description: 'This is a samplequiz with no backend connection',
-                    thumbnail: '',
-                    categories: [
-                        {
-                            id: 2,
-                            name: 'Java',
-                            quizzes: 2
-                        },
-                        {
-                            id: 1,
-                            name: 'Python',
-                            quizzes: 1
-                        }
-                    ],
-                    progress: '0'
-                },
-                {
-                    id: '2',
-                    name: 'SampleQuiz2',
-                    description: 'This is a samplequiz with no backend connection',
-                    thumbnail: '',
-                    categories: [
-                        {
-                            id: 1,
-                            name: 'Python',
-                            quizzes: 1
-                        }
-                    ],
-                    progress: '20'
-                },
-                {
-                    id: '3',
-                    name: 'SampleQuiz3 hell',
-                    description: 'This is a samplequiz with no backend connection',
-                    thumbnail: '',
-                    categories: [
-                        {
-                            id: 2,
-                            name: 'Java',
-                            quizzes: 2
-                        },
-                        {
-                            id: 3,
-                            name: 'Databases',
-                            quizzes: 4
-                        }
-                    ],
-                    progress: '25'
-                },
-                {
-                    id: '4',
-                    name: 'SampleQuiz4',
-                    description: 'This is a samplequiz with no backend connection',
-                    thumbnail: '',
-                    categories: [
-                        {
-                            id: 3,
-                            name: 'Databases',
-                            quizzes: 4
-                        }
-                    ],
-                    progress: '95'
-                }
-            ],
-            categories: [
-                {
-                    id: 2,
-                    name: 'Java',
-                    quizzes: 2
-                },
-                {
-                    id: 1,
-                    name: 'Python',
-                    quizzes: 1
-                },
-                {
-                    id: 3,
-                    name: 'Databases',
-                    quizzes: 4
-                }
-            ],
-            search: '',
-            selected: [],
-            orderbyprogress: false,
-            userloggedin: true,
-            user: { is_admin: true }
-        }
+    mounted () {
+        this.$store.dispatch('quiz/getAll')
+        this.$store.dispatch('quiz/getCategories')
+        console.log(this.filteredQuizzes)
     },
     computed: {
-        ...mapState('user', {
-            loggedIn: state => state.loggedIn,
-            userName: state => state.name,
-            isadmin: state => state.isAdmin
+        ...mapState({
+            user: state => state.user,
+            quizzes: state => state.quiz.quizzes,
+            categories: state => state.quiz.categories,
         }),
-        filteredByAll: function () {
-            const filtered = this._filterByName(
-                this._filterByCategory(this.quizzes, this.selected),
-                this.search
-            )
-            if (this.orderbyprogress) return this._sortByProgress(filtered)
-            else return filtered
+        ...mapGetters('quiz', [
+            'filteredQuizzes',
+            'categoryNames'
+        ]),
+        searchKeyword: {
+            // The vuex-way to handle 2-way-binding with v-model,
+            // see https://vuex.vuejs.org/guide/forms.html#two-way-computed-property
+            get () {
+                return this.$store.state.quiz.searchKeyword
+            },
+            set (keyword) {
+                this.$store.commit('quiz/setSearchKeyword', keyword)
+            }
         },
-        categoryNames: function () {
-            return this.categories.map(category => category.name)
-        }
-    },
-    methods: {
-        _filterByName: function (quizzes, search) {
-            return quizzes.filter(quiz => quiz.name.toLowerCase().match(search.toLowerCase()))
+        selectedCategories: {
+            get () {
+                return this.$store.state.quiz.selectedCategories
+            },
+            set (categories) {
+                this.$store.commit('quiz/setSelectedCategories', categories)
+            }
         },
-        _filterByCategory: function (quizzes, selected) {
-            if (selected.length === 0) return quizzes
-            return quizzes.filter(quiz => selected.filter(sel => quiz.categories.map(category => category.name).includes(sel)).length > 0)
-        },
-        _sortByProgress: function (quizzes) {
-            return quizzes.sort((a, b) => b.progress - a.progress)
+        sortByProgress: {
+            get () {
+                return this.$store.state.quiz.sortByProgress
+            },
+            set (isEnabled) {
+                this.$store.commit('quiz/enableSortByProgress', isEnabled)
+            }
         }
     }
 }
