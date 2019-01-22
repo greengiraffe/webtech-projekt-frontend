@@ -17,6 +17,7 @@
           label="Password"
           @blur="$v.password.$touch()"
           @click:append="showPassword = !showPassword"
+          @keyup.enter="submit"
         ></v-text-field>
 
         <v-btn @click="submit">Login</v-btn>
