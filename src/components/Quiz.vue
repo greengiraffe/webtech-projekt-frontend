@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import Question from '../components/Question.vue';
+import Question from '../components/Question.vue'
 
 export default {
     data () {
@@ -53,11 +53,11 @@ export default {
                 progress: '20' /* NOT BACKEND CONFORM - Progress still to implement */
             }
         }
-  },
+    },
     methods: {
         startquiz: function (event) {
             this.showfront = false
-    }
+        }
     },
     components: {
         Question

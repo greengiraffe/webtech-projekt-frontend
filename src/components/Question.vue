@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import Answers from '../components/Answers.vue';
+import Answers from '../components/Answers.vue'
 
 export default {
     name: 'Question',
@@ -111,7 +111,7 @@ export default {
                 }
             ]
         }
-  }
+    }
 }
 </script>
 
