@@ -24,12 +24,12 @@
             </div>
         </div>
         <v-spacer></v-spacer>
-        <Question v-if='!showfront'></Question>
+        <Task v-if='!showfront'></Task>
     </div>
 </template>
 
 <script>
-import Question from '../components/Question.vue'
+import Task from '../components/Task.vue'
 
 export default {
     data () {
@@ -70,7 +70,7 @@ export default {
         }
     },
     components: {
-        Question
+        Task
     }
 }
 </script>
@@ -113,6 +113,7 @@ h1 {
 
       p{
           display: inline;
+          padding-right: 1%;
       }
   }
 }
