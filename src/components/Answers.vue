@@ -4,7 +4,7 @@
             <p>Choose the correct answer. One or more answers might be correct.</p>
             <ul>
                 <li v-for="answer in answers" :key="answer.id">
-                    <v-checkbox :label="answer.text" v-model="selected" :value="answer.text" :disabled="showverification"></v-checkbox>
+                    <v-checkbox :label="answer.text" v-model="selected" :value="answer.text" :disabled="showverification" ></v-checkbox>
                 </li>
             </ul>
             <v-btn @click="verify()">Check</v-btn>
@@ -166,6 +166,9 @@ li {
   .v-input--selection-controls {
     padding: 0;
     margin: 0;
+      input {
+          opacity: 1;
+      }
   }
 }
 
