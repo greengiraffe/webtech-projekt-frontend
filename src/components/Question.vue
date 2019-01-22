@@ -120,4 +120,8 @@ export default {
   padding: 20px;
   padding-bottom: 0px;
 }
+.v-window{
+    width: 60%;
+    margin: 4% auto;
+}
 </style>
