@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { getUserToken, refreshTokenIfNecessary } from './helpers/auth'
+import { getUserToken, refreshTokenIfNecessary, isExpired } from './helpers/auth'
 
 const API_BASE_URL = `https://api.learnit.development.wahlemedia.de/api`
 const API_VERSION = 'v1'
@@ -10,7 +10,7 @@ axios.defaults.baseURL = `${API_BASE_URL}/${API_VERSION}`
 axios.interceptors.request.use(
     async function (config) {
         let token = getUserToken()
-        if (token !== null) {
+        if (token !== null && !isExpired(token)) {
             if (!config.url.includes('refresh')) {
                 // don't refresh JWT on /refresh route to avoid endless loops
                 token = await refreshTokenIfNecessary(token)
