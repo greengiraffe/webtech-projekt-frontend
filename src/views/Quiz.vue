@@ -7,6 +7,11 @@
         </div>
         <v-spacer></v-spacer>
         <div v-if='showfront' class=quizfront>
+            <div class="quizcategories">
+                <p v-if="categorynames.length > 1">Categories: </p>
+                <p v-else>Category: </p>
+                <p v-for="category in this.categorynames" :key="category">{{category}}</p>
+            </div>
             <p>{{ quiz.description }}</p>
             <div v-if="quiz.progress == 0" class="startquiz">
             <!-- <router-link :to="{path: 'quiz/'+quiz.id+task}" exact> -->
@@ -59,6 +64,11 @@ export default {
             this.showfront = false
         }
     },
+    computed: {
+        categorynames: function () {
+            return this.quiz.categories.map(category => category.name)
+        }
+    },
     components: {
         Question
     }
@@ -95,6 +105,15 @@ h1 {
     text-align: center;
     font-size: 2em;
     margin: 3% auto;
+  }
+  .quizcategories{
+      margin: 3%;
+      text-align: center;
+      color: grey;
+
+      p{
+          display: inline;
+      }
   }
 }
 </style>

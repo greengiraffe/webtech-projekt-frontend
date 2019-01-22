@@ -5,6 +5,11 @@
             <div>
                 <h2 class="quizname">{{ quiz.name }}</h2>
                 <p class="quizdescription">{{ quiz.description }}</p>
+                <div class="quizcategories">
+                    <p v-if="quizcategories.length > 1">Categories: </p>
+                    <p v-else>Category: </p>
+                    <p v-for="category in this.quizcategories" :key="category">{{category}}</p>
+                </div>
             </div>
         </v-card-title>
 
@@ -30,16 +35,19 @@ export default {
                 is_admin: true
             }
         }
-  },
+    },
     computed: {
         isadmin: function () {
             return this.user.is_admin
-    }
+        },
+        quizcategories: function () {
+            return this.quiz.categories.map(category => category.name)
+        }
     }
 }
 </script>
 
-<style>
+<style lang="scss">
 .router-link-active {
   margin: 0 auto;
 }
@@ -57,5 +65,13 @@ export default {
 .v-card__actions {
   width: 90%;
   margin: 0 auto;
+}
+.quizcategories{
+    color: grey;
+
+      p{
+          display: inline;
+          padding-right: 1%;
+      }
 }
 </style>
