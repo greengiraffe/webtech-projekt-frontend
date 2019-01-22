@@ -1,48 +1,34 @@
 <template>
     <div>
-        <v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg" aspect-ratio="2.75"></v-img>
+        <v-img :src="quiz.thumbnail" aspect-ratio="2.75"></v-img>
         <v-card-title primary-title>
             <div>
                 <h2 class="quizname">{{ quiz.name }}</h2>
                 <p class="quizdescription">{{ quiz.description }}</p>
                 <div class="quizcategories">
-                    <p v-if="quizcategories.length > 1">Categories: </p>
+                    <p v-if="quiz.categories.length > 1">Categories: </p>
                     <p v-else>Category: </p>
-                    <p v-for="category in this.quizcategories" :key="category">{{category}}</p>
+                    <p v-for="category in this.quiz.categories" :key="category.id">{{ category.name }}</p>
                 </div>
             </div>
         </v-card-title>
 
-        <v-card-actions>
-            <router-link :to="{path: 'quiz/'+quiz.id}" exact class="startbutton" :class="{noadmin: !isadmin}">
-               <v-btn title="Start quiz"><v-icon style="margin-right: 5px">play_arrow</v-icon>Start</v-btn>
-            </router-link>
-            <router-link :to="{path: 'editquiz/'+quiz.id, params: {quiz}}" class="editbutton" :class="{noadmin_edit: !isadmin}" exact>
-                <v-btn v-if="isadmin" title="Edit this quiz"><v-icon style="margin-right: 5px">create</v-icon>Edit</v-btn>
-            </router-link>
+        <v-card-actions v-if="user.loggedIn">
+            <v-btn :to="{path: 'quiz/'+quiz.id}" exact title="Start quiz" :class="{noadmin: !user.isAdmin}"><v-icon style="margin-right: 5px">play_arrow</v-icon>Start</v-btn>
+            <v-btn :to="{path: 'editquiz/'+quiz.id, params: {quiz}}" exact :class="{noadmin_edit: !user.isAdmin}" v-if="user.isAdmin" title="Edit this quiz"><v-icon style="margin-right: 5px">create</v-icon>Edit</v-btn>
         </v-card-actions>
     </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
     props: ['quiz'],
-    data () {
-        return {
-            user: {
-                name: 'user',
-                email: 'user@user.com',
-                is_admin: true
-            }
-        }
-    },
     computed: {
-        isadmin: function () {
-            return this.user.is_admin
-        },
-        quizcategories: function () {
-            return this.quiz.categories.map(category => category.name)
-        }
+        ...mapState({
+            user: state => state.user
+        }),
     }
 }
 </script>
