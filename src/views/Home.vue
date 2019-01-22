@@ -159,7 +159,7 @@ export default {
         },
         _filterByCategory: function (quizzes, selected) {
             if (selected.length === 0) return quizzes
-            return quizzes.filter(quiz => selected.filter(sel => this.categoryNames.includes(sel)).length > 0)
+            return quizzes.filter(quiz => selected.filter(sel => quiz.categories.map(category => category.name).includes(sel)).length > 0)
         },
         _sortByProgress: function (quizzes) {
             return quizzes.sort((a, b) => b.progress - a.progress)
