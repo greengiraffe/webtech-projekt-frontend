@@ -136,7 +136,8 @@ export default {
     computed: {
         ...mapState('user', {
             loggedIn: state => state.loggedIn,
-            userName: state => state.name
+            userName: state => state.name,
+            isadmin: state => state.isAdmin
         }),
         filteredByAll: function () {
             const filtered = this._filterByName(
@@ -148,9 +149,6 @@ export default {
         },
         categoryNames: function () {
             return this.categories.map(category => category.name)
-        },
-        isadmin: function () {
-            return this.user.is_admin
         }
     },
     methods: {

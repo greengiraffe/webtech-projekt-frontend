@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from './views/Home.vue'
-import Quiz from './components/Quiz.vue'
+import Quiz from './views/Quiz.vue'
 import Quizform from './components/Quizform.vue'
 import TaskForm from './components/TaskForm.vue'
 
