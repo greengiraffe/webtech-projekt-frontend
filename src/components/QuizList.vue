@@ -1,6 +1,6 @@
 <template>
     <v-container grid-list-xl>
-        <v-layout row wrap justify-center fill-height id="quizzes">
+        <v-layout row wrap fill-height id="quizzes">
             <v-flex v-show="quizzes.length === 0" grow xs12 class="text-xs-center">
                 <LoadingIndicator></LoadingIndicator>
             </v-flex>

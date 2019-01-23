@@ -1,18 +1,25 @@
 <template>
   <div id="startpage">
-    <h1 class="welcome-message">
-      <span v-if="user.loggedIn">
-        Hi {{ user.name }}, let's learn something!
-      </span>
-      <span v-else>
-        Welcome to <span class="font-weight-light headline text-uppercase">Learn</span><span class="font-weight-black headline text-uppercase">it</span>
-      </span>
-    </h1>
     <v-container id="filtersearchsection">
-      <div id="search">
-        <v-icon>search</v-icon>
-        <input type="text" v-model="searchKeyword" placeholder="Search for quizzes" />
-      </div>
+        <v-layout>
+            <v-flex>
+                <h1 class="display-3 pt-3 mt-5 mb-5">
+                <span v-if="user.loggedIn">
+                    Hi {{ user.name }}, let's learn something!
+                </span>
+                <span v-else>
+                    Welcome to <span class="font-weight-light text-uppercase">Learn</span><span class="font-weight-black text-uppercase">it</span>
+                </span>
+                </h1>
+            </v-flex>
+        </v-layout>
+
+        <v-layout justify-center>
+            <v-flex xs4>
+                <v-text-field solo append-icon="search" v-model="searchKeyword" placeholder="Search for quizzes"></v-text-field>
+            </v-flex>
+        </v-layout>
+
       <v-layout row wrap justify-space-between align-center class="sameheight">
         <div v-if="user.isAdmin" id="newquizbtn">
           <router-link :to="{path: '/newquiz'}" exact=""><v-btn title="Add new quiz"><v-icon>add</v-icon> New quiz</v-btn></router-link>
@@ -27,6 +34,7 @@
         </div>
       </v-layout>
     </v-container>
+
     <QuizList v-bind:quizzes="filteredQuizzes"></QuizList>
   </div>
 </template>
@@ -122,26 +130,5 @@ export default {
       }
     }
   }
-
-  #search {
-    border: 1px solid #8080804d;
-    border-radius: 20px;
-    width: 30%;
-    margin: 0 auto;
-    padding: 10px;
-
-    .input {
-      width: 90%;
-      padding-left: 3%;
-    }
-
-    &:hover {
-      border: 1px solid #808080cc;
-    }
-  }
-}
-.welcome-message {
-  margin: 1em auto;
-  text-align: center;
 }
 </style>
