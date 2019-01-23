@@ -8,9 +8,9 @@
         <v-spacer></v-spacer>
         <div v-if='showfront' class=quizfront>
             <div class="quizcategories">
-                <p v-if="categorynames.length > 1">Categories: </p>
+                <p v-if="quiz.categories.length > 1">Categories: </p>
                 <p v-else>Category: </p>
-                <p v-for="category in this.categorynames" :key="category">{{category}}</p>
+                <p v-for="category in quiz.categories" :key="category">{{category}}</p>
             </div>
             <p>{{ quiz.description }}</p>
             <div v-if="quiz.progress == 0" class="startquiz">
@@ -30,34 +30,16 @@
 
 <script>
 import Task from '../components/Task.vue'
+import { mapState } from 'vuex'
 
 export default {
     data () {
         return {
             showfront: true,
-            quiz: {
-                id: 1,
-                name: 'Typoblindtext',
-                description:
-          'Dies ist ein Typoblindtext. An ihm kann man sehen, ob alle Buchstaben da sind und wie sie aussehen. Manchmal benutzt man Worte wie Hamburgefonts, Rafgenduks oder Handgloves, um Schriften zu testen. Manchmal Sätze, die alle Buchstaben des Alphabets enthalten - man nennt diese Sätze »Pangrams«. Sehr bekannt ist dieser: The quick brown fox jumps over the lazy old dog. Oft werden in Typoblindtexte auch fremdsprachige Satzteile eingebaut (AVAIL® and Wefox™ are testing aussi la Kerning), um die Wirkung in anderen Sprachen zu testen. In Lateinisch sieht zum Beispiel fast jede Schrift gut aus. Quod erat demonstrandum. Seit 1975 fehlen in den meisten Testtexten die Zahlen, weswegen nach TypoGb. 204 § ab dem Jahr 2034 Zahlen in 86 der Texte zur Pflicht werden. Nichteinhaltung wird mit bis zu 245 € oder 368 $ bestraft. Genauso wichtig in sind mittlerweile auch Âçcèñtë, die in neueren Schriften aber fast immer enthalten sind. Ein wichtiges aber schwierig zu integrierendes Feld sind OpenType-Funktionalitäten. Je nach Software und Voreinstellungen können eingebaute Kapitälchen, Kerning oder Ligaturen (sehr pfiffig) nicht richtig dargestellt werden.Dies ist ein Typoblindtext. An ihm kann man sehen, ob alle Buchstaben da sind und wie sie aussehen. Manchmal benutzt man Worte wie Hamburgefonts, Rafgenduks',
-                thumbnail: '',
-                categories: [
-                    {
-                        id: 1,
-                        name: 'Java',
-                        quizzes: 5
-                    }
-                ],
-                tasks: [
-                    {
-                        id: 1,
-                        text: '',
-                        order: 1
-                    }
-                ],
-                progress: '20' /* NOT BACKEND CONFORM - Progress still to implement */
-            }
         }
+    },
+    mounted () {
+        this.$store.dispatch('currentQuiz/getQuiz', this.$route.params.id)
     },
     methods: {
         startquiz: function (event) {
@@ -65,6 +47,9 @@ export default {
         }
     },
     computed: {
+        ...mapState({
+            quiz: state => state.currentQuiz,
+        }),
         categorynames: function () {
             return this.quiz.categories.map(category => category.name)
         }
