@@ -6,9 +6,7 @@
                 <h2 class="quizname">{{ quiz.name }}</h2>
                 <p class="quizdescription">{{ quiz.description }}</p>
                 <div class="quizcategories">
-                    <p v-if="quiz.categories.length > 1">Categories: </p>
-                    <p v-else>Category: </p>
-                    <p v-for="category in this.quiz.categories" :key="category.id">{{ category.name }}</p>
+                    <v-chip label small v-for="category in this.categories" :key="category.id">{{ category.name }}</v-chip>
                 </div>
             </div>
         </v-card-title>
@@ -29,6 +27,9 @@ export default {
         ...mapState({
             user: state => state.user
         }),
+        categories () {
+            return this.quiz.categories.data
+        }
     }
 }
 </script>
@@ -47,10 +48,15 @@ export default {
 .noadmin {
   margin: 0 auto;
 }
-
 .v-card__actions {
   width: 90%;
   margin: 0 auto;
+}
+.quizname {
+    word-wrap: break-word;
+    word-break: break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .quizcategories{
     color: grey;
