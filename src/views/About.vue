@@ -1,17 +1,21 @@
 <template>
     <div class="about">
-      <h1>About <span class="font-weight-light headline text-uppercase">Learn</span><span class="font-weight-black headline text-uppercase">it</span></h1>
-      <v-container>
-        <v-timeline align-top>
-          <v-timeline-item v-for="(item, i) in abouttexts" :color="item.color" :icon="item.icon" :key="i" fill-dot >
-            <v-card :color="item.color" dark >
-              <v-card-title class="title">{{item.title}}</v-card-title>
-              <v-card-text class="white text--primary">
-                <p>{{item.text}}</p>
-              </v-card-text>
-            </v-card>
-          </v-timeline-item>
-        </v-timeline>
+        <v-container>
+            <v-layout>
+                <h1 class="display-3 mt-5 mb-5">About <span class="font-weight-light text-uppercase">Learn</span><span class="font-weight-black text-uppercase">it</span></h1>
+            </v-layout>
+            <v-layout>
+                <v-timeline align-top>
+                <v-timeline-item v-for="(item, i) in abouttexts" :color="item.color" :icon="item.icon" :key="i" fill-dot >
+                    <v-card :color="item.color" dark >
+                    <v-card-title class="title">{{item.title}}</v-card-title>
+                    <v-card-text class="white text--primary">
+                        <p>{{item.text}}</p>
+                    </v-card-text>
+                    </v-card>
+                </v-timeline-item>
+                </v-timeline>
+            </v-layout>
       </v-container>
     </div>
 </template>
@@ -70,7 +74,5 @@ export default {
 </script>
 
 <style lang="scss">
-h1 {
-  margin: 1em auto;
-}
+
 </style>
