@@ -64,13 +64,13 @@ export default class API {
     }
 
     static async saveCategory (name) {
-        return axios.post('category', {
+        return axios.post('categories', {
             name
         })
     }
 
     static async deleteCategory (id) {
-        return axios.delete(`category/${id}`)
+        return axios.delete(`categories/${id}`)
     }
 
     // TASK
@@ -101,12 +101,8 @@ export default class API {
         return axios.get('quizzes')
     }
 
-    static async saveQuiz (name, description, categories) {
-        return axios.post('quizzes', {
-            name,
-            description,
-            categories
-        })
+    static async saveQuiz (quiz) {
+        return axios.post('quizzes', quiz)
     }
 
     static async updateQuiz (quizId, name, description, categories) {

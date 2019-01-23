@@ -1,11 +1,11 @@
 <template>
     <div>
-        <v-img :src="quiz.thumbnail" aspect-ratio="2.75"></v-img>
+        <v-img :src="quiz.thumbnail || 'https://source.unsplash.com/xekxE_VR0Ec/450x300'" aspect-ratio="2.75"></v-img>
 
         <v-card-title primary-title>
-            <h2 class="mb-2">{{ quiz.name }}</h2>
-            <p>{{ quiz.description }}</p>
-            <div>
+            <h2 class="mb-2 fullWidth">{{ quiz.name }}</h2>
+            <p class="fullWidth">{{ quiz.description }}</p>
+            <div class="fullWidth">
                 <v-chip label small v-for="category in this.categories" :key="category.id">{{ category.name }}</v-chip>
             </div>
         </v-card-title>
@@ -14,7 +14,7 @@
             <v-btn
                 :to="{path: 'quiz/'+quiz.id}"
                 title="Start quiz"
-                color="indigo white--text"
+                color="indigo accent-4 white--text"
                 exact
                 depressed
             >
@@ -22,6 +22,7 @@
             </v-btn>
             <v-btn
                 v-if="user.isAdmin"
+                @click="setCurrentQuiz"
                 :to="{path: 'editquiz/'+quiz.id, params: {quiz}}"
                 title="Edit this quiz"
                 class="indigo lighten-5"
@@ -46,11 +47,20 @@ export default {
         categories () {
             return this.quiz.categories.data
         }
+    },
+    methods: {
+        setCurrentQuiz () {
+            this.$store.dispatch('currentQuiz/getQuiz', this.quiz.id)
+            // this.$store.commit('currentQuiz/getQuiz', this.quiz.id)
+        }
     }
 }
 </script>
 
 <style lang="scss">
+    .fullWidth {
+        width: 100%;
+    }
     .card-actions {
         justify-content: space-between
     }

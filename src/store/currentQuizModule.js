@@ -3,8 +3,8 @@ import API from '../api'
 export const currentQuizModule = {
     namespaced: true,
     state: {
-        id: 1,
-        name: '123',
+        id: null,
+        name: '',
         description: '',
         thumbnail: '',
         categories: [],
@@ -18,26 +18,44 @@ export const currentQuizModule = {
     },
     mutations: {
         setQuiz (state, payload) {
-            state.quizId = payload.id || 0
-            state.name = payload.name || 0
-            state.description = payload.description || 0
-            state.tasks = payload.tasks.data || []
-            state.categories = payload.categories.data.map(item => item.name) || []
+            state.id = payload.id || null
+            state.name = payload.name || ''
+            state.description = payload.description || ''
+            state.tasks = payload.tasks ? payload.tasks.data : []
+            state.categories = payload.categories ? payload.categories.data : []
         },
         setTask (state, payload) {
             state.taskId = payload || 0
+        },
+        addCategory (state, payload) {
+            state.categories.push(payload)
         }
     },
     actions: {
         async getQuiz ({ commit }, id) {
             const res = await API.getQuiz(id)
             commit('setQuiz', res.data.data)
-            console.log(res)
         },
         async getTask ({ commit }) {
             const res = await API.getQuizzes()
             commit('setQuizzes', res.data.data)
         },
+        async addQuiz ({ commit }, quiz) {
+            delete quiz.id
+            const res = await API.saveQuiz(quiz)
+            commit('quiz/addQuiz', res.data.data, { root: true })
+            return res
+        },
+        async deleteQuiz ({ commit }, id) {
+            const res = await API.deleteQuiz(id)
+            commit('quiz/removeQuiz', id, { root: true })
+            return res
+        },
+        async updateQuiz ({ commit }, quiz) {
+            const res = await API.updateQuiz(quiz)
+            commit('quiz/updateQuiz', res.data.data, { root: true })
+            return res
+        }
 
     }
 }

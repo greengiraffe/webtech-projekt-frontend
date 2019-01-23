@@ -49,6 +49,10 @@
 import { mapState } from 'vuex'
 
 export default {
+    mounted () {
+        this.$store.dispatch('quiz/getAll')
+        this.$store.dispatch('quiz/getCategories')
+    },
     computed: {
         ...mapState({
             loggedIn: state => state.user.loggedIn

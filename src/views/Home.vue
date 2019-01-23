@@ -15,15 +15,17 @@
         </v-layout>
 
         <v-layout justify-center>
-            <v-flex xs4>
+            <v-flex xs9 sm4>
                 <v-text-field solo append-icon="search" v-model="searchKeyword" placeholder="Search for quizzes"></v-text-field>
             </v-flex>
         </v-layout>
 
       <v-layout row wrap justify-space-between align-center class="sameheight">
+
         <div v-if="user.isAdmin" id="newquizbtn">
-          <router-link :to="{path: '/newquiz'}" exact=""><v-btn title="Add new quiz"><v-icon>add</v-icon> New quiz</v-btn></router-link>
+          <v-btn :to="{path: '/newquiz'}" exact class="indigo accent-4 white--text" @click="setNewQuiz"><v-icon>add</v-icon> New quiz</v-btn>
         </div>
+
         <div id="filter">
           <div :class="{noadmin: !user.isAdmin}" id="category">
               <v-select v-model="selectedCategories" :items="categoryNames" attach chips label="Filter by categories" multiple></v-select>
@@ -46,11 +48,6 @@ import QuizList from '../components/QuizList.vue'
 export default {
     components: {
         QuizList
-    },
-    mounted () {
-        this.$store.dispatch('quiz/getAll')
-        this.$store.dispatch('quiz/getCategories')
-        console.log(this.filteredQuizzes)
     },
     computed: {
         ...mapState({
@@ -87,6 +84,11 @@ export default {
             set (isEnabled) {
                 this.$store.commit('quiz/enableSortByProgress', isEnabled)
             }
+        }
+    },
+    methods: {
+        setNewQuiz () {
+            this.$store.commit('currentQuiz/setQuiz', {})
         }
     }
 }

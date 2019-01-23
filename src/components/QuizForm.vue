@@ -1,42 +1,57 @@
 <template>
     <v-form class="quizform">
          <v-card>
-            <h1>{{ this.newname }}</h1>
+
+             <v-card-title>
+                <h1>{{ this.quiz.name || "New Quiz" }}</h1>
+             </v-card-title>
+
             <v-container>
                 <div class="datainput">
                     <div class="small">
-                        <img :src="imageUrl" height="150" v-if="imageUrl"/>
-                        <v-text-field label="Select Image" @click='pickFile' v-model='newthumbnail' prepend-icon='add_a_photo'></v-text-field>
+                        <img v-if="quiz.thumbnail.length > 0" :src="quiz.thumbnail" height="150" />
+                        <v-text-field v-model='quiz.thumbnail' label="Select Image" @click='pickFile'  prepend-icon='add_a_photo'></v-text-field>
                         <input type="file" style="display: none" ref="image" accept="image/*" @change="onFilePicked">
                     </div>
                     <div class="small">
-                        <v-text-field v-model="newname" label="Quizname" required="required" clearable></v-text-field>
+                        <v-text-field v-model="quiz.name" label="Quizname" required="required" clearable></v-text-field>
                     </div>
                     <div>
-                        <v-combobox v-model="newcategories" :items="categories" :search-input.sync="search" hide-selected
-                        label="Add one or more categories"  multiple persistent-hint small-chips >
+                        <v-combobox
+                            v-model="selectedCategories"
+                            :items="allCategories"
+                            :search-input.sync="categorySearch"
+                            hide-selected
+                            label="Add one or more categories"
+                            multiple
+                            persistent-hint
+                            chips
+                            deletable-chips
+                        >
                             <template slot="no-data">
-                            <v-list-tile>
-                                <v-list-tile-content>
-                                <v-list-tile-title>
-                                    No results matching "<strong>{{ search }}</strong>". Press <kbd>enter</kbd> to create a new one
-                                </v-list-tile-title>
-                                </v-list-tile-content>
-                            </v-list-tile>
+                                <v-list-tile>
+                                    <v-list-tile-content>
+                                    <v-list-tile-title>
+                                        No results matching "<strong>{{ categorySearch }}</strong>". Press <kbd>enter</kbd> to create a new one
+                                    </v-list-tile-title>
+                                    </v-list-tile-content>
+                                </v-list-tile>
                             </template>
                         </v-combobox>
                     </div>
+
                     <div class="large">
-                        <v-text-field v-model="newdescription" label="Description" rows="2" multi-line clearable></v-text-field>
+                        <v-textarea v-model="quiz.description" label="Description" rows="2"></v-textarea>
                     </div>
+
                     <div id="tasks">
                         <h2>Tasks</h2>
-                        <div v-if="quiztasks.length === 0" id="notasks">
-                            <p >No tasks have been added to this quiz yet.</p>
+                        <div v-if="quiz.tasks.length === 0" id="notasks">
+                            <p>No tasks have been added to this quiz yet.</p>
                             <v-btn title="Add new task"><v-icon>add</v-icon> add a task</v-btn>
                         </div>
 
-                        <v-data-table v-else :headers="taskdetails" :items="quiztasks" class="quiztasks">
+                        <v-data-table v-else :headers="taskdetails" :items="quiz.tasks" class="quiztasks">
                             <template slot="headers" slot-scope="props">
                                 <tr>
                                     <th v-for="header in taskdetails" :key="header" >{{header}}</th>
@@ -44,7 +59,7 @@
                                 </tr>
                             </template>
                             <template slot="items" slot-scope="props">
-                                <tr v-for="task in quiztasks" :key="task.id">
+                                <tr v-for="task in quiz.tasks" :key="task.id">
                                     <td>{{task.order}}</td>
                                     <td>{{task.text}}</td>
                                     <td>{{task.type.name}}</td>
@@ -57,13 +72,16 @@
                             </template>
                         </v-data-table>
                     </div>
+
                     <v-divider style="margin: 5% auto;"></v-divider>
+
                     <div class="btns">
-                        <router-link :to="{name: 'home'}"><v-btn>Cancel</v-btn></router-link>
-                        <v-btn>Save</v-btn>
+                        <v-btn :to="{name: 'home'}">Cancel</v-btn>
+                        <v-btn @click="saveQuiz" class="indigo accent-4 white--text">Save</v-btn>
                     </div>
-                    <div id="delete" class="text-xs-center">
-                        <v-dialog v-model="dialog" width="40%" >
+
+                    <div v-if="quiz.id !== null" id="delete" class="text-xs-center">
+                        <v-dialog v-model="showDeleteDialog" width="40%" >
                             <v-btn slot="activator" title="Delete this quiz" ><v-icon color="#ba1a0e" style="margin-right: 5px">delete</v-icon>Delete</v-btn>
                             <v-card>
                                 <v-card-title class="headline grey lighten-2" primary-title>Delete</v-card-title>
@@ -71,12 +89,13 @@
                                 <v-divider></v-divider>
                                 <v-card-actions>
                                     <v-spacer></v-spacer>
-                                    <v-btn color="primary" flat @click="dialog = false">Yes</v-btn>
-                                    <v-btn color="primary" flat @click="dialog = false">No</v-btn>
+                                    <v-btn color="primary" flat @click="deleteQuiz">Yes</v-btn>
+                                    <v-btn color="primary" flat @click="showDeleteDialog = false">No</v-btn>
                                 </v-card-actions>
                             </v-card>
                         </v-dialog>
                     </div>
+
                 </div>
             </v-container>
          </v-card>
@@ -84,100 +103,43 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
-    props: 'quiz',
     data () {
         return {
-            // Models for input data
-            newname: 'New Quiz',
-            newdescription: '',
-            newthumbnail: '',
-            newcategories: [],
-            // get from backend
-            quiz: {
-                id: 1,
-                name: 'Quiz 1',
-                description: '',
-                thumbnail: '',
-                categories: [
-                    {
-                        id: 1,
-                        name: 'Python',
-                        quizzes: 2
-                    },
-                    {
-                        id: 2,
-                        name: 'Java',
-                        quizzes: 1
-                    }
-                ]
-            },
-            quiztasks: [
-                {
-                    id: '1',
-                    text: 'What is an animal?',
-                    order: '1',
-                    type: {
-                        id: 2,
-                        name: 'multiple choice'
-                    },
-                    answers: [
-                        {
-                            id: 1,
-                            order: 1,
-                            text: 'a'
-                        }
-                    ],
-                    solved: false
-                },
-                {
-                    id: '2',
-                    text: 'What is a tiger?',
-                    order: '2',
-                    type: {
-                        id: 1,
-                        name: 'single choice'
-                    },
-                    answers: [
-                        {
-                            id: 1,
-                            order: 1,
-                            text: 'a'
-                        }
-                    ],
-                    solved: false
-                }
-            ],
+            categorySearch: null,
             // Stay like this
             taskdetails: ['Order', 'Text', 'Type', 'Solved'],
-            // Get from backend
-            categories: [
-                {
-                    id: 1,
-                    name: 'Python',
-                    quizzes: 2
-                },
-                {
-                    id: 2,
-                    name: 'Java',
-                    quizzes: 1
-                }
-            ],
-            dialog: false,
-            // Check what will be used here -> thumbnail?
-            imageUrl: ''
-
+            showDeleteDialog: false,
         }
     },
     computed: {
-        edit: function () {
-            /* TODO: adapt to get data from vuex */
-            if (this.quiz) {
-                this.name = this.quiz.name
+        ...mapState({
+            quiz: state => state.currentQuiz,
+            allCategories: state => {
+                return state.quiz.categories.map(c => {
+                    // Combobox handles objects with text & value properties
+                    return {
+                        text: c.name,
+                        value: c.id,
+                    }
+                })
+            },
+        }),
+        selectedCategories: {
+            get () {
+                return this.$store.state.currentQuiz.categories.map(c => {
+                    // Combobox handles objects with text & value properties
+                    return {
+                        text: c.name,
+                        value: c.id,
+                    }
+                })
+            },
+            set (category) {
+                this.$store.commit('currentQuiz/addCategory', category)
             }
         }
-    /* tasks: function(){
-        } */
     },
     methods: {
         pickFile () {
@@ -202,6 +164,41 @@ export default {
                 this.imageFile = ''
                 this.imageUrl = ''
             }
+        },
+        saveQuiz () {
+            let newCategories = []
+            const existingCategories = this.selectedCategories
+                .filter(cat => {
+                    if (typeof cat !== 'string') return cat
+                })
+                .map(cat => cat.value)
+            Promise.all(
+                this.selectedCategories
+                    .filter(cat => {
+                        if (typeof cat === 'string') return cat
+                    })
+                    .map(cat => this.$store.dispatch('quiz/addCategory', cat))
+            ).then(responses => {
+                if (responses || responses.length !== 0) {
+                    newCategories = responses.map(res => res.data.data.id)
+                }
+                // only send category IDs to API
+                this.quiz.categories = this.quiz.categories.map(c => c.id)
+                this.quiz.categories.push(...newCategories, ...existingCategories)
+
+                if (this.quiz.id !== null) {
+                    // editing quiz
+                    this.$store.dispatch('currentQuiz/updateQuiz', this.quiz)
+                } else {
+                    this.$store.dispatch('currentQuiz/addQuiz', this.quiz)
+                }
+
+                this.$router.push({ name: 'home' })
+            })
+        },
+        deleteQuiz () {
+            this.$store.dispatch('currentQuiz/deleteQuiz', this.quiz.id)
+            this.$router.push({ name: 'home' })
         }
     }
 }

@@ -27,6 +27,7 @@ export const quizModule = {
         selectedCategories: [],
         searchKeyword: '',
         sortByProgress: false,
+        loading: false,
     },
     getters: {
         categoryNames: (state) => {
@@ -49,6 +50,9 @@ export const quizModule = {
         },
         sortedByProgress: (state) => {
             return sortByProgress(state.quizzes)
+        },
+        hasQuizzes: (state) => {
+            return state.quizzes.length > 0
         }
     },
     mutations: {
@@ -66,17 +70,47 @@ export const quizModule = {
         },
         enableSortByProgress (state, payload) {
             state.sortByProgress = !!payload
+        },
+        setLoading (state, payload) {
+            state.loading = payload
+        },
+        addQuiz (state, payload) {
+            state.quizzes.push(payload)
+        },
+        removeQuiz (state, payload) {
+            state.quizzes = state.quizzes.filter(quiz => {
+                if (quiz.id !== payload) return quiz
+            })
+        },
+        updateQuiz (state, payload) {
+            state.quizzes = state.quizzes.map(quiz => {
+                if (quiz.id === payload.id) {
+                    return payload
+                }
+                return quiz
+            })
+        },
+        addCategory (state, payload) {
+            state.categories.push(payload)
         }
     },
     actions: {
         async getAll ({ commit }) {
+            commit('setLoading', true)
             const res = await API.getQuizzes()
             commit('setQuizzes', res.data.data)
+            commit('setLoading', false)
         },
 
         async getCategories ({ commit }) {
             const res = await API.getCategories()
             commit('setCategories', res.data.data)
+        },
+
+        async addCategory ({ commit }, category) {
+            const res = await API.saveCategory(category)
+            commit('addCategory', res.data.data)
+            return res
         }
     }
 }
