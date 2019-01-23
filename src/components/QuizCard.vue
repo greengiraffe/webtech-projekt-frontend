@@ -1,19 +1,37 @@
 <template>
     <div>
         <v-img :src="quiz.thumbnail" aspect-ratio="2.75"></v-img>
+
         <v-card-title primary-title>
+            <h2 class="mb-2">{{ quiz.name }}</h2>
+            <p>{{ quiz.description }}</p>
             <div>
-                <h2 class="quizname">{{ quiz.name }}</h2>
-                <p class="quizdescription">{{ quiz.description }}</p>
-                <div class="quizcategories">
-                    <v-chip label small v-for="category in this.categories" :key="category.id">{{ category.name }}</v-chip>
-                </div>
+                <v-chip label small v-for="category in this.categories" :key="category.id">{{ category.name }}</v-chip>
             </div>
         </v-card-title>
 
         <v-card-actions v-if="user.loggedIn">
-            <v-btn :to="{path: 'quiz/'+quiz.id}" exact title="Start quiz" :class="{noadmin: !user.isAdmin}"><v-icon style="margin-right: 5px">play_arrow</v-icon>Start</v-btn>
-            <v-btn :to="{path: 'editquiz/'+quiz.id, params: {quiz}}" exact :class="{noadmin_edit: !user.isAdmin}" v-if="user.isAdmin" title="Edit this quiz"><v-icon style="margin-right: 5px">create</v-icon>Edit</v-btn>
+            <v-btn
+                :to="{path: 'quiz/'+quiz.id}"
+                title="Start quiz"
+                :class="{noadmin: !user.isAdmin}"
+                color="green"
+                exact
+                flat
+            >
+                <v-icon class="mr-1">play_arrow</v-icon>Start
+            </v-btn>
+            <v-btn
+                v-if="user.isAdmin"
+                :to="{path: 'editquiz/'+quiz.id, params: {quiz}}"
+                title="Edit this quiz"
+                :class="{noadmin_edit: !user.isAdmin}"
+                color="deep-orange"
+                exact
+                flat
+            >
+                    <v-icon class="mr-1">create</v-icon>Edit
+            </v-btn>
         </v-card-actions>
     </div>
 </template>
@@ -35,35 +53,5 @@ export default {
 </script>
 
 <style lang="scss">
-.router-link-active {
-  margin: 0 auto;
-}
-.editbutton {
-  margin-right: 0px;
-  margin-left: auto;
-}
-.noadmin_edit {
-  display: none;
-}
-.noadmin {
-  margin: 0 auto;
-}
-.v-card__actions {
-  width: 90%;
-  margin: 0 auto;
-}
-.quizname {
-    word-wrap: break-word;
-    word-break: break-all;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.quizcategories{
-    color: grey;
 
-      p{
-          display: inline;
-          padding-right: 1%;
-      }
-}
 </style>
