@@ -22,6 +22,7 @@ export const currentQuizModule = {
             state.name = payload.name || ''
             state.description = payload.description || ''
             state.tasks = payload.tasks ? payload.tasks.data : []
+            state.thumbnail = payload.thumbnail || 'https://source.unsplash.com/xekxE_VR0Ec/450x300'
             state.categories = payload.categories ? payload.categories.data : []
         },
         setTask (state, payload) {
@@ -29,6 +30,9 @@ export const currentQuizModule = {
         },
         addCategory (state, payload) {
             state.categories.push(payload)
+        },
+        setCategories (state, payload) {
+            state.categories = payload
         }
     },
     actions: {

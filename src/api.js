@@ -105,12 +105,8 @@ export default class API {
         return axios.post('quizzes', quiz)
     }
 
-    static async updateQuiz (quizId, name, description, categories) {
-        return axios.post(`quizzes/${quizId}`, {
-            name,
-            description,
-            categories
-        })
+    static async updateQuiz (quiz) {
+        return axios.post(`quizzes/${quiz.id}`, quiz)
     }
 
     static async deleteQuiz (id) {

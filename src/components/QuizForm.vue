@@ -1,6 +1,7 @@
 <template>
     <v-form class="quizform">
          <v-card>
+            <v-img class="thumb-preview" :src="quiz.thumbnail || 'https://source.unsplash.com/xekxE_VR0Ec/450x300'" aspect-ratio="8"/>
 
              <v-card-title>
                 <h1>{{ this.quiz.name || "New Quiz" }}</h1>
@@ -8,19 +9,14 @@
 
             <v-container>
                 <div class="datainput">
-                    <div class="small">
-                        <img v-if="quiz.thumbnail.length > 0" :src="quiz.thumbnail" height="150" />
-                        <v-text-field v-model='quiz.thumbnail' label="Select Image" @click='pickFile'  prepend-icon='add_a_photo'></v-text-field>
-                        <input type="file" style="display: none" ref="image" accept="image/*" @change="onFilePicked">
-                    </div>
-                    <div class="small">
-                        <v-text-field v-model="quiz.name" label="Quizname" required="required" clearable></v-text-field>
-                    </div>
+                    <v-text-field v-model="quiz.name" label="Quizname" required="required" clearable></v-text-field>
+                    <v-text-field v-model='quiz.thumbnail' label="Add an image URL" prepend-icon='add_a_photo'></v-text-field>
                     <div>
                         <v-combobox
-                            v-model="selectedCategories"
+                            v-model="currentCategories"
                             :items="allCategories"
                             :search-input.sync="categorySearch"
+                            cache-items
                             hide-selected
                             label="Add one or more categories"
                             multiple
@@ -126,7 +122,7 @@ export default {
                 })
             },
         }),
-        selectedCategories: {
+        currentCategories: {
             get () {
                 return this.$store.state.currentQuiz.categories.map(c => {
                     // Combobox handles objects with text & value properties
@@ -136,69 +132,63 @@ export default {
                     }
                 })
             },
-            set (category) {
-                this.$store.commit('currentQuiz/addCategory', category)
+            set (categories) {
+                let cats = categories.map(c => {
+                    // Transform back to usual category shape
+
+                    // New categories are just strings instead of objects, so
+                    // transform them to objects
+                    let id = typeof c === 'string' ? null : c.value
+                    let name = typeof c === 'string' ? c : c.text
+                    return { name, id }
+                })
+                this.$store.commit('currentQuiz/setCategories', cats)
             }
+        },
+        isThumbUrl () {
+            // Dumb check if it is an actual image URL, just for demo purposes
+            return this.quiz.thumbnail.includes('http')
         }
     },
     methods: {
-        pickFile () {
-            this.$refs.image.click()
-        },
-        // method by Vuetify
-        onFilePicked (e) {
-            const files = e.target.files
-            if (files[0] !== undefined) {
-                this.thumbnail = files[0].name
-                if (this.thumbnail.lastIndexOf('.') <= 0) {
-                    return
-                }
-                const fr = new FileReader()
-                fr.readAsDataURL(files[0])
-                fr.addEventListener('load', () => {
-                    this.imageUrl = fr.result
-                    this.imageFile = files[0] // this is an image file that can be sent to server...
-                })
-            } else {
-                this.thumbnail = ''
-                this.imageFile = ''
-                this.imageUrl = ''
-            }
-        },
-        saveQuiz () {
-            let newCategories = []
-            const existingCategories = this.selectedCategories
+        async saveQuiz () {
+            const existingCategories = this.currentCategories
                 .filter(cat => {
-                    if (typeof cat !== 'string') return cat
+                    if (cat.id !== null) return cat
                 })
                 .map(cat => cat.value)
-            Promise.all(
-                this.selectedCategories
-                    .filter(cat => {
-                        if (typeof cat === 'string') return cat
-                    })
-                    .map(cat => this.$store.dispatch('quiz/addCategory', cat))
-            ).then(responses => {
+
+            let newCategories = this.currentCategories
+                .filter(cat => {
+                    if (cat.id === null) return cat
+                })
+
+            if (newCategories.length > 0) {
+                const responses = await Promise.all(newCategories.map(cat => this.$store.dispatch('quiz/addCategory', cat.name)))
                 if (responses || responses.length !== 0) {
-                    newCategories = responses.map(res => res.data.data.id)
+                    newCategories = responses.map(res => res.data.data)
                 }
-                // only send category IDs to API
-                this.quiz.categories = this.quiz.categories.map(c => c.id)
-                this.quiz.categories.push(...newCategories, ...existingCategories)
+            }
 
-                if (this.quiz.id !== null) {
-                    // editing quiz
-                    this.$store.dispatch('currentQuiz/updateQuiz', this.quiz)
-                } else {
-                    this.$store.dispatch('currentQuiz/addQuiz', this.quiz)
-                }
+            const allCategories = [...newCategories, ...existingCategories]
+            // only send category IDs to API
+            this.quiz.categories = allCategories.map(c => c.id)
 
-                this.$router.push({ name: 'home' })
-            })
+            if (this.quiz.id !== null) {
+                // editing quiz
+                this.$store.dispatch('currentQuiz/updateQuiz', this.quiz)
+            } else {
+                this.$store.dispatch('currentQuiz/addQuiz', this.quiz)
+            }
+
+            this.$router.push({ name: 'home' })
         },
         deleteQuiz () {
             this.$store.dispatch('currentQuiz/deleteQuiz', this.quiz.id)
             this.$router.push({ name: 'home' })
+        },
+        selectCategory (c) {
+            console.log(c)
         }
     }
 }
@@ -208,22 +198,15 @@ export default {
 .quizform > .v-card {
   margin: 5% auto;
   width: 70%;
-  padding: 5% 0%;
 
-  .datainput {
-    width: 80%;
-    margin: 2% auto;
+//   .datainput {
+//     width: 80%;
+//     margin: 2% auto;
 
-    .small {
-      width: 40%;
-    }
-    > :first-child {
-      float: right;
-    }
-    .btns {
-      text-align: center;
-    }
-  }
+//     .btns {
+//       text-align: center;
+//     }
+//   }
 
   #tasks {
     margin-top: 7%;
@@ -243,5 +226,9 @@ export default {
   .v-card {
     margin-bottom: 0px;
   }
+}
+
+.thumb-preview {
+    max-width: 100%;
 }
 </style>

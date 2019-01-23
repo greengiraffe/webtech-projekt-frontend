@@ -6,7 +6,7 @@
             <h2 class="mb-2 fullWidth">{{ quiz.name }}</h2>
             <p class="fullWidth">{{ quiz.description }}</p>
             <div class="fullWidth">
-                <v-chip label small v-for="category in this.categories" :key="category.id">{{ category.name }}</v-chip>
+                <v-chip label small v-for="category in this.categories" :key="category.name">{{ category.name }}</v-chip>
             </div>
         </v-card-title>
 
