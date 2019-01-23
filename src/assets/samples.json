@@ -1,0 +1,800 @@
+[{
+    "name": "Python Basics",
+    "description": "This is a quiz that will teach you some of the Python basics. It is developed for absolute Python beginners, so don't be shy if you have no Python experience yet. You should have some basic knowledge about programming, though. Otherwise it will take you a little longer to complete the quiz. The quiz will not take too long and is perfect to get a brief overview over Python. ",
+    "categories":{
+        "data":[
+            {
+                "name": "Python"
+            },
+            {
+                "name": "Beginners"
+            }
+        ]
+    },
+    "tasks": {
+        "data":[
+            {
+                "text": "What is Python? What are the benefits of using Python?",
+                "type_id": 2,
+                "answers":{
+                    "data":[
+                        {
+                            "text": "Python is a programming language in which objects can be used.",
+                            "correct_choice": true,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "Python is a very big snake that kills her prey by strangling it.",
+                            "correct_choice": true,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "Python is part of Monty Python, a very funny drama group that produced some great movies.",
+                            "correct_choice": true,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "Python is a tasty dessert, mostly eaten in Southamerica.",
+                            "correct_choice": false,
+                            "correct_text": null
+                        }                       
+                    ]
+                }
+            },
+            {
+                "text": "Is Python case sensitive when dealing with identifiers?",
+                "type_id": 2,
+                "answers":{
+                    "data":[
+                        {
+                            "text": "Yes",
+                            "correct_choice": true,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "No",
+                            "correct_choice": false,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "Machine dependent",
+                            "correct_choice": true,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "None of the above",
+                            "correct_choice": false,
+                            "correct_text": null
+                        }                       
+                    ]
+                }
+            },
+            {
+                "text": "Python uses #ANSWER:1# instead of #ANSWER:2# to structure code blocks.",
+                "type_id": 3,
+                "answers":{
+                    "data":[
+                        {
+                            "correct_choice": null,
+                            "correct_text": "indentations"
+                        },
+                        {
+                            "correct_choice": null,
+                            "correct_text": "brackets"
+                        }                 
+                    ]
+                }
+            },
+            {
+                "text": "What are the immutable built-in types that python provides?",
+                "type_id": 1,
+                "answers":{
+                    "data":[
+                        {
+                            "text": "Strings, Booleans, Numbers",
+                            "correct_choice": false,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "Integers, Longs, Arrays",
+                            "correct_choice": false,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "Strings, Tuples, Numbers",
+                            "correct_choice": true,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "Lists, Sets, Dictionaries",
+                            "correct_choice": false,
+                            "correct_text": null
+                        }                       
+                    ]
+                }
+            },
+            {
+                "text": "Can a for-loop be run with the expression: \"while x in i\"?",
+                "type_id": 1,
+                "answers":{
+                    "data":[
+                        {
+                            "text": "Yes",
+                            "correct_choice": true,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "No",
+                            "correct_choice": false,
+                            "correct_text": null
+                        }            
+                    ]
+                }
+            },
+            {
+                "text": "What is the output when following statement is executed ? \n >>>\"a\"+\"bc\"",
+                "type_id": 1,
+                "answers":{
+                    "data":[
+                        {
+                            "text": "a",
+                            "correct_choice": false,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "bc",
+                            "correct_choice": false,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "bca",
+                            "correct_choice": false,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "abc",
+                            "correct_choice": true,
+                            "correct_text": null
+                        }                       
+                    ]
+                }
+            },
+            {
+                "text": "Iterators can be used to #ANSWER:1# over c#ANSWER:2# and l#ANSWER:3#.",
+                "type_id": 2,
+                "answers":{
+                    "data":[
+                        {
+                            "correct_choice": null,
+                            "correct_text": "ontainers"
+                        },
+                        {
+                            "correct_choice": null,
+                            "correct_text": "ists"
+                        }             
+                    ]
+                }
+            },
+            {
+                "text": "A string that is used to describe functions, modules and classes in Python is called a #ANSWER:1#",
+                "type_id": 2,
+                "answers":{
+                    "data":[
+                        {
+                            "correct_choice": null,
+                            "correct_text": "docstring"
+                        }       
+                    ]
+                }
+            }
+        ]
+    }
+},
+{
+    "name": "Java Basics",
+    "description": "This is a quiz that will teach you some of the Java basics. It is developed for absolute Java beginners, so don't be shy if you have no Java experience yet. You should have some basic knowledge about programming, though. Otherwise it will take you a little longer to complete the quiz. The quiz will not take too long and is perfect to get a brief overview over Java." ,
+    "categories":{
+        "data":[
+            {
+                "name": "Java"
+            },
+            {
+                "name": "Beginners"
+            }
+        ]
+    },
+    "tasks": {
+        "data":[
+            {
+                "text": "What is Java?",
+                "type_id": "2",
+                "answers":{
+                    "data":[
+                        {
+                            "text": "Java is a high-level programming language.",
+                            "correct_choice": true,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "Java is an island that belongs to Indonesia.",
+                            "correct_choice": true,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "The Java cake is a very tasy dessert that usually has some melted chocolate within a small cake.",
+                            "correct_choice": false,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "Java is a chicken breed that comes from the USA.",
+                            "correct_choice": true,
+                            "correct_text": null
+                        }                              
+                    ]
+                }
+            },
+            {
+                "text": "Java is an #ANSWER:1#-oriented programming language that is also #ANSWER:2# independent",
+                "type_id": "3",
+                "answers":{
+                    "data":[
+                        {
+                            "correct_choice": null,
+                            "correct_text": "object"
+                        },
+                        {
+                            "correct_choice": null,
+                            "correct_text": "plattform"
+                        }                        
+                    ]
+                }
+            },
+            {
+                "text": "What are the main parts that a Java program consists of?",
+                "type_id": "1",
+                "answers":{
+                    "data":[
+                        {
+                            "text": "Classes and Teachers",
+                            "correct_choice": false,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "Classes and Students",
+                            "correct_choice": false,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "Classes and Objects",
+                            "correct_choice": true,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "Classes and Scripts",
+                            "correct_choice": false,
+                            "correct_text": null
+                        }                              
+                    ]
+                }
+            },
+            {
+                "text": "What kind of variables are available in Java?",
+                "type_id": "2",
+                "answers":{
+                    "data":[
+                        {
+                            "text": "Universe varaibles",
+                            "correct_choice": false,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "Local variables",
+                            "correct_choice": true,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "Instance variables",
+                            "correct_choice": false,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "Class variables",
+                            "correct_choice": true,
+                            "correct_text": null
+                        }                              
+                    ]
+                }
+            },
+            {
+                "text": "Write the constructor of the class World: #ANSWER:1#",
+                "type_id": "3",
+                "answers":{
+                    "data":[
+                        {
+                            "correct_choice": null,
+                            "correct_text": "public World()"
+                        }          
+                    ]
+                }
+            },
+            {
+                "text": "What is an access modifier?",
+                "type_id": "1",
+                "answers":{
+                    "data":[
+                        {
+                            "text": "It is a code that gives you permission to a huge Java community.",
+                            "correct_choice": false,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "It tells you whether you are allowed to use the Java code that someone else has written.",
+                            "correct_choice": false,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "It allows to set different access levels for classes, variables and methods, for example.",
+                            "correct_choice": true,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "It can be used to tell classes about their importance.",
+                            "correct_choice": false,
+                            "correct_text": null
+                        }                              
+                    ]
+                }
+            },
+            {
+                "text": "What are the three steps of creating an object for a class? \n D#ANSWER:1#, I#ANSWER:2#, I#ANSWER:3#.",
+                "type_id": "3",
+                "answers":{
+                    "data":[
+                        {
+                            "correct_choice": null,
+                            "correct_text": "eclare"
+                        },
+                        {
+                            "correct_choice": null,
+                            "correct_text": "nstantiate"
+                        },
+                        {
+                            "correct_choice": null,
+                            "correct_text": "nitialize"
+                        }                         
+                    ]
+                }
+            },
+            {
+                "text": "Choose the access modifiers available in Java",
+                "type_id": "2",
+                "answers":{
+                    "data":[
+                        {
+                            "text": "private",
+                            "correct_choice": true,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "public",
+                            "correct_choice": true,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "global",
+                            "correct_choice": false,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "protected",
+                            "correct_choice": true,
+                            "correct_text": null
+                        }                              
+                    ]
+                }
+            }
+        ]
+    }
+},
+{
+    "name": "Databases for Dummys",
+    "description": "This is a quiz in which you can learn some basic things about Databases. You don't have to be experienced with databases at all, just go ahead and click through the questions that we posed.",
+    "categories":{
+        "data":[
+            {
+                "name": "Databases"
+            },
+            {
+                "name": "Beginners"
+            }
+        ]
+    },
+    "tasks": {
+        "data":[
+            {
+                "text": "What is a database?",
+                "type_id": "1",
+                "answers":{
+                    "data":[
+                        {
+                            "text": "A database is used to store different data.",
+                            "correct_choice": true,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "A database is a basic data format.",
+                            "correct_choice": false,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "A database the secret base station of Darth Vader and the imperium.",
+                            "correct_choice": false,
+                            "correct_text": null
+                        }                         
+                    ]
+                }
+            },
+            {
+                "text": "The basic commands in the Structured Query Language are: S#ANSWER:1# F#ANSWER:2#, W#ANSWER:3#",
+                "type_id": "3",
+                "answers":{
+                    "data":[
+                        {
+                            "correct_choice": null,
+                            "correct_text": "elect"
+                        },
+                        {
+                            "correct_choice": null,
+                            "correct_text": "rom"
+                        },
+                        {
+                            "correct_choice": null,
+                            "correct_text": "here"
+                        }                         
+                    ]
+                }
+            },
+            {
+                "text": "What can be found in a database?",
+                "type_id": "2",
+                "answers":{
+                    "data":[
+                        {
+                            "text": "Windows",
+                            "correct_choice": false,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "Tables",
+                            "correct_choice": true,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "Friends",
+                            "correct_choice": false,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "Relations",
+                            "correct_choice": true,
+                            "correct_text": null
+                        }                            
+                    ]
+                }
+            },{
+                "text": "What is a data redundancy?",
+                "type_id": "1",
+                "answers":{
+                    "data":[
+                        {
+                            "text": "Unimportant data is stored within the database.",
+                            "correct_choice": false,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "Data is duplicated within the database.",
+                            "correct_choice": true,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "There is not enough data stored in the database to justify the usage of a database.",
+                            "correct_choice": false,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "None of the above",
+                            "correct_choice": false,
+                            "correct_text": null
+                        }                      
+                    ]
+                }
+            },{
+                "text": "What does SQL stand for? S#ANSWER:1# Q#ANSWER:2# L#ANSWER:3#",
+                "type_id": "3",
+                "answers":{
+                    "data":[
+                        {
+                            "correct_choice": null,
+                            "correct_text": "tructured"
+                        },
+                        {
+                            "correct_choice": null,
+                            "correct_text": "uery"
+                        },
+                        {
+                            "correct_choice": null,
+                            "correct_text": "anguage"
+                        }                         
+                    ]
+                }
+            }
+        ]
+    }
+},
+{
+    "name": "Into Python",
+    "description": "You already know some things about Python? Well... Let's dive in deeper into the material and see how much you really know - or what there is to learn for you. You should have been able to finish the Python Basics quiz before you start this one.",
+    "categories":{
+        "data":[
+            {
+                "name": "Python"
+            },
+            {
+                "name": "Intermediate"
+            }
+        ]
+    },
+    "tasks": {
+        "data":[
+            {
+                "text": "How do you delete a file in Python?",
+                "type_id": "2",
+                "answers":{
+                    "data":[
+                        {
+                            "text": "command os.remove",
+                            "correct_choice": true,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "command os.destroy",
+                            "correct_choice": false,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "command os.delete",
+                            "correct_choice": false,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "command os.unlink",
+                            "correct_choice": true,
+                            "correct_text": null
+                        }                            
+                    ]
+                }
+            },
+            {
+                "text": "What is the output of the functions shown below? \n ord(65) \n ord('A')",
+                "type_id": "1",
+                "answers":{
+                    "data":[
+                        {
+                            "text": "A \n65",
+                            "correct_choice": false,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "Error \n65",
+                            "correct_choice": true,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "A \nError",
+                            "correct_choice": false,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "Error \nError",
+                            "correct_choice": false,
+                            "correct_text": null
+                        }                            
+                    ]
+                }
+            },
+            {
+                "text": "What is the output of the code shown below?\n m = re.search('a', 'The blue umbrella')\n m.re.pattern",
+                "type_id": "1",
+                "answers":{
+                    "data":[
+                        {
+                            "text": "{}",
+                            "correct_choice": false,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "The blue umbrella",
+                            "correct_choice": false,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "a",
+                            "correct_choice": true,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "No output",
+                            "correct_choice": false,
+                            "correct_text": null
+                        }                            
+                    ]
+                }
+            },
+            {
+                "text": "A Python #ANSWER:1# is a specific change that we make in Python syntax to alter functions easily.",
+                "type_id": "3",
+                "answers":{
+                    "data":[
+                        {
+                            "correct_choice": true,
+                            "correct_text": "decorator"
+                        }                  
+                    ]
+                }
+            }
+        ]
+    }
+},
+{
+    "name": "VueJS quick start",
+    "description": "This is an introduction quiz to VueJS. If you want to build a small VueJS application but have no idea what it is all about, you can start by doing this quiz. Here you will gain some fundamental knowledge that helps you to find your way into the framework. It would be good if you already had some JavaScript experience.",
+    "categories":{
+        "data":[
+            {
+                "name": "JavaScript"
+            },
+            {
+                "name": "Framework"
+            },
+            {
+                "name": "Beginners"
+            }
+        ]
+    },
+    "tasks": {
+        "data":[
+            {
+                "text": "What is VueJS?",
+                "type_id": "1",
+                "answers":{
+                    "data":[
+                        {
+                            "text": "It is a construction kid for websites. You don't need programming experience.",
+                            "correct_choice": false,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "It is a CSS framework that helps you to make your application beautiful.",
+                            "correct_choice": false,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "It is JavaScript frontend framework that enables you to build frontend indepently from any backend.",
+                            "correct_choice": true,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "It stands for Vue Jupiter and Stars and is a web application that helps you to locate planets on the nightsky.",
+                            "correct_choice": false,
+                            "correct_text": null
+                        }                            
+                    ]
+                }
+            },
+            {
+                "text": "What are some of the most important features of VueJS?",
+                "type_id": "2",
+                "answers":{
+                    "data":[
+                        {
+                            "text": "Virtual DOM",
+                            "correct_choice": true,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "Components",
+                            "correct_choice": true,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "Routing",
+                            "correct_choice": true,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "Templates",
+                            "correct_choice": true,
+                            "correct_text": null
+                        }                            
+                    ]
+                }
+            },
+            {
+                "text": "What is the meaning of : in front of an HTML property?",
+                "type_id": "1",
+                "answers":{
+                    "data":[
+                        {
+                            "text": "Introduction of the property",
+                            "correct_choice": false,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "Marks important data",
+                            "correct_choice": false,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "Binds data dynamically to the DOM object",
+                            "correct_choice": true,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "Only decoration without meaning",
+                            "correct_choice": false,
+                            "correct_text": null
+                        }                            
+                    ]
+                }
+            },
+            {
+                "text": "What are default directives in Vue?",
+                "type_id": "2",
+                "answers":{
+                    "data":[
+                        {
+                            "text": "v-if",
+                            "correct_choice": true,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "v-tag",
+                            "correct_choice": false,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "v-bind",
+                            "correct_choice": true,
+                            "correct_text": null
+                        },
+                        {
+                            "text": "v-curse",
+                            "correct_choice": false,
+                            "correct_text": null
+                        }                            
+                    ]
+                }
+            },
+            {
+                "text": "VueJS ist ein Frontend-#ANSWER:1# das auf #ANSWER:2# basiert und unter einer #ANSWER:3#-source Lizenz zur Verfügung gestellt wird.",
+                "type_id": "3",
+                "answers":{
+                    "data":[
+                        {
+                            "correct_choice": null,
+                            "correct_text": "framework"
+                        },
+                        {
+                            "correct_choice": null,
+                            "correct_text": "javascript"
+                        },
+                        {
+                            "correct_choice": null,
+                            "correct_text": "open"
+                        }                        
+                    ]
+                }
+            }
+        ]
+    }
+}]
