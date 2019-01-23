@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from './views/Home.vue'
 import Quiz from './views/Quiz.vue'
-import Quizform from './components/Quizform.vue'
+import QuizForm from './components/QuizForm.vue'
 import TaskForm from './components/TaskForm.vue'
 
 Vue.use(VueRouter)
@@ -38,11 +38,11 @@ export default new VueRouter({
         },
         {
             path: '/newquiz',
-            component: Quizform
+            component: QuizForm
         },
         {
             path: '/editquiz/:id',
-            component: Quizform,
+            component: QuizForm,
             props: true
         },
         {
