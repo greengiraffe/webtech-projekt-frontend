@@ -1,29 +1,21 @@
 <template>
     <div>
-        <v-container fluid>
-            <p>Choose the correct answer. One or more answers might be correct.</p>
+            <v-card-text>{{ task.text }}</v-card-text>
+            <v-spacer></v-spacer>
+            <p class="pl-4 pt-3">Choose the correct answer. One or more answers might be correct.</p>
             <ul>
                 <li v-for="answer in answers" :key="answer.id">
                     <v-checkbox :label="answer.text" v-model="selected[answer.id]" :disabled="showverification" ></v-checkbox>
                 </li>
             </ul>
-            <v-btn @click="verify()">Check</v-btn>
-        </v-container>
-        <div id="verification" v-if="showverification">
-            <p v-if="correctlysolved" style="background-color: lightgreen">
-                Congratulations! You solved the task correctly.
-            </p>
-            <p v-else style="background-color: #feb6b6">
-                Sorry, this was not completely correct. Try again later.
-            </p>
-        </div>
+
     </div>
 </template>
 
 <script>
 export default {
     name: 'AnswerChoice',
-    props: ['task_id'],
+    props: { task: Object },
     data () {
         return {
             answers: [
@@ -71,6 +63,10 @@ li {
     padding: 0;
     margin: 0;
   }
+}
+.v-card__text {
+  padding: 20px;
+  padding-bottom: 0px;
 }
 
 .v-tabs,

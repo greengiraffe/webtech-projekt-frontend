@@ -7,11 +7,19 @@
 
         <v-tabs-items>
             <v-tab-item v-for="task in tasks" :value="'task-' + task.id" :key="task.id">
-                <v-card theme--light>
-                    <v-card-text>{{ task.text }}</v-card-text>
+                <v-card theme--light class="pa-3">
                     <div class="answers">
-                        <AnswerText v-if="task.type.name === 'text'"></AnswerText>
-                        <AnswerChoice v-else v-bind:task_id="task.id"></AnswerChoice>
+                        <AnswerText v-bind:task="task" v-if="task.type.name === 'text'"></AnswerText>
+                        <AnswerChoice v-bind:task="task" v-else></AnswerChoice>
+                    </div>
+                    <v-btn @click="verify()" class="mx-auto d-block">Check</v-btn>
+                    <div id="verification" v-if="showverification">
+                        <p v-if="correctlysolved" style="background-color: lightgreen">
+                            Congratulations! You solved the task correctly.
+                        </p>
+                        <p v-else style="background-color: #feb6b6">
+                            Sorry, this was not completely correct. Try again later.
+                        </p>
                     </div>
                 </v-card>
             </v-tab-item>
@@ -69,10 +77,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.v-card__text {
-  padding: 20px;
-  padding-bottom: 0px;
-}
 .v-window{
     width: 60%;
     margin: 4% auto;
