@@ -10,7 +10,7 @@
                 <v-card theme--light>
                     <v-card-text>{{ task.text }}</v-card-text>
                     <div class="answers">
-                        <AnswerText v-if="task.type.name==='text'"></AnswerText>
+                        <AnswerText v-if="task.type.name === 'text'"></AnswerText>
                         <AnswerChoice v-else v-bind:task_id="task.id"></AnswerChoice>
                     </div>
                 </v-card>
