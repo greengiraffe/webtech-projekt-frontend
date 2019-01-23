@@ -26,42 +26,42 @@ export default {
         return {
             abouttexts: [
                 {
-                    color: 'rgba(23, 30, 95, 0.3)',
+                    color: 'rgba(26, 35, 126, 0.3)',
                     icon: 'keyboard',
                     title: 'What is LearnIT?',
                     text:
             'LearnIT offers quizzes that help you to learn various things about computing. But learning does not have to be boring, not even learning programming! LearnIT is concepted like a quiz game, so that you wont even notice how many serious topics you covered on the fly! Try out our several quizzes and experience a whole new kind of learning. LearnIT is suitable for everyone - you cannot really fail and will succeed eventually. Just start with the topic that is most interesting for you and learn at your own pace.'
                 },
                 {
-                    color: 'rgba(23, 30, 95, 0.44)',
+                    color: 'rgba(26, 35, 126, 0.44)',
                     icon: 'face',
                     title: 'Create a user account',
                     text:
             'You will be able to create a user account with which you can always login. It will store the progress you make during your sessions, so that you can easily jump back in where you left off.'
                 },
                 {
-                    color: 'rgba(23, 30, 95, 0.55)',
+                    color: 'rgba(26, 35, 126, 0.55)',
                     icon: 'check_box',
                     title: 'Find the right quiz',
                     text:
             'If you want to find a quiz suited for you, go ahead and use the search bar on the start page. Other than that you can filter quizzes by categories and order them by your personal progress.'
                 },
                 {
-                    color: 'rgba(23, 30, 95, 0.75)',
+                    color: 'rgba(26, 35, 126, 0.75)',
                     icon: 'search',
                     title: 'Enjoy different task types',
                     text:
             'Once you can choose a quiz you can start doing the tasks. There are single and multiple choice tasks, as well as fill-in-the-blanks. Every task that you answered correctly will be added to your progress, which is stored for each quiz.'
                 },
                 {
-                    color: 'rgba(23, 30, 95, 0.89)',
+                    color: 'rgba(26, 35, 126, 0.89)',
                     icon: 'settings',
                     title: 'Admin functionality',
                     text:
             'Only admin users are able to add, edit and delete quizzes. Once editing a quiz, they are also able to add, edit and delete the referring tasks. If you want to participate in LearnIT and become an admin yourself, shoot us a message at wannabeanadmin@learnit.com.'
                 },
                 {
-                    color: '#171e5f',
+                    color: '#1A237E',
                     icon: 'developer_board',
                     title: 'Behind the scenes',
                     text:
@@ -74,5 +74,7 @@ export default {
 </script>
 
 <style lang="scss">
-
+p {
+    color: rgb(26, 35, 126);
+}
 </style>

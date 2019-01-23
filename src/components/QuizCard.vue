@@ -10,14 +10,13 @@
             </div>
         </v-card-title>
 
-        <v-card-actions v-if="user.loggedIn">
+        <v-card-actions v-if="user.loggedIn" class="card-actions">
             <v-btn
                 :to="{path: 'quiz/'+quiz.id}"
                 title="Start quiz"
-                :class="{noadmin: !user.isAdmin}"
-                color="green"
+                color="indigo white--text"
                 exact
-                flat
+                depressed
             >
                 <v-icon class="mr-1">play_arrow</v-icon>Start
             </v-btn>
@@ -25,10 +24,9 @@
                 v-if="user.isAdmin"
                 :to="{path: 'editquiz/'+quiz.id, params: {quiz}}"
                 title="Edit this quiz"
-                :class="{noadmin_edit: !user.isAdmin}"
-                color="deep-orange"
+                class="indigo lighten-5"
                 exact
-                flat
+                depressed
             >
                     <v-icon class="mr-1">create</v-icon>Edit
             </v-btn>
@@ -53,5 +51,7 @@ export default {
 </script>
 
 <style lang="scss">
-
+    .card-actions {
+        justify-content: space-between
+    }
 </style>
