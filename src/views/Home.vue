@@ -3,7 +3,7 @@
     <v-container id="filtersearchsection">
         <v-layout>
             <v-flex>
-                <h1 class="display-3 pt-3 mt-5 mb-5">
+                <h1 class="display-2 pt-3 mt-5 mb-5">
                 <span v-if="user.loggedIn">
                     Hi {{ user.name }}, let's learn something!
                 </span>
