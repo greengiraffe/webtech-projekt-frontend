@@ -8,7 +8,15 @@
                     <v-checkbox :label="answer.text" v-model="answer.selected"></v-checkbox>
                 </li>
             </ul>
-
+            <v-btn class="mx-auto d-block" @click="verify()">Check</v-btn>
+            <div id="verification" v-if="this.showverification">
+                <p v-if="correctlysolved" style="background-color: lightgreen">
+                    Congratulations! You solved the task correctly.
+                </p>
+                <p v-else style="background-color: #feb6b6">
+                    Sorry, this was not completely correct. Try again later.
+                </p>
+            </div>
     </div>
 </template>
 
@@ -16,9 +24,72 @@
 export default {
     name: 'AnswerChoice',
     props: ['task'],
+    data () {
+        return {
+            showverification: false
+        }
+    },
     computed: {
+        correctchoice: function () {
+            const correctAnswers = this.selected
+                .map(sel => this.answers.find(answer => answer.text === sel))
+                .filter(
+                    answer => answer !== undefined && answer.correct_choice
+                )
+            return correctAnswers.map(corrA => corrA.text)
+        },
+        nrcorrectanswers: function () {
+            return this.answers.filter(answer => answer.correct_choice)
+                .length
+        },
         correctlysolved: function () {
-            return true // TODO
+            if (
+                this.selected.length === this.nrcorrectanswers &&
+                this.correctchoice.length === this.nrcorrectanswers
+            ) {
+                return true
+            } else {
+                return false
+            }
+        }
+    },
+
+    // returns an array with the text of all correctly chosen answers, based on the selected answers
+    // TODO: change back to boolean
+
+    // returns the number of all answers that are marked with correct_choice in the answers array
+    // TODO: change back to boolean
+
+    // returns if task solved correctly
+
+    methods: {
+        verify () {
+            this.showverification = true
+            this.highlightChosen()
+        },
+        highlightChosen () {
+            const chosenCheck = document.querySelectorAll('[aria-checked="true"]')
+            const tagName = 'li'
+            let color
+
+            for (let i = 0; i < chosenCheck.length; i++) {
+                let element = chosenCheck[i]
+                const value = element.getAttribute('value')
+                // determine whether to color red or green
+                if (this.correctchoice.includes(value)) {
+                    color = 'lightgreen'
+                } else {
+                    color = '#feb6b6'
+                }
+
+                while (element && element.parentNode) {
+                    element = element.parentNode
+                    if (element.tagName && element.tagName.toLowerCase() === tagName) {
+                        element.style.backgroundColor = color
+                        break
+                    }
+                }
+            }
         }
     }
 }

@@ -12,15 +12,7 @@
                         <AnswerText v-bind:task="task" v-if="task.type.data.name === 'text'"></AnswerText>
                         <AnswerChoice v-bind:task="task" v-else></AnswerChoice>
                     </div>
-                    <v-btn class="mx-auto d-block">Check</v-btn>
-                    <div id="verification" v-if="task.showverification">
-                        <p v-if="correctlysolved" style="background-color: lightgreen">
-                            Congratulations! You solved the task correctly.
-                        </p>
-                        <p v-else style="background-color: #feb6b6">
-                            Sorry, this was not completely correct. Try again later.
-                        </p>
-                    </div>
+
                 </v-card>
             </v-tab-item>
         </v-tabs-items>
