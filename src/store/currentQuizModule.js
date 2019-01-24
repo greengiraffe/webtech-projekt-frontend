@@ -17,21 +17,25 @@ export const currentQuizModule = {
         id: (state) => {
             return state.quizId
         },
+        tasks: (state) => {
+            return state.tasks
+        }
     },
     mutations: {
         setQuiz (state, payload) {
             state.id = payload.id || null
             state.name = payload.name || ''
             state.description = payload.description || ''
-            state.tasks = payload.tasks ? payload.tasks.data.map ( item => {
-                return { showVerification: false, type: { data: { name: '' } } }
+            state.tasks = payload.tasks ? payload.tasks.data.map(item => {
+                return { showVerification: false, type: { data: { name: '' } }, id: item.id, order: item.order }
             }) : []
             state.thumbnail = payload.thumbnail || 'https://source.unsplash.com/xekxE_VR0Ec/450x300'
             state.categories = payload.categories ? payload.categories.data.map(item => item.name) : []
         },
         addTask (state, payload) {
-            payload.selected = false
-            state.tasks[payload.order - 1] = payload || {}
+            payload.task.selected = false
+            state.tasks[payload.index] = payload.task
+            console.log(state)
         },
         addCategory (state, payload) {
             state.categories.push(payload)
@@ -45,9 +49,9 @@ export const currentQuizModule = {
             const res = await API.getQuiz(id)
             commit('setQuiz', res.data.data)
             res.data.data.tasks.data.forEach(async (item, index) => {
-                const task = await API.getTasksByQuiz(id, index)
+                const task = await API.getTasksByQuiz(id, index + 1)
                 if (task.data) {
-                    commit('addTask', task.data.data[0])
+                    commit('addTask', { task: task.data.data[0], index: index })
                 }
             })
         },

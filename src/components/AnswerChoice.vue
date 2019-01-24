@@ -3,7 +3,7 @@
             <v-card-text>{{task.text}}</v-card-text>
             <v-spacer></v-spacer>
             <p class="pl-4 pt-3">Choose the correct answer. One or more answers might be correct.</p>
-            <ul>
+            <ul v-if="task.answers">
                 <li v-for="answer in task.answers.data" :key="answer.id">
                     <v-checkbox :label="answer.text" v-model="answer.selected"></v-checkbox>
                 </li>
