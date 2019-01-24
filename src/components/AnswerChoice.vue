@@ -16,10 +16,6 @@
 export default {
     name: 'AnswerChoice',
     props: ['task'],
-    data () {
-        return {
-        }
-    },
     computed: {
         correctlysolved: function () {
             return true // TODO
