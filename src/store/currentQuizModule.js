@@ -4,12 +4,14 @@ export const currentQuizModule = {
     namespaced: true,
     state: {
         id: null,
+        activeTask: 0,
         name: '',
         description: '',
         thumbnail: '',
         categories: [],
         tasks: [],
-        progress: '0' /* NOT BACKEND CONFORM - Progress still to implement */
+        progress: '0', /* NOT BACKEND CONFORM - Progress still to implement */
+        currentTask: {}
     },
     getters: {
         id: (state) => {
@@ -21,12 +23,15 @@ export const currentQuizModule = {
             state.id = payload.id || null
             state.name = payload.name || ''
             state.description = payload.description || ''
-            state.tasks = payload.tasks ? payload.tasks.data : []
+            state.tasks = payload.tasks ? payload.tasks.data.map ( item => {
+                return { showVerification: false, type: { data: { name: '' } } }
+            }) : []
             state.thumbnail = payload.thumbnail || 'https://source.unsplash.com/xekxE_VR0Ec/450x300'
-            state.categories = payload.categories ? payload.categories.data : []
+            state.categories = payload.categories ? payload.categories.data.map(item => item.name) : []
         },
-        setTask (state, payload) {
-            state.taskId = payload || 0
+        addTask (state, payload) {
+            payload.selected = false
+            state.tasks[payload.order - 1] = payload || {}
         },
         addCategory (state, payload) {
             state.categories.push(payload)
@@ -39,10 +44,12 @@ export const currentQuizModule = {
         async getQuiz ({ commit }, id) {
             const res = await API.getQuiz(id)
             commit('setQuiz', res.data.data)
-        },
-        async getTask ({ commit }) {
-            const res = await API.getQuizzes()
-            commit('setQuizzes', res.data.data)
+            res.data.data.tasks.data.forEach(async (item, index) => {
+                const task = await API.getTasksByQuiz(id, index)
+                if (task.data) {
+                    commit('addTask', task.data.data[0])
+                }
+            })
         },
         async addQuiz ({ commit }, quiz) {
             delete quiz.id

@@ -1,11 +1,11 @@
 <template>
     <div>
-            <v-card-text>{{ task.text }}</v-card-text>
+            <v-card-text>{{task.text}}</v-card-text>
             <v-spacer></v-spacer>
             <p class="pl-4 pt-3">Choose the correct answer. One or more answers might be correct.</p>
             <ul>
-                <li v-for="answer in answers" :key="answer.id">
-                    <v-checkbox :label="answer.text" v-model="selected[answer.id]" :disabled="showverification" ></v-checkbox>
+                <li v-for="answer in task.answers.data" :key="answer.id">
+                    <v-checkbox :label="answer.text" v-model="answer.selected"></v-checkbox>
                 </li>
             </ul>
 
@@ -15,42 +15,11 @@
 <script>
 export default {
     name: 'AnswerChoice',
-    props: { task: Object },
-    data () {
-        return {
-            answers: [
-                {
-                    id: 1,
-                    order: 1,
-                    text: 'banana'
-                },
-                {
-                    id: 2,
-                    order: 2,
-                    text: 'elephant'
-                },
-                {
-                    id: 3,
-                    order: 3,
-                    text: 'kangaroo'
-                },
-                {
-                    id: 4,
-                    order: 4,
-                    text: 'tree'
-                }
-            ],
-            selected: [],
-            showverification: false
-        }
-    },
+    props: ['task'],
     computed: {
         correctlysolved: function () {
             return true // TODO
         }
-    },
-    methods: {
-        verify () {}
     }
 }
 </script>

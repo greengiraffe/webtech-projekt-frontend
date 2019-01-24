@@ -49,10 +49,7 @@ export default {
     computed: {
         ...mapState({
             quiz: state => state.currentQuiz,
-        }),
-        categorynames: function () {
-            return this.quiz.categories.map(category => category.name)
-        }
+        })
     },
     components: {
         Task
