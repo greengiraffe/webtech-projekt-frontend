@@ -4,7 +4,7 @@
             <v-spacer></v-spacer>
             <p class="pl-4 pt-3">Choose the correct answer. One or more answers might be correct.</p>
             <ul v-if="task.answers">
-                <li v-for="answer in task.answers.data" :key="answer.id" v-bind:class="{ correct: answer.is_correct }">
+                <li v-for="answer in task.answers.data" :key="answer.id" v-bind:class="{ correct: answer.is_correct, false: answer.is_correct === false }">
                     <v-checkbox :label="answer.text" v-model="answer.answer_choice"></v-checkbox>
                 </li>
             </ul>
@@ -27,31 +27,6 @@ export default {
     methods: {
         verify () {
             this.$store.dispatch('currentQuiz/verify', this.task)
-            // this.highlightChosen()
-        },
-        highlightChosen () {
-            const chosenCheck = document.querySelectorAll('[aria-checked="true"]')
-            const tagName = 'li'
-            let color
-
-            for (let i = 0; i < chosenCheck.length; i++) {
-                let element = chosenCheck[i]
-                const value = element.getAttribute('value')
-                // determine whether to color red or green
-                if (this.correctchoice.includes(value)) {
-                    color = 'lightgreen'
-                } else {
-                    color = '#feb6b6'
-                }
-
-                while (element && element.parentNode) {
-                    element = element.parentNode
-                    if (element.tagName && element.tagName.toLowerCase() === tagName) {
-                        element.style.backgroundColor = color
-                        break
-                    }
-                }
-            }
         }
     }
 }
@@ -64,6 +39,15 @@ li {
   .v-input--selection-controls {
     padding: 0;
     margin: 0;
+  }
+  .v-input__slot {
+      margin: 8px 0;
+  }
+  &.correct {
+    background-color: lightgreen;
+  }
+  &.false {
+    background-color: #feb6b6;
   }
 }
 .v-card__text {

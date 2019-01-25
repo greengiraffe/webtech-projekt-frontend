@@ -10,9 +10,7 @@ export const currentQuizModule = {
         thumbnail: '',
         categories: [],
         tasks: [],
-        loading: true,
-        progress: '0', /* NOT BACKEND CONFORM - Progress still to implement */
-        currentTask: {}
+        verified: false
     },
     getters: {
         id: (state) => {
@@ -20,6 +18,9 @@ export const currentQuizModule = {
         },
         tasks: (state) => {
             return state.tasks
+        },
+        task: (state) => {
+            return state.tasks[0]
         },
         loading: (state) => {
             return state.loading
@@ -30,38 +31,36 @@ export const currentQuizModule = {
             state.id = payload.id || null
             state.name = payload.name || ''
             state.description = payload.description || ''
-            state.tasks = []
             state.thumbnail = payload.thumbnail || 'https://source.unsplash.com/xekxE_VR0Ec/450x300'
             state.categories = payload.categories ? payload.categories.data.map(item => item.name) : []
         },
         addTask (state, payload) {
             payload.task.quiz = state.id
-            state.tasks[payload.index] = payload.task
-            // could save answers state at some point
             if (payload.task.answers && payload.task.answers.data) {
                 payload.task.answers.data.forEach(answer => {
                     answer.answer_choice = answer.answer_choice || 0
                     answer.answer_text = answer.answer_text || null
+                    answer.is_correct = null
                 })
             }
+            state.tasks.push(payload.task)
         },
         verifyTask (state, payload) {
-            let task = state.tasks.filter(task => task.id === payload.task)[0]
-            task.answers.data.forEach(answer => {
-                let result = payload.answers.filter(result => result.answer_id === answer.id)[0]
-                console.log(answer)
+            let task = state.tasks.find(task => task.id === payload.task)
+            payload.answers.forEach(result => {
+                let answer = task.answers.data.find(answer => answer.id === result.answer_id)
                 if (task.type.data.name === 'text') {
 
                 } else {
                     answer.is_correct = result.is_correct.choice
+                    console.log(result.is_correct.choice)
                 }
             })
-            task.is_correct = task.answers.data.reduce((ac, answer) => ac && (answer.is_correct || answer.is_correct === null)
+            task.is_correct = task.answers.data.reduce((ac, answer) => ac && (answer.is_correct || answer.is_correct === null))
             task.verified = true
-            console.log(state)
         },
         sortTasks (state) {
-            state.tasks.sort((a, b) => { return a.order - b.order })
+            // Vue.set(state, 'tasks', state.tasks.sort((a, b) => { return a.order - b.order }))
         },
         addCategory (state, payload) {
             state.categories.push(payload)
@@ -109,7 +108,6 @@ export const currentQuizModule = {
         },
         async verify ({ commit }, task) {
             const res = await API.validateTask(task.quiz, task.id, task.answers.data)
-            console.log(res)
             commit('verifyTask', { task: task.id, answers: res.data })
             return res.data
         }

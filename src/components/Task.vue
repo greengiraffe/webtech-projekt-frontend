@@ -14,7 +14,7 @@
                         <AnswerText v-bind:task="task" v-else-if="task.type.data.name === 'text'"></AnswerText>
                         <AnswerChoice v-bind:task="task" v-else></AnswerChoice>
                     </div>
-                    <p v-if="tasks[0].verified">123123123123</p>
+                    <p v-if="task.verified">123123123123</p>
                 </v-card>
             </v-tab-item>
         </v-tabs-items>
