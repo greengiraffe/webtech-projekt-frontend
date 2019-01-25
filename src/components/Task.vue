@@ -1,7 +1,7 @@
 <template>
     <v-tabs dark color="#171e5f" show-arrows>
         <v-tabs-slider color="#3fd6d3"></v-tabs-slider>
-        <v-tab v-for="i in quiz.tasks.length" :onclick="() => {this.$store.activeTask = i}" :href="'#task-' + i"
+        <v-tab v-for="i in tasks.length" :onclick="() => {this.$store.activeTask = i}" :href="'#task-' + i"
                :key="i">
             Task {{ i }}
         </v-tab>
@@ -14,6 +14,7 @@
                         <AnswerText v-bind:task="task" v-else-if="task.type.data.name === 'text'"></AnswerText>
                         <AnswerChoice v-bind:task="task" v-else></AnswerChoice>
                     </div>
+                    <p v-if="tasks[0].verified">123123123123</p>
                 </v-card>
             </v-tab-item>
         </v-tabs-items>
@@ -21,25 +22,22 @@
 </template>
 
 <script>
-  import AnswerChoice from '../components/AnswerChoice.vue'
-  import AnswerText from '../components/AnswerText.vue'
-  import {mapState, mapGetters} from 'vuex'
+import AnswerChoice from '../components/AnswerChoice.vue'
+import AnswerText from '../components/AnswerText.vue'
+import { mapGetters } from 'vuex'
 
-  export default {
+export default {
     name: 'Task',
     components: {
-      AnswerChoice,
-      AnswerText
+        AnswerChoice,
+        AnswerText
     },
     computed: {
-      ...mapState({
-        quiz: state => state.currentQuiz,
-      }),
-      ...mapGetters({
-        tasks: 'currentQuiz/tasks'
-      })
+        ...mapGetters({
+            tasks: 'currentQuiz/tasks'
+        })
     }
-  }
+}
 </script>
 
 <style lang="scss" scoped>
