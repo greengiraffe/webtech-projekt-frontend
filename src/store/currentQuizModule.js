@@ -53,11 +53,10 @@ export const currentQuizModule = {
                 if (task.type.data.name === 'text') {
 
                 } else {
-                    // ToDo: remove fix for null for correctly unmarked boxes after backend update
-                    answer.is_correct = result.is_correct.choice == null || result.is_correct.choice
+                    answer.is_correct = result.is_correct.choice
                 }
             })
-            task.is_correct = task.answers.data.reduce((ac, answer) => ac && answer.is_correct)
+            task.is_correct = task.answers.data.reduce((ac, answer) => ac && (answer.is_correct || answer.is_correct === null)
             task.verified = true
             console.log(state)
         },
