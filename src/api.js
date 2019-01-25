@@ -106,7 +106,9 @@ export default class API {
     }
 
     static async updateQuiz (quiz) {
-        return axios.post(`quizzes/${quiz.id}`, quiz)
+        const id = quiz.id
+        delete quiz.id
+        return axios.patch(`quizzes/${id}`, quiz)
     }
 
     static async deleteQuiz (id) {

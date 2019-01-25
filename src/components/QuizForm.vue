@@ -144,7 +144,6 @@ export default {
                     return { name, id }
                 })
                 this.$store.commit('currentQuiz/setCategories', cats)
-                console.log(this.$store.state.currentQuiz.categories)
             }
         },
         isThumbUrl () {
@@ -154,40 +153,41 @@ export default {
     },
     methods: {
         saveQuiz () {
+            // Note that categories are { text, value } objects here!
+            console.log(this.currentCategories)
             const existingCategories = this.currentCategories
                 .filter(cat => {
-                    if (cat.id !== null) return cat
+                    if (cat.value !== null) return cat
                 })
                 .map(cat => cat.value)
 
             let newCategories = this.currentCategories
                 .filter(cat => {
-                    if (cat.id === null) return cat
+                    if (cat.value === null) return cat
                 })
 
-            if (newCategories.length > 0) {
-                Promise.all(newCategories.map(cat => this.$store.dispatch('quiz/addCategory', cat.name)))
-                    .then(responses => {
-                        if (responses || responses.length !== 0) {
-                            newCategories = responses.map(res => res.data.data)
-                        }
-                        this.quiz.categories = [...newCategories, ...existingCategories]
-                    })
-                    .catch(() => {
-                        this.quiz.categories = existingCategories
-                    })
-            } else {
-                this.quiz.categories = existingCategories
-            }
+            Promise.all(newCategories.map(cat => {
+                return this.$store.dispatch('quiz/addCategory', cat.text)
+            }))
+                .then(responses => {
+                    if (responses || responses.length !== 0) {
+                        newCategories = responses.map(res => res.data.data)
+                    }
+                    this.quiz.categories = [...newCategories, ...existingCategories]
+                })
+                .catch(() => {
+                    this.quiz.categories = existingCategories
+                })
+                .finally(() => {
+                    if (this.quiz.id !== null) {
+                        // editing quiz
+                        this.$store.dispatch('currentQuiz/updateQuiz', this.quiz)
+                    } else {
+                        this.$store.dispatch('currentQuiz/addQuiz', this.quiz)
+                    }
 
-            if (this.quiz.id !== null) {
-                // editing quiz
-                this.$store.dispatch('currentQuiz/updateQuiz', this.quiz)
-            } else {
-                this.$store.dispatch('currentQuiz/addQuiz', this.quiz)
-            }
-
-            this.$router.push({ name: 'home' })
+                    this.$router.push({ name: 'home' })
+                })
         },
         deleteQuiz () {
             this.$store.dispatch('currentQuiz/deleteQuiz', this.quiz.id)
@@ -207,15 +207,6 @@ export default {
 .quizform > .v-card {
   margin: 5% auto;
   width: 70%;
-
-//   .datainput {
-//     width: 80%;
-//     margin: 2% auto;
-
-//     .btns {
-//       text-align: center;
-//     }
-//   }
 
   #tasks {
     margin-top: 7%;

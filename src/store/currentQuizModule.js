@@ -34,7 +34,7 @@ export const currentQuizModule = {
                 return { showVerification: false, type: { data: { name: '' } }, id: item.id, order: item.order }
             }) : []
             state.thumbnail = payload.thumbnail || 'https://source.unsplash.com/xekxE_VR0Ec/450x300'
-            state.categories = payload.categories ? payload.categories.data.map(item => item.name) : []
+            state.categories = payload.categories ? payload.categories.data : []
         },
         addTask (state, payload) {
             payload.task.selected = false
@@ -80,7 +80,11 @@ export const currentQuizModule = {
             return res
         },
         async updateQuiz ({ commit }, quiz) {
-            const res = await API.updateQuiz(quiz)
+            const res = await API.updateQuiz({
+                id: quiz.id,
+                name: quiz.name,
+                categories: quiz.categories
+            })
             commit('quiz/updateQuiz', res.data.data, { root: true })
             return res
         }
