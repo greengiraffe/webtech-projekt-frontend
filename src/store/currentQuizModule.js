@@ -30,6 +30,7 @@ export const currentQuizModule = {
         setQuiz (state, payload) {
             state.id = payload.id || null
             state.name = payload.name || ''
+            state.tasks = []
             state.description = payload.description || ''
             state.thumbnail = payload.thumbnail || 'https://source.unsplash.com/xekxE_VR0Ec/450x300'
             state.categories = payload.categories ? payload.categories.data.map(item => item.name) : []
@@ -53,14 +54,13 @@ export const currentQuizModule = {
 
                 } else {
                     answer.is_correct = result.is_correct.choice
-                    console.log(result.is_correct.choice)
                 }
             })
             task.is_correct = task.answers.data.reduce((ac, answer) => ac && (answer.is_correct || answer.is_correct === null))
             task.verified = true
         },
         sortTasks (state) {
-            // Vue.set(state, 'tasks', state.tasks.sort((a, b) => { return a.order - b.order }))
+           state.tasks = state.tasks.sort((a, b) => { return a.order - b.order })
         },
         addCategory (state, payload) {
             state.categories.push(payload)
