@@ -7,7 +7,7 @@
         </v-tab>
 
         <v-tabs-items>
-            <v-tab-item v-for="(task, index) in tasks" :value="'task-' + index" :key="index">
+            <v-tab-item v-for="(task, index) in tasks" :value="'task-' + (index + 1)" :key="index">
                 <v-card theme--light class="pa-3">
                     <div class="answers">
                         <div v-if="task.type.data.name === ''"></div>
