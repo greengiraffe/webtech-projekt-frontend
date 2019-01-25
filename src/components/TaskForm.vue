@@ -66,8 +66,8 @@
             </v-container>
 
             <div class="btns text-xs-center">
-                <router-link :to="{name: 'home'}"><v-btn>Cancel</v-btn></router-link>
-                <v-btn>Save</v-btn>
+                <router-link :to="{path: quizroute}"><v-btn>Cancel</v-btn></router-link>
+                <v-btn @click="save_task">Save</v-btn>
                     </div>
                     <div id="delete" class="text-xs-center">
                         <v-dialog v-model="dialog" width="40%" >
@@ -89,6 +89,7 @@
     </v-form>
 </template>
 <script>
+import { mapState } from 'vuex'
 export default {
     name: 'TaskForm',
     data () {
@@ -113,7 +114,13 @@ export default {
         },
         answerfields: function () {
             return this.newanswers
-        }
+        },
+        quizroute: function () {
+            return this.$route.path.replace('/newtask', '')
+        },
+        ...mapState({
+            quiz: state => state.currentQuiz
+        }),
     },
     methods: {
         add_answer: function () {
@@ -148,6 +155,13 @@ export default {
                 this.newtypename = this.task.tasktype
                 this.newanswers = this.task.answers
             }
+        },
+        save_task: function () {
+            let task = {
+
+            }
+
+            this.$store.commit('currentQuiz/addTask', task)
         }
     },
     beforeMount () {

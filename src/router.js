@@ -46,7 +46,7 @@ export default new VueRouter({
             props: true
         },
         {
-            path: '/quiz/:id/newtask',
+            path: '/edit/quiz/:id/newtask',
             component: Edit,
             props: true
         },

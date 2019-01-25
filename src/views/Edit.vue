@@ -21,9 +21,10 @@ export default {
         QuizForm,
         TaskForm
     },
+    props: { quiz: Boolean, task: Object },
     data () {
         return {
-            props: { editquiz: Boolean, task: Object }
+
         }
     },
     computed: {

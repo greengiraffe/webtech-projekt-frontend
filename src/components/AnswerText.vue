@@ -16,7 +16,7 @@ export default {
     props: ['task'],
     computed: {
         compute_blank_text: function () {
-          console.log(this.props)
+            console.log(this.props)
             let textarray = this.task.text.split('#')
             return textarray
         }

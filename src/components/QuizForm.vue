@@ -44,7 +44,7 @@
                         <h2>Tasks</h2>
                         <div v-if="quiz.tasks.length === 0" id="notasks">
                             <p>No tasks have been added to this quiz yet.</p>
-                            <v-btn title="Add new task" :to="{path: 'quiz/'+quiz.id+'/newtask', params: [false, task]}" ><v-icon>add</v-icon> add a task</v-btn>
+                            <v-btn title="Add new task" :to="{path: '/edit/quiz/'+quiz.id+'/newtask', params: [false, null]}" ><v-icon>add</v-icon> add a task</v-btn>
                         </div>
 
                         <v-data-table v-else :headers="taskdetails" :items="quiz.tasks" class="quiztasks">

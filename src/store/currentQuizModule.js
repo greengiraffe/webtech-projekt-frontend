@@ -83,7 +83,8 @@ export const currentQuizModule = {
             const res = await API.updateQuiz({
                 id: quiz.id,
                 name: quiz.name,
-                categories: quiz.categories
+                categories: quiz.categories,
+                tasks: quiz.tasks
             })
             commit('quiz/updateQuiz', res.data.data, { root: true })
             return res
