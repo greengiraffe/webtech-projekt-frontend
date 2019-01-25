@@ -47,7 +47,7 @@
                             <v-btn title="Add new task" :to="{path: '/edit/quiz/'+quiz.id+'/newtask', params: [false, null]}" ><v-icon>add</v-icon> add a task</v-btn>
                         </div>
 
-                        <v-data-table v-else :headers="taskdetails" :items="quiz.tasks" class="quiztasks">
+                        <v-data-table v-else :headers="taskdetails" :items="quiz.tasks" class="quiztasks" hide-actions>
                             <template slot="headers" slot-scope="props">
                                 <tr>
                                     <th v-for="header in taskdetails" :key="header" >{{header}}</th>

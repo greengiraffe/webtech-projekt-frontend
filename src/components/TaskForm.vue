@@ -37,7 +37,7 @@
                     <div id="choiceanswers">
                         <v-spacer></v-spacer>
                         <h2>Answers</h2>
-                        <v-data-table :headers="headers" :items="answerfields" >
+                        <v-data-table :headers="headers" :items="answerfields" hide-actions>
                             <template slot="headers" slot-scope="props">
                                 <tr>
                                     <th v-for="header in headers" :key="header" >{{header}}</th>
