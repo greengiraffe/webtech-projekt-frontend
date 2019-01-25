@@ -10,6 +10,7 @@ export const currentQuizModule = {
         thumbnail: '',
         categories: [],
         tasks: [],
+        loading: true,
         progress: '0', /* NOT BACKEND CONFORM - Progress still to implement */
         currentTask: {}
     },
@@ -19,6 +20,9 @@ export const currentQuizModule = {
         },
         tasks: (state) => {
             return state.tasks
+        },
+        loading: (state) => {
+            return state.loading
         }
     },
     mutations: {
@@ -42,16 +46,25 @@ export const currentQuizModule = {
         },
         setCategories (state, payload) {
             state.categories = payload
+        },
+        setLoading (state, payload) {
+            state.loading = payload
         }
     },
     actions: {
         async getQuiz ({ commit }, id) {
+            commit('setLoading', true)
             const res = await API.getQuiz(id)
             commit('setQuiz', res.data.data)
+            let count = res.data.data.tasks.data.length
             res.data.data.tasks.data.forEach(async (item, index) => {
                 const task = await API.getTasksByQuiz(id, index + 1)
                 if (task.data) {
                     commit('addTask', { task: task.data.data[0], index: index })
+                    count--
+                    if (count === 0) {
+                        commit('setLoading', false)
+                    }
                 }
             })
         },

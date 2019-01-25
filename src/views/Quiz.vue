@@ -15,12 +15,12 @@
             <p>{{ quiz.description }}</p>
             <div v-if="quiz.progress == 0" class="startquiz">
             <!-- <router-link :to="{path: 'quiz/'+quiz.id+task}" exact> -->
-                    <v-btn v-on:click="startquiz">Start Quiz</v-btn>
+                <v-btn v-on:click="startquiz" :loading="loading">Start Quiz</v-btn>
                 <!-- </router-link> -->
             </div>
             <div v-else class="continuequiz">
                 <p id="quizprogress">{{ quiz.progress }} %</p>
-                <v-btn v-on:click="startquiz">Continue quiz</v-btn>
+                <v-btn v-on:click="startquiz" :loading="loading">Continue quiz</v-btn>
             </div>
         </div>
         <v-spacer></v-spacer>
@@ -30,7 +30,7 @@
 
 <script>
 import Task from '../components/Task.vue'
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
     data () {
@@ -49,6 +49,9 @@ export default {
     computed: {
         ...mapState({
             quiz: state => state.currentQuiz,
+        }),
+        ...mapGetters({
+            loading: 'currentQuiz/loading'
         })
     },
     components: {
