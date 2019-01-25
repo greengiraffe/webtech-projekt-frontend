@@ -53,15 +53,6 @@ export default {
             }
         }
     },
-
-    // returns an array with the text of all correctly chosen answers, based on the selected answers
-    // TODO: change back to boolean
-
-    // returns the number of all answers that are marked with correct_choice in the answers array
-    // TODO: change back to boolean
-
-    // returns if task solved correctly
-
     methods: {
         verify () {
             this.showverification = true

@@ -90,6 +90,7 @@
 </template>
 <script>
 export default {
+    name: 'TaskForm',
     data () {
         return {
             props: { task: Object },
@@ -152,6 +153,7 @@ export default {
     beforeMount () {
         this.check_if_editing()
     }
+    // Save task -> get current quiz and add task
 }
 </script>
 
@@ -202,19 +204,22 @@ export default {
 .v-textarea{
     font-size: 14px;
 }
-td:first-child{
-    width: 90%;
-    text-align: left;
-}
-th:first-child{
-    width: 90%;
-}
-td{
-    text-align: center;
-    .v-alert{
+#choiceanswers{
+    td:first-child{
+        width: 90%;
+        text-align: left;
+    }
+    th:first-child{
+        width: 90%;
+    }
+    td{
         text-align: center;
+        .v-alert{
+            text-align: center;
+        }
     }
 }
+
 #choiceCheck{
     .v-input__control{
         margin: 0 auto;
