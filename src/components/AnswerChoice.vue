@@ -4,13 +4,13 @@
             <v-spacer></v-spacer>
             <p class="pl-4 pt-3">Choose the correct answer. One or more answers might be correct.</p>
             <ul v-if="task.answers">
-                <li v-for="answer in task.answers.data" :key="answer.id">
-                    <v-checkbox :label="answer.text" v-model="answer.selected"></v-checkbox>
+                <li v-for="answer in task.answers.data" :key="answer.id" v-bind:class="{ correct: answer.is_correct, false: answer.is_correct === false }">
+                    <v-checkbox :label="answer.text" v-model="answer.answer_choice"></v-checkbox>
                 </li>
             </ul>
             <v-btn class="mx-auto d-block" @click="verify()">Check</v-btn>
-            <div id="verification" v-if="this.showverification">
-                <p v-if="correctlysolved" style="background-color: lightgreen">
+            <div id="verification" v-if="task.verified">
+                <p v-if="task.is_correct" style="background-color: lightgreen">
                     Congratulations! You solved the task correctly.
                 </p>
                 <p v-else style="background-color: #feb6b6">
@@ -24,63 +24,9 @@
 export default {
     name: 'AnswerChoice',
     props: ['task'],
-    data () {
-        return {
-            showverification: false
-        }
-    },
-    computed: {
-        correctchoice: function () {
-            const correctAnswers = this.selected
-                .map(sel => this.answers.find(answer => answer.text === sel))
-                .filter(
-                    answer => answer !== undefined && answer.correct_choice
-                )
-            return correctAnswers.map(corrA => corrA.text)
-        },
-        nrcorrectanswers: function () {
-            return this.answers.filter(answer => answer.correct_choice)
-                .length
-        },
-        correctlysolved: function () {
-            if (
-                this.selected.length === this.nrcorrectanswers &&
-                this.correctchoice.length === this.nrcorrectanswers
-            ) {
-                return true
-            } else {
-                return false
-            }
-        }
-    },
     methods: {
         verify () {
-            this.showverification = true
-            this.highlightChosen()
-        },
-        highlightChosen () {
-            const chosenCheck = document.querySelectorAll('[aria-checked="true"]')
-            const tagName = 'li'
-            let color
-
-            for (let i = 0; i < chosenCheck.length; i++) {
-                let element = chosenCheck[i]
-                const value = element.getAttribute('value')
-                // determine whether to color red or green
-                if (this.correctchoice.includes(value)) {
-                    color = 'lightgreen'
-                } else {
-                    color = '#feb6b6'
-                }
-
-                while (element && element.parentNode) {
-                    element = element.parentNode
-                    if (element.tagName && element.tagName.toLowerCase() === tagName) {
-                        element.style.backgroundColor = color
-                        break
-                    }
-                }
-            }
+            this.$store.dispatch('currentQuiz/verify', this.task)
         }
     }
 }
@@ -93,6 +39,15 @@ li {
   .v-input--selection-controls {
     padding: 0;
     margin: 0;
+  }
+  .v-input__slot {
+      margin: 8px 0;
+  }
+  &.correct {
+    background-color: lightgreen;
+  }
+  &.false {
+    background-color: #feb6b6;
   }
 }
 .v-card__text {

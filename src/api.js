@@ -134,8 +134,10 @@ export default class API {
     // VALIDATE
 
     static async validateTask (quizId, taskId, answers) {
-        return axios.post(`validate/${quizId}/tasks/${taskId}`, {
-            answers
+        return axios.post(`validate`, {
+            'quiz_id': quizId,
+            'task_id': taskId,
+            'answers': answers
         })
     }
 }
