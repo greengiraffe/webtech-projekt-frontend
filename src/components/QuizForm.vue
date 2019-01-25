@@ -144,6 +144,7 @@ export default {
                     return { name, id }
                 })
                 this.$store.commit('currentQuiz/setCategories', cats)
+                console.log(this.$store.state.currentQuiz.categories)
             }
         },
         isThumbUrl () {
@@ -152,7 +153,7 @@ export default {
         }
     },
     methods: {
-        async saveQuiz () {
+        saveQuiz () {
             const existingCategories = this.currentCategories
                 .filter(cat => {
                     if (cat.id !== null) return cat
@@ -165,15 +166,19 @@ export default {
                 })
 
             if (newCategories.length > 0) {
-                const responses = await Promise.all(newCategories.map(cat => this.$store.dispatch('quiz/addCategory', cat.name)))
-                if (responses || responses.length !== 0) {
-                    newCategories = responses.map(res => res.data.data)
-                }
+                Promise.all(newCategories.map(cat => this.$store.dispatch('quiz/addCategory', cat.name)))
+                    .then(responses => {
+                        if (responses || responses.length !== 0) {
+                            newCategories = responses.map(res => res.data.data)
+                        }
+                        this.quiz.categories = [...newCategories, ...existingCategories]
+                    })
+                    .catch(() => {
+                        this.quiz.categories = existingCategories
+                    })
+            } else {
+                this.quiz.categories = existingCategories
             }
-
-            const allCategories = [...newCategories, ...existingCategories]
-            // only send category IDs to API
-            this.quiz.categories = allCategories.map(c => c.id)
 
             if (this.quiz.id !== null) {
                 // editing quiz
