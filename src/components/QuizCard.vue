@@ -23,7 +23,7 @@
             <v-btn
                 v-if="user.isAdmin"
                 @click="setCurrentQuiz"
-                :to="{path: 'editquiz/'+quiz.id, params: {quiz}}"
+                :to="{path: 'edit/quiz/'+quiz.id, params: {editquiz: 'true'}}"
                 title="Edit this quiz"
                 class="indigo lighten-5"
                 exact

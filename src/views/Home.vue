@@ -23,7 +23,7 @@
       <v-layout row wrap justify-space-between align-center class="sameheight">
 
         <div v-if="user.isAdmin" id="newquizbtn">
-          <v-btn :to="{path: '/newquiz'}" exact class="indigo accent-4 white--text" @click="setNewQuiz"><v-icon>add</v-icon> New quiz</v-btn>
+          <v-btn :to="{path: '/newquiz', params: true}" exact class="indigo accent-4 white--text" @click="setNewQuiz"><v-icon>add</v-icon> New quiz</v-btn>
         </div>
 
         <div id="filter">

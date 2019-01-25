@@ -44,14 +44,14 @@
                         <h2>Tasks</h2>
                         <div v-if="quiz.tasks.length === 0" id="notasks">
                             <p>No tasks have been added to this quiz yet.</p>
-                            <v-btn title="Add new task"><v-icon>add</v-icon> add a task</v-btn>
+                            <v-btn title="Add new task" :to="{path: 'quiz/'+quiz.id+'/newtask', params: [false, task]}" ><v-icon>add</v-icon> add a task</v-btn>
                         </div>
 
                         <v-data-table v-else :headers="taskdetails" :items="quiz.tasks" class="quiztasks">
                             <template slot="headers" slot-scope="props">
                                 <tr>
                                     <th v-for="header in taskdetails" :key="header" >{{header}}</th>
-                                    <th><v-btn title="Add new task"><v-icon>add</v-icon></v-btn></th>
+                                    <th><v-btn title="Add new task" @click="saveQuiz" :to="{path: 'quiz/'+quiz.id+'/newtask', params: [false, task]}"><v-icon>add</v-icon></v-btn></th>
                                 </tr>
                             </template>
                             <template slot="items" slot-scope="props">
@@ -61,8 +61,8 @@
                                     <td>{{task.type.name}}</td>
                                     <td>{{task.solved}}</td>
                                     <td>
-                                        <v-btn flat icon title="Edit this task"><v-icon>create</v-icon></v-btn>
-                                        <v-btn flat icon title="Delete this task" color="#ba1a0e"><v-icon>delete</v-icon></v-btn>
+                                        <v-btn flat icon title="Edit this task" :to="{path: '/edit/quiz/'+quiz.id+'/task', params: [false, task]}"><v-icon>create</v-icon></v-btn>
+                                        <v-btn flat icon title="Delete this task" color="#ba1a0e" @click="deleteTask(task)"><v-icon>delete</v-icon></v-btn>
                                     </td>
                                 </tr>
                             </template>
@@ -101,6 +101,7 @@
 <script>
 import { mapState } from 'vuex'
 export default {
+    name: 'QuizForm',
     data () {
         return {
             categorySearch: null,
@@ -143,6 +144,7 @@ export default {
                     return { name, id }
                 })
                 this.$store.commit('currentQuiz/setCategories', cats)
+                console.log(this.$store.state.currentQuiz.categories)
             }
         },
         isThumbUrl () {
@@ -151,7 +153,7 @@ export default {
         }
     },
     methods: {
-        async saveQuiz () {
+        saveQuiz () {
             const existingCategories = this.currentCategories
                 .filter(cat => {
                     if (cat.id !== null) return cat
@@ -164,15 +166,19 @@ export default {
                 })
 
             if (newCategories.length > 0) {
-                const responses = await Promise.all(newCategories.map(cat => this.$store.dispatch('quiz/addCategory', cat.name)))
-                if (responses || responses.length !== 0) {
-                    newCategories = responses.map(res => res.data.data)
-                }
+                Promise.all(newCategories.map(cat => this.$store.dispatch('quiz/addCategory', cat.name)))
+                    .then(responses => {
+                        if (responses || responses.length !== 0) {
+                            newCategories = responses.map(res => res.data.data)
+                        }
+                        this.quiz.categories = [...newCategories, ...existingCategories]
+                    })
+                    .catch(() => {
+                        this.quiz.categories = existingCategories
+                    })
+            } else {
+                this.quiz.categories = existingCategories
             }
-
-            const allCategories = [...newCategories, ...existingCategories]
-            // only send category IDs to API
-            this.quiz.categories = allCategories.map(c => c.id)
 
             if (this.quiz.id !== null) {
                 // editing quiz
@@ -189,6 +195,9 @@ export default {
         },
         selectCategory (c) {
             console.log(c)
+        },
+        deleteTask (task) {
+            this.quiz.tasks = this.quiz.tasks.filter(t => t !== task)
         }
     }
 }
