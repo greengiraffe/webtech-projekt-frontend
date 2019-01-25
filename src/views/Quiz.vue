@@ -10,7 +10,7 @@
             <div class="quizcategories">
                 <p v-if="quiz.categories.length > 1">Categories: </p>
                 <p v-else>Category: </p>
-                <p v-for="category in quiz.categories" :key="category">{{category}}</p>
+                <p v-for="category in quiz.categories" :key="category.id">{{category.name}}</p>
             </div>
             <p>{{ quiz.description }}</p>
             <div v-if="quiz.progress == 0" class="startquiz">
